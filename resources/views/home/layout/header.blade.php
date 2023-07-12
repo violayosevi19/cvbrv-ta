@@ -7,7 +7,7 @@
       <span class="d-flex justify-content-start align-items-center">
         <i class="fas fa-bars"></i>
       </span>
-    </button>
+      </button>
     <div class="collapse navbar-collapse" id="navbarExample01">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item active">
@@ -30,10 +30,10 @@
         </li>
         <li class="nav-item">
          <div class="btn-group">
-          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a style="" class="dropdown-toggle nav-link px-3"  data-bs-toggle="dropdown" aria-expanded="false">
             Penjualan
-          </button>
-          <ul class="dropdown-menu">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="/faktur-home">Faktur</a></li>
             <li><a class="dropdown-item" href="/penjualan-home">Penjualan</a></li>
             <li><a class="dropdown-item" href="/pembayaran-home">Pembayaran</a></li>

@@ -15,9 +15,11 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Supplier</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal Faktur</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Hp</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
@@ -26,18 +28,20 @@
               <tbody>
                 @foreach($suppliers as $sp)
                 <tr>
-                 <td>
-                  <div class="d-flex px-2 py-1">
-                    <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">{{ $sp->nonota }}</h6>
-                    </div>
-                  </div>
+                <td class="align-middle text-center">
+                  <span class="badge badge-sm bg-gradient-secondary">{{ $sp->nonota }}</span>
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $sp->namasupplier }}</span>
                 </td>
-                <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ $sp->tglfaktur }}</p>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->kodeproduk }}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->nohp }}</span>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->tglfaktur }}</span>
                 </td>
                 <td class="align-middle text-center text-sm">
                   <span class="badge badge-sm bg-gradient-secondary">{{ $sp->jatuhtempo }}</span>
@@ -56,6 +60,9 @@
                       Delete
                     </button>
                   </form>
+                  <a href="/supplier-dash/{{$sp->kodeproduk}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                    Read
+                  </a>
                 </td>
               </tr>
               @endforeach

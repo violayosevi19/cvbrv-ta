@@ -24,7 +24,10 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('dashboard.pegawai.create',['pegawais' => Pegawai::all()]);
+        return view('dashboard.pegawai.create',['pegawais' => 
+        Pegawai::all()
+
+        ]);
     }
 
     /**

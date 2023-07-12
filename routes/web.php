@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\JenisprodukController;
@@ -9,8 +10,8 @@ use App\Http\Controllers\DetailPesananController;
 use App\Http\Controllers\FakturController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PembayaranController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PegawaiHomeController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DetailpesananHomeController;
 use App\Http\Controllers\FakturHomeController;
 use App\Http\Controllers\JenisprodukHomeController;
@@ -21,6 +22,9 @@ use App\Http\Controllers\SupplierHomeController;
 use App\Http\Controllers\TokoHomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\SearchingController;
+use App\Http\Controllers\GetTotalController;
 
 
 /*
@@ -34,16 +38,17 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.dash.dashboard');
-});
+// Route::get('/', function () {
+//     return view('dashboard.dash.dashboard');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dash.dashboard');
-})->Middleware('auth');
+// Route::get('/dashboard', function () {
+//     return view('dashboard.dash.dashboard');
+// })->Middleware('auth');
 
 //front end
-
+Route::get('/',[DashboardController::class,'index'])->Middleware('auth');
+Route::get('/dashboard',[DashboardController::class,'index']);
 Route::resource('/pegawai-dash',PegawaiController::class);
 
 Route::resource('/produk-dash',ProdukController::class);
@@ -61,7 +66,9 @@ Route::resource('/penjualan-dash',PenjualanController::class);
 Route::resource('/pembayaran-dash',PembayaranController::class);
 
 Route::resource('/supplier-dash',SupplierController::class);
-
+Route::resource('/stock-dash',StockController::class);
+Route::get('/get-stock',[SearchingController::class,'searchingStok']);
+Route::get('/get-total', [GetTotalController::class,'getTotal']);
 //backend
 
 

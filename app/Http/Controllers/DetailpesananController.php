@@ -37,11 +37,12 @@ class DetailpesananController extends Controller
     public function store(Request $request)
     {
         $validateData=$request->validate([
-            'nonota' => 'required|unique:detailpesanans',
+            'nonota' => 'required',
+            'namaproduk' => 'required',
             'jumlah' => 'required',
             'harga' => 'required',
             'tglpesan' => 'required',
-            'kodeproduk' => 'required|unique:detailpesanans'
+            // 'kodeproduk' => 'required|unique:detailpesanans'
          ]);
 
         Detailpesanan::create($validateData);
@@ -54,9 +55,22 @@ class DetailpesananController extends Controller
      * @param  \App\Models\detailpesanan  $detailpesanan
      * @return \Illuminate\Http\Response
      */
-    public function show(detailpesanan $detailpesanan)
+    public function show(detailpesanan $detailpesanan,$nonota)
     {
-        //
+        $takeNota = detailpesanan::where('nonota','=',$nonota)->get()->all();
+        // dd($takeNota);
+        // $takeData = detailpesanan::find($id);
+        // dd($takeData);
+        // dd($takeNota);
+        
+        if(!$takeNota){
+            $errorMessage = 'Terjadi kesalahan dalam memproses data.';
+            session()->flash('error', $errorMessage);
+            return redirect('/detailpesanan-dash');
+        } else {
+            return view('dashboard.detailpesanan.read',['takeNotas' => $takeNota]);
+        }
+        
     }
 
     /**

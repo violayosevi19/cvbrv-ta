@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('detailpesanans', function (Blueprint $table) {
             $table->id();
-            $table->char('nonota',12)->unique();
+            $table->char('nonota',12);
+            $table->string('namaproduk');
             $table->integer('jumlah');
             $table->integer('harga');
             $table->date('tglpesan');
-            $table->char('kodeproduk',12)->unique();
             $table->timestamps();
         });
     }

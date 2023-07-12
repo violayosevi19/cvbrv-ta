@@ -9,4 +9,8 @@ class faktur extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function detailPesanan() {
+        return $this->hasMany(detailpesanan::class,'nonota','nonota');
+    }
 }

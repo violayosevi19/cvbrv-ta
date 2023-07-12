@@ -23,7 +23,7 @@
                   @method('put')
                   <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
-                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$details->nonota )}}">
+                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota" value="{{ old('nonota',$details->nonota )}}">
                   </div>
                   @error('nonota')
                   {{ $message }}

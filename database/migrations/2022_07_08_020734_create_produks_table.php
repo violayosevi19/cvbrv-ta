@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('satuan');
             $table->integer('harga');
             $table->integer('stock');
+            $table->integer('stock_minimum')->default(10);
             $table->integer('jenisproduk_id');
             $table->timestamps();
         });

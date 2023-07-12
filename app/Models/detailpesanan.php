@@ -9,4 +9,8 @@ class detailpesanan extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function faktur() {
+        return $this->belongsTo(faktur::class,'nonota','nonota');
+    }
 }

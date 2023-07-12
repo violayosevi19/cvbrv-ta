@@ -37,7 +37,10 @@ class SupplierController extends Controller
     {
         $validateData=$request->validate([
             'nonota' => 'required|unique:suppliers',
+            'kodeproduk' => 'required',
             'namasupplier' => 'required',
+            'nohp' => 'required',
+            'alamat' => 'required',
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'total' => 'required',
@@ -53,9 +56,11 @@ class SupplierController extends Controller
      * @param  \App\Models\supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(supplier $supplier)
+    public function show(supplier $supplier,$kodeproduk)
     {
-        //
+        $takeDataSupplier = supplier::where('kodeproduk','=',$kodeproduk)->get()->all();
+        // dd($takeDataSupplier);
+        return view('dashboard.supplier.read',['detailSupplier' => $takeDataSupplier]);
     }
 
     /**

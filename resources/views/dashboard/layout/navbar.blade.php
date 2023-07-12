@@ -9,10 +9,17 @@
       <h6 class="font-weight-bolder text-white mb-0">@yield('JudulTabel')</h6>
     </nav>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-      <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-        <div class="input-group">
-          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-          <input type="text" class="form-control" placeholder="Type here...">
+      <div class="ms-md-auto pe-md-3 d-flex align-items-center mt-3">
+        <div class="btn-group">
+          <button type="button" class="btn btn-dark dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+            Cek Data Barang
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="/get-stock">Cek Stok</a></li>
+            <li><a class="dropdown-item" href="/penjualan-home">Penjualan per Bulan</a></li>
+            <li><a class="dropdown-item" href="/pembayaran-home">Produk per Kategori</a></li>
+            <li><a class="dropdown-item" href="/detailpesanan-home">Laporan Penjualan</a></li>
+          </ul>
         </div>
       </div>
       <ul class="navbar-nav  justify-content-end">

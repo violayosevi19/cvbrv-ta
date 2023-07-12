@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('fakturs', function (Blueprint $table) {
             $table->id();                                   
             $table->char('nonota',12)->unique();
+            $table->string('namatoko');
             $table->date('tglfaktur');
             $table->date('jatuhtempo');
-            $table->string('namatoko');
+            $table->string('keterangan')->nullable();
             $table->double('total',10,2);
             $table->timestamps();
         });

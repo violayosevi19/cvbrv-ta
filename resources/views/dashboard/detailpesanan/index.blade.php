@@ -5,6 +5,16 @@
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
+      @if(session()->has('pesan'))
+          <div class="alert alert-danger" role="alert">
+            {{ session('pesan') }}
+          </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif  
       <div class="card mb-4">
         <div class="card-header pb-0">
           <h6>Detail Pesanan</h6>
@@ -16,10 +26,10 @@
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jumlah</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Pesan</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                 </tr>
               </thead>
@@ -32,6 +42,9 @@
                       <h6 class="mb-0 text-sm">{{ $detail->nonota }}</h6>
                     </div>
                   </div>
+                </td>
+                <td>
+                  <p class="text-xs font-weight-bold mb-0">{{ $detail->namaproduk }}</p>
                 </td>
                 <td>
                   <p class="text-xs font-weight-bold mb-0">{{ $detail->jumlah }}</p>
@@ -56,6 +69,9 @@
                       Delete
                     </button>
                   </form>
+                  <a href="/detailpesanan-dash/{{$detail->nonota}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                    Read
+                  </a>
                 </td>
               </tr>
               @endforeach
@@ -66,9 +82,5 @@
     </div>
   </div>
 </div>
-@if(session()->has('pesan'))
-<div class="alert alert-danger" role="alert">
-  {{ session('pesan') }}
-</div>
-@endif
+
 @endsection

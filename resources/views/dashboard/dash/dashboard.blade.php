@@ -2,6 +2,39 @@
 @section('container')
 @section('JudulPages','Dashboard')
 @section('JudulTabel','Dashboard')
+<div class="ms-4 me-4">
+    @if(!empty($stockAlerts))
+    @foreach($stockAlerts as $message)
+    <div class="alert alert-danger d-flex align-items-center" id="stock" class="stock" role="alert" >
+        <div class="flex-grow-1">{{$message}}</div>
+        <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
+    </div>
+    @endforeach
+    @else
+    <div class="alert alert-success d-flex align-items-center" id="stock" class="stock" role="alert">
+      <div class="flex-grow-1">Stok ado lai ma</div>
+        <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
+      </div>
+    @endif
+    <script>
+      var closeElement = document.querySelectorAll('.close');
+      closeElement.forEach(function(close) {
+          close.addEventListener('click', function() {
+            var closeContent = document.getElementById('stock');
+            console.log(closeContent);
+              if (closeContent) {
+                closeContent.remove();
+              }
+          })
+      });
+    </script>
+    <style>
+      #stock {
+        background-color: rgba(255, 0, 0, 0.5); /* Ganti angka 0.5 sesuai dengan tingkat transparansi yang diinginkan (0-1) */
+        color:white;
+      }
+  </style>
+</div>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -12,7 +45,6 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
                 <h5 class="font-weight-bolder">
-                  $53,000
                 </h5>
                 <p class="mb-0">
                   <span class="text-success text-sm font-weight-bolder">+55%</span>

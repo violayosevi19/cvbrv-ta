@@ -22,9 +22,21 @@
                   @error('nonota')
                   {{ $message }}
                   @enderror
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Kode Produk</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="kodeproduk">
+                  </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="namasupplier">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">No Hp</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nohp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Alamat</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="alamat">
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tanggal Faktur</label>

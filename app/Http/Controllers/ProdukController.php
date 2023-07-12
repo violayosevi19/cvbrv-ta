@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\produk;
 use App\Models\jenisproduk;
+use App\Models\supplier;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -59,9 +60,11 @@ class ProdukController extends Controller
      * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function show(produk $produk)
+    public function show(produk $produk,$kodeproduk)
     {
-        //
+        $takeSupplier = supplier::where('kodeproduk','=',$kodeproduk)->get()->all();
+        dd($takeSupplier);
+        return view('dashboard.supplier.read',['detailSupplier' => $takeSupplier]);
     }
 
     /**

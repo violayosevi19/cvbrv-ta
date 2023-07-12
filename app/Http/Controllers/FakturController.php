@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\faktur;
+use App\Models\detailpesanan;
 use Illuminate\Http\Request;
 
 class FakturController extends Controller
@@ -14,7 +15,22 @@ class FakturController extends Controller
      */
     public function index()
     {
-        return view('dashboard.faktur.index',['fakturs' => Faktur::all()]);
+        $tglJatuhTempo = faktur::pluck('jatuhtempo','namatoko'); 
+        $now = date('Y-m-d',strtotime(now()));
+        // dd($tglJatuhTempo);
+        // dd($now);
+        $message =  [];
+        foreach($tglJatuhTempo as $namaToko => $tglJatuhTempo){
+            // dd($namaToko,$tglJatuhTempo);
+            if($tglJatuhTempo === $now){
+                $message[] = "Faktur toko $namaToko sudah jatuh tempo";
+            } 
+        }
+    
+        return view('dashboard.faktur.index',[
+                    'fakturs' => Faktur::all(),
+                    'alertJatuhTempo' => $message
+                ]);
     }
 
     /**
@@ -37,9 +53,10 @@ class FakturController extends Controller
     {
         $validateData=$request->validate([
             'nonota' => 'required|unique:fakturs',
+            'namatoko' => 'required',
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
-            'namatoko' => 'required',
+            'keterangan' => 'required',
             'total' => 'required'
         ]);
 
@@ -53,9 +70,22 @@ class FakturController extends Controller
      * @param  \App\Models\faktur  $faktur
      * @return \Illuminate\Http\Response
      */
-    public function show(faktur $faktur)
+    public function show(faktur $faktur,$nonota)
     {
-        //
+        $takeNota = detailpesanan::where('nonota','=',$nonota)->get()->all();
+        // dd($takeNota);
+        // $takeData = detailpesanan::find($id);
+        // dd($takeData);
+        // dd($takeNota);
+        
+        if(!$takeNota){
+            $errorMessage = 'Terjadi kesalahan dalam memproses data.';
+            session()->flash('error', $errorMessage);
+            return redirect('/faktur-dash');
+        } else {
+            return view('dashboard.detailpesanan.read',['takeNotas' => $takeNota]);
+        }
+        
     }
 
     /**
@@ -80,9 +110,10 @@ class FakturController extends Controller
     {
         $validateData=$request->validate([
             'nonota' => 'required',
+            'namatoko' => 'required',
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
-            'namatoko' => 'required',
+            'keterangan' => 'required',
             'total' => 'required'
         ]);
 
