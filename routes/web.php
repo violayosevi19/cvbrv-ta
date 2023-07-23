@@ -7,7 +7,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\JenisprodukController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\DetailPesananController;
-use App\Http\Controllers\FakturController;
+use App\Http\Controllers\FakturControllerDash;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PegawaiHomeController;
@@ -61,7 +61,7 @@ Route::resource('/toko-dash',TokoController::class);
 
 Route::resource('/detailorderan-dash',DetailPesananController::class);
 
-Route::resource('/faktur-dash',FakturController::class);
+Route::resource('/faktur-dash',FakturControllerDash::class);
 
 Route::resource('/penjualan-dash',PenjualanController::class);
 

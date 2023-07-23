@@ -7,7 +7,7 @@ use App\Models\faktur;
 use App\Models\detailpesanan;
 use Illuminate\Http\Request;
 
-class FakturController extends Controller
+class FakturControllerDash extends Controller
 {
     /**
      * Display a listing of the resource.
