@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\produk;
+use App\Models\Stock;
 
 class DashboardController extends Controller
 {
     public function index() {
-        $stock = produk::pluck('stock','namaproduk');
-        $stockMin = produk::pluck('stock_minimum','namaproduk');
+        $stock = Stock::pluck('stock','namaproduk');
+        $stockMin = Stock::pluck('stock_minimum','namaproduk');
         // $productNames = $stock->keys();
         // dd($stockMin);
         $message = [];

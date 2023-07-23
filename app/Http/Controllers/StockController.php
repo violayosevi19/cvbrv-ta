@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -14,7 +15,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        return view('dashboard.stock.index',['stocks' => Stock::all()]);
+        return view('dashboard.stock.index',[
+            'stocks' => Stock::all(),
+        ]);
     }
 
     /**
@@ -43,7 +46,14 @@ class StockController extends Controller
             'stock' => 'required',
         ]);
 
-        Stock::create($validateData);
+        $stock = $validateData['stock'];
+        $satuan = $validateData['satuan'];
+        $date = date('d-m-Y', strtotime(now()));
+        $keterangan = 'Stock telah ditambahkan pada ' . $date . ' sebanyak ' . $stock . ' ' . $satuan;
+        $validateDataNew = array_merge($validateData, ['keterangan' => $keterangan]);
+
+        Stock::create($validateDataNew);
+      
         return redirect('/stock-dash')->with('pesan','Data berhasil ditambah');
     }
 
@@ -78,7 +88,7 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock,$id)
     {
-       $validateData = $request->validate([
+        $validateData = $request->validate([
             'kodeproduk' => 'required',
             'namaproduk' => 'required',
             'satuan' => 'required',
@@ -86,7 +96,14 @@ class StockController extends Controller
             'stock' => 'required',
         ]);
 
-        Stock::where('id',$id)->update($validateData);
+        $stock = $validateData['stock'];
+        $satuan = $validateData['satuan'];
+        $date = date('d-m-Y', strtotime(now()));
+        $keterangan = 'Stock diubah pada ' . $date . ' sebanyak ' . $stock . ' ' . $satuan;
+        $validateDataNew = array_merge($validateData, ['keterangan' => $keterangan]);
+
+        Stock::where('id',$id)->update($validateDataNew);
+    
         return redirect('/stock-dash')->with('pesan','Data berhasil ditambah');
     }
 

@@ -24,7 +24,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SearchingController;
-use App\Http\Controllers\GetTotalController;
+use App\Http\Controllers\GetDataController;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
 
 
 /*
@@ -57,7 +59,7 @@ Route::resource('/jenisproduk-dash',JenisprodukController::class);
 
 Route::resource('/toko-dash',TokoController::class);
 
-Route::resource('/detailpesanan-dash',DetailPesananController::class);
+Route::resource('/detailorderan-dash',DetailPesananController::class);
 
 Route::resource('/faktur-dash',FakturController::class);
 
@@ -66,9 +68,16 @@ Route::resource('/penjualan-dash',PenjualanController::class);
 Route::resource('/pembayaran-dash',PembayaranController::class);
 
 Route::resource('/supplier-dash',SupplierController::class);
+Route::resource('/barangmasuk-dash',BarangMasukController::class);
+Route::resource('/barangkeluar-dash',BarangKeluarController::class);
 Route::resource('/stock-dash',StockController::class);
 Route::get('/get-stock',[SearchingController::class,'searchingStok']);
-Route::get('/get-total', [GetTotalController::class,'getTotal']);
+Route::get('/get-data', [GetDataController::class,'getFaktur']);
+Route::get('/get-alamat', [GetDataController::class,'getAlamat']);
+Route::get('/get-produk', [GetDataController::class,'getNamaProduk']);
+Route::get('/get-jumlah', [GetDataController::class,'getJumlahHargaProduk']);
+Route::get('/get-jumlahdetail', [GetDataController::class,'getJumlahHargaDetail']);
+Route::get('/get-faktur', [GetDataController::class,'getPenjualan']);
 //backend
 
 

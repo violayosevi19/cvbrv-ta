@@ -1,19 +1,19 @@
 @extends('dashboard.layout.main')
 @section('container')
-@section('JudulPages','Detail Pesanan')
-@section('JudulTabel','Detail Pesanan')
+@section('JudulPages','Detail Orderan')
+@section('JudulTabel','Detail Orderan')
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3">Create Detail Pesanan</h6>
+          <h6 class="mx-3">Create Detail Orderan</h6>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
             <div class="row mx-5 mt-3">
               <div class="col col-md-6">
-                <form action="/detailpesanan-dash" method="post">
+                <form action="/detailorderan-dash" method="post">
                   @csrf
                   <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>

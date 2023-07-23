@@ -75,12 +75,8 @@
                   <span class="text-secondary text-xs font-weight-bold">{{ $faktur->total }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  @if($faktur->keterangan === "ordered")
+                  @if($faktur->keterangan === "kredit")
                   <div class="btn btn-warning">
-                  <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->keterangan }}</span>
-                  </div>
-                  @elseif($faktur->keterangan === "shipping")
-                  <div class="btn btn-primary">
                   <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->keterangan }}</span>
                   </div>
                   @else
@@ -101,7 +97,7 @@
                     </button>
                   </form>
                   <a href="/faktur-dash/{{$faktur->nonota}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
-                    Read
+                    Cetak Faktur
                   </a>
                 </td>
               </tr>

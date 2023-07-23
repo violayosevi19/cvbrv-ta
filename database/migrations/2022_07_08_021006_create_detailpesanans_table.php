@@ -16,10 +16,18 @@ return new class extends Migration
         Schema::create('detailpesanans', function (Blueprint $table) {
             $table->id();
             $table->char('nonota',12);
-            $table->string('namaproduk');
-            $table->integer('jumlah');
+            $table->char('kodeproduk',12);
+            $table->string('namatoko',50);
+            $table->string('alamat')->nullable();
+            $table->string('tglfaktur');
+            $table->string('jatuhtempo',20);
+            $table->string('namasales');
+            $table->string('namaproduk',50);
+            $table->integer('kuantitas');
+            $table->char('satuan',12);
             $table->integer('harga');
-            $table->date('tglpesan');
+            $table->decimal('diskon')->nullable();
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }

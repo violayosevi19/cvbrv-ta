@@ -27,16 +27,8 @@
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="namaproduk">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Satuan</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="satuan">
-                  </div>
-                  <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="harga">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Stock</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="stock">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jenis Produk</label>

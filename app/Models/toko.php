@@ -9,4 +9,8 @@ class toko extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function detailpesanans(){
+        return $this->hasMany(detailpesanan::class,'nonota','nonota');
+    }
 }

@@ -17,18 +17,18 @@
                   @csrf
                   <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
-                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="exampleFormControlInput1" name="nonota">
+                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota">
                   </div>
                   @error('nonota')
                   {{ $message }}
                   @enderror
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Toko</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="namatoko">
+                    <input type="text" class="form-control" id="namatoko" name="namatoko">
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Total Penjualan</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="totalpenjualan">
+                    <input type="text" class="form-control" id="total" name="totalpenjualan">
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>
@@ -41,5 +41,32 @@
       </div>
     </div>
   </div>
-  
   @endsection
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#nonota').on('keyup',function() {
+                var nonota = $(this).val();
+                console.log(nonota);
+                if(nonota !== '') {
+                  $.ajax({
+                    url:'/get-faktur',
+                    type: 'GET',
+                    data : { nonota : nonota },
+                    success : function (response) {
+                      $('#namatoko').val(response.namatoko)
+                      $('#total').val(response.total)
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle the error response
+                        console.log('Error:', error);
+                    }
+                  })
+                } else {
+                  $('#namatoko').val('')
+                  $('#total').val('')
+                }
+      });      
+    
+    });
+</script>

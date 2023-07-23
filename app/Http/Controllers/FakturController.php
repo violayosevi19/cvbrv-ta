@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Dompdf;
 use App\Models\faktur;
 use App\Models\detailpesanan;
 use Illuminate\Http\Request;
@@ -17,11 +18,8 @@ class FakturController extends Controller
     {
         $tglJatuhTempo = faktur::pluck('jatuhtempo','namatoko'); 
         $now = date('Y-m-d',strtotime(now()));
-        // dd($tglJatuhTempo);
-        // dd($now);
         $message =  [];
         foreach($tglJatuhTempo as $namaToko => $tglJatuhTempo){
-            // dd($namaToko,$tglJatuhTempo);
             if($tglJatuhTempo === $now){
                 $message[] = "Faktur toko $namaToko sudah jatuh tempo";
             } 
@@ -70,21 +68,59 @@ class FakturController extends Controller
      * @param  \App\Models\faktur  $faktur
      * @return \Illuminate\Http\Response
      */
-    public function show(faktur $faktur,$nonota)
-    {
-        $takeNota = detailpesanan::where('nonota','=',$nonota)->get()->all();
-        // dd($takeNota);
-        // $takeData = detailpesanan::find($id);
-        // dd($takeData);
-        // dd($takeNota);
+    // public function show(faktur $faktur,$nonota)
+    // {
+    //     $takeNota = detailpesanan::where('nonota','=',$nonota)->get()->all();
+    //     $namaToko = faktur::where('nonota','=', $nonota)->get()->toArray();
+    //     $total = detailpesanan::where('nonota','=',$nonota)->sum(\DB::raw('jumlah*harga'));
+    //     // dd($namaToko[0]['namatoko']);
+    //     // $takeData = detailpesanan::find($id);
+    //     // dd($takeData);
+    //     // dd($takeNota);
         
-        if(!$takeNota){
-            $errorMessage = 'Terjadi kesalahan dalam memproses data.';
-            session()->flash('error', $errorMessage);
-            return redirect('/faktur-dash');
-        } else {
-            return view('dashboard.detailpesanan.read',['takeNotas' => $takeNota]);
-        }
+    //     if(!$takeNota){
+    //         $errorMessage = 'Terjadi kesalahan dalam memproses data.';
+    //         session()->flash('error', $errorMessage);
+    //         return redirect('/faktur-dash');
+    //     } else {
+    //         return view('dashboard.detailorderan.readorderan',[
+    //             'takeNotas' => $takeNota,
+    //             'total' => $total,
+    //             'namaToko' => $namaToko[0]['namatoko']
+    //         ]);
+    //     }
+        
+    // }
+
+    public function show(Faktur $faktur,$nonota)
+    {
+        $detailProduks = Detailpesanan::select(
+            'kodeproduk',
+            'namaproduk',
+            'kuantitas',
+            'satuan',
+            'harga',
+            'diskon',
+            'jumlah')
+            ->where('nonota','=',$nonota)->get()->toArray();
+        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->get()->toArray();
+        $totalProdukPerNonota =  Detailpesanan::select(
+            'kodeproduk',
+            'namaproduk',
+            'kuantitas',
+            'satuan',
+            'harga',
+            'diskon',
+            'jumlah')
+            ->where('nonota','=',$nonota)->get()->count();;
+        $totalFaktur = detailpesanan::where('nonota',$nonota)->sum(\DB::raw('jumlah-diskon'));
+
+        return view('dashboard.detailorderan.readorderan',[
+            'detailtokos' => $detailToko,
+            'detailproduks' => $detailProduks,
+            'totaldatapernota' => $totalProdukPerNonota,
+            'bayar' => $totalFaktur 
+        ]);
         
     }
 

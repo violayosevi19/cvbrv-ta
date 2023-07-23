@@ -24,22 +24,21 @@
                   @enderror
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Toko</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="namatoko">
+                    <input type="text" class="form-control" id="namatoko" name="namatoko">
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tanggal Faktur</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" name="tglfaktur">
+                    <input type="date" class="form-control" id="tglfaktur" name="tglfaktur">
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jatuh Tempo</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" name="jatuhtempo">
+                    <input type="date" class="form-control" id="jatuhtempo" name="jatuhtempo">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
                     <select class="form-select" id="keterangan" name="keterangan">
-                      <option value="ordered">Ordered</option>
-                      <option value="shipping">Shipping</option>
-                      <option value="done">Done</option>
+                      <option value="cash">Cash</option>
+                      <option value="kredit">Kredit</option>
                     </select>
                   </div>
                    <div class="mb-3">
@@ -65,11 +64,14 @@
             var nonota = $(this).val();
             if (nonota !== '') {
                 $.ajax({
-                    url: '/get-total', // Ganti dengan URL yang sesuai
+                    url: '/get-data', // Ganti dengan URL yang sesuai
                     type: 'GET',
                     data: { nonota: nonota },
                     success: function (response) {
                         $('#total').val(response.total);
+                        $('#namatoko').val(response.namatoko);
+                        $('#tglfaktur').val(response.tglfaktur);
+                        $('#jatuhtempo').val(response.jatuhtempo);
                     }
                 });
             }

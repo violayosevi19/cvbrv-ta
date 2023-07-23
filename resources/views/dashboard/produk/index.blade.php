@@ -17,9 +17,7 @@
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Produk</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stock</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jenis Produk</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                 </tr>
@@ -37,18 +35,18 @@
                 <td>
                   <p class="text-xs font-weight-bold mb-0">{{ $produk->namaproduk }}</p>
                 </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="badge badge-sm bg-gradient-secondary">{{ $produk->satuan }}</span>
-                </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $produk->harga }}</span>
                 </td>
-                <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $produk->stock }}</span>
-                </td>
+                @if($produk->jenisproduk !== null)
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $produk->jenisproduk->jenis }}</span>
                 </td>
+                @else
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"></span>
+                </td>
+                @endif
                 <td class="align-middle text-center">
                   <a href="/produk-dash/{{$produk->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit

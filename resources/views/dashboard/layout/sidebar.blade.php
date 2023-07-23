@@ -60,11 +60,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('detailpesanan-dash') ? 'active' : ''}} " href="{{ url('detailpesanan-dash') }}">
+          <a class="nav-link {{ Request::is('detailorderan-dash') ? 'active' : ''}} " href="{{ url('detailorderan-dash') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-shopping-cart text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Detail Pesanan</span>
+            <span class="nav-link-text ms-1">Detail Orderan</span>
           </a>
         </li>
          <li class="nav-item">
@@ -92,19 +92,19 @@
           </a>
         </li>
         <li class="nav-item">
-         <a class="nav-link {{ Request::is('pembayaran-dash') ? 'active' : ''}} " href="{{ url('pembayaran-dash') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-money text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Pembayaran</span>
-          </a>
-        </li>
-        <li class="nav-item">
-         <a class="nav-link {{ Request::is('pembayaran-dash') ? 'active' : ''}} " href="{{ url('pembayaran-dash') }}">
+         <a class="nav-link {{ Request::is('report-dash') ? 'active' : ''}} " href="{{ url('report-dash') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-file-pdf-o text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link {{ Request::is('barangmasuk-dash') ? 'active' : ''}} " href="{{ url('barangmasuk-dash') }}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-money text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Barang Masuk</span>
           </a>
         </li>
         <li class="nav-item mt-3">

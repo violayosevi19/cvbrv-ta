@@ -13,4 +13,18 @@ class detailpesanan extends Model
     public function faktur() {
         return $this->belongsTo(faktur::class,'nonota','nonota');
     }
+
+    public function produk() {
+        return $this->hasMany(produk::class,'kodeproduk', 'kodeproduk');
+    }
+
+    public function stock() {
+        return $this->hasMany(Stock::class,'kodeproduk', 'kodeproduk');
+    }
+
+    public function toko() {
+        return $this->belongsTo(toko::class,'nonota', 'nonota');
+    }
+
+    
 }

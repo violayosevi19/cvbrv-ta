@@ -44,9 +44,7 @@ class ProdukController extends Controller
          $validateData = $request->validate([
             'kodeproduk' => 'required',
             'namaproduk' => 'required',
-            'satuan' => 'required',
             'harga' => 'required',
-            'stock' => 'required',
             'jenisproduk_id' => 'required',
         ]);
 

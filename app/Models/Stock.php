@@ -13,4 +13,12 @@ class Stock extends Model
     public function produk(){
         return $this->belongsTo(produk::class);
     }
+
+    public function barangMasuk(){
+        return $this->belongsTo(BarangMasuk::class,'kodeproduk','kodeproduk');
+    }
+
+    public function detailPesanan(){
+        return $this->belongsTo(detailpesanan::class,'kodeproduk','kodeproduk');
+    }
 }
