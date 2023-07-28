@@ -1,315 +1,300 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+    <style type="text/css">
+        @page {
+            size: A4; /* Ukuran kertas yang Anda inginkan, seperti A4 */
+            margin: 0.2rem;
+        }
 
+        .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
 
-<title>company invoice - Bootdey.com</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<style type="text/css">
-    	body{
-    margin-top:20px;
-    color: #484b51;
-}
-.text-secondary-d1 {
-    color: #728299!important;
-}
-.page-header {
-    margin: 0 0 1rem;
-    padding-bottom: 1rem;
-    padding-top: .5rem;
-    border-bottom: 1px dotted #e2e2e2;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -ms-flex-align: center;
-    align-items: center;
-}
-.page-title {
-    padding: 0;
-    margin: 0;
-    font-size: 1.75rem;
-    font-weight: 300;
-}
-.brc-default-l1 {
-    border-color: #dce9f0!important;
-}
+        a {
+        color: #5D6975;
+        text-decoration: underline;
+        }
 
-.ml-n1, .mx-n1 {
-    margin-left: -.25rem!important;
-}
-.mr-n1, .mx-n1 {
-    margin-right: -.25rem!important;
-}
-.mb-4, .my-4 {
-    margin-bottom: 1.5rem!important;
-}
+        body {
+        position: relative;
+        width: 21cm;  
+        height: 29.7cm; 
+        color: #001028;
+        background: #FFFFFF; 
+        font-family: Arial, sans-serif; 
+        font-size: 12px; 
+        font-family: Arial;
+        }
 
-hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
-}
+        header {
+        padding: 10px 0;
+        margin-bottom: 30px;
+        }
 
-.text-grey-m2 {
-    color: #888a8d!important;
-}
+        #logo {
+        text-align: center;
+        margin-bottom: 10px;
+        }
 
-.text-success-m2 {
-    color: #86bd68!important;
-}
+        #logo img {
+        width: 90px;
+        }
 
-.font-bolder, .text-600 {
-    font-weight: 600!important;
-}
+        h1 {
+        color: #5D6975;
+        font-size: 1.6em;
+        line-height: 1.4em;
+        font-weight: normal;
+        text-align: center;
+        margin: 0 0 20px 0;
+        background: url(dimension.png);
+        }
 
-.text-110 {
-    font-size: 110%!important;
-}
-.text-blue {
-    color: #478fcc!important;
-}
-.pb-25, .py-25 {
-    padding-bottom: .75rem!important;
-}
+       .header-faktur {
+            display : grid;
+            grid-row: 1fr 1fr;
+       }
 
-.pt-25, .py-25 {
-    padding-top: .75rem!important;
-}
-.bgc-default-tp1 {
-    background-color: rgba(121,169,197,.92)!important;
-}
-.bgc-default-l4, .bgc-h-default-l4:hover {
-    background-color: #f3f8fa!important;
-}
-.page-header .page-tools {
-    -ms-flex-item-align: end;
-    align-self: flex-end;
-}
+       .data-cv, .data-toko{
+        margin-top:0.5rem;
+        
+       }
 
-.btn-light {
-    color: #757984;
-    background-color: #f5f6f9;
-    border-color: #dddfe4;
-}
-.w-2 {
-    width: 1rem;
-}
+       .data-toko {
+        display :grid;
+        grid-template-columns : 1fr 1fr;
+        gap:10px;
+       }
 
-.text-120 {
-    font-size: 120%!important;
-}
-.text-primary-m1 {
-    color: #4087d4!important;
-}
+       #project-toko {
+            float: right;
+            text-align: left;
+            margin-right: 2rem;
+       }
 
-.text-danger-m1 {
-    color: #dd4949!important;
-}
-.text-blue-m2 {
-    color: #68a3d5!important;
-}
-.text-150 {
-    font-size: 150%!important;
-}
-.text-60 {
-    font-size: 60%!important;
-}
-.text-grey-m1 {
-    color: #7b7d81!important;
-}
-.align-bottom {
-    vertical-align: bottom!important;
-}
+        #project span {
+        color: #5D6975;
+        text-align: right;
+        width: 52px;
+        margin-right: 10px;
+        display: inline-block;
+        font-size: 12px;
+        }
 
+        #project {
+            float: left;
+            font-size: 12px;
+        }
 
+        #company {
+            padding: 5px 20px;
+            font-weight: normal;  
+        }
 
+        #project div,
+        #company div,
+        #project-toko div{
+            white-space: nowrap;        
+        }
 
+        .tabel-produk {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        }
 
+        .tabel-produk tr:nth-child(2n-1) td {
+        background: #F5F5F5;
+        }
 
+        .tabel-produk th,
+        .tabel-produk td {
+        text-align: center;
+        }
 
+        .tabel-produk th {
+        padding: 5px 20px;
+        color: #5D6975;
+        border-bottom: 1px solid #C1CED9;
+        white-space: nowrap;        
+        font-weight: normal;
+        }
 
+        .tabel-toko th {
+            padding: 5px 20px;
+            color: #5D6975;
+            font-weight: normal;
+        }
 
+        .tabel-produk .no,
+        .tabel-produk .produk,
+        .tabel-produk .satuan,
+        .tabel-produk .harga,
+        .tabel-produk .qty,
+        .tabel-produk .jumlah,
+        .tabel-produk .disc,
+        .tabel-produk .totalharga{
+        text-align: center;
+        }
 
+        .tabel-produk td {
+        padding: 5px;
+        text-align: right;
+        }
 
+        .tabel-produk td.no,
+        .tabel-produk td.produk {
+        vertical-align: top;
+        }
 
+        .tabel-produk td.no,
+        .tabel-produk td.produk,
+        .tabel-produk td.total {
+        font-size: 12px;
+        text-align: center;
+        }
 
+        .tabel-produk td.grand {
+        border-top: 1px solid #5D6975;;
+        }
 
+        #notices .notice {
+        color: #5D6975;
+        font-size: 1.2em;
+        }
 
+        #notices {
+            margin:1rem;
+        }
 
+        footer {
+        color: #5D6975;
+        width: 100%;
+        height: 30px;
+        position: absolute;
+        bottom: 0;
+        border-top: 1px solid #C1CED9;
+        padding: 8px 0;
+        text-align: center;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        main {
+            margin-top: -2rem;
+        }
     </style>
-</head>
-<body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<div class="page-content container">
-<div class="page-header text-blue-d2">
-<h1 class="page-title text-secondary-d1">
-Invoice
-<small class="page-info">
-<i class="fa fa-angle-double-right text-80"></i>
-ID: #111-222
-</small>
-</h1>
-<div class="page-tools">
-<div class="action-buttons">
-<a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
-<i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-Print
-</a>
-<a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
-<i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
-Export
-</a>
-</div>
-</div>
-</div>
-<div class="container px-0">
-<div class="row mt-4">
-<div class="col-12 col-lg-12">
-<div class="row">
-<div class="col-12">
-<div class="text-center text-150">
-<i class="fa fa-book fa-2x text-success-m2 mr-1"></i>
-<span class="text-default-d3">Bootdey.com</span>
-</div>
-</div>
-</div>
-
-<hr class="row brc-default-l1 mx-n1 mb-4" />
-<div class="row">
-<div class="col-sm-6">
-<div>
-<span class="text-sm text-grey-m2 align-middle">To:</span>
-<span class="text-600 text-110 text-blue align-middle">Alex Doe</span>
-</div>
-<div class="text-grey-m2">
-<div class="my-1">
-Street, City
-</div>
-<div class="my-1">
-State, Country
-</div>
-<div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">111-111-111</b></div>
-</div>
-</div>
-
-<div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
-<hr class="d-sm-none" />
-<div class="text-grey-m2">
-<div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-Invoice
-</div>
-<div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #111-222</div>
-<div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue Date:</span> Oct 12, 2019</div>
-<div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">Unpaid</span></div>
-</div>
-</div>
-
-</div>
-<div class="mt-4">
-<div class="row text-600 text-white bgc-default-tp1 py-25">
-<div class="d-none d-sm-block col-1">#</div>
-<div class="col-9 col-sm-5">Description</div>
-<div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
-<div class="d-none d-sm-block col-sm-2">Unit Price</div>
-<div class="col-2">Amount</div>
-</div>
-<div class="text-95 text-secondary-d3">
-<div class="row mb-2 mb-sm-0 py-25">
-<div class="d-none d-sm-block col-1">1</div>
-<div class="col-9 col-sm-5">Domain registration</div>
-<div class="d-none d-sm-block col-2">2</div>
-<div class="d-none d-sm-block col-2 text-95">$10</div>
-<div class="col-2 text-secondary-d2">$20</div>
-</div>
-<div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-<div class="d-none d-sm-block col-1">2</div>
-<div class="col-9 col-sm-5">Web hosting</div>
-<div class="d-none d-sm-block col-2">1</div>
-<div class="d-none d-sm-block col-2 text-95">$15</div>
-<div class="col-2 text-secondary-d2">$15</div>
-</div>
-<div class="row mb-2 mb-sm-0 py-25">
-<div class="d-none d-sm-block col-1">3</div>
-<div class="col-9 col-sm-5">Software development</div>
-<div class="d-none d-sm-block col-2">--</div>
-<div class="d-none d-sm-block col-2 text-95">$1,000</div>
-<div class="col-2 text-secondary-d2">$1,000</div>
-</div>
-<div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-<div class="d-none d-sm-block col-1">4</div>
-<div class="col-9 col-sm-5">Consulting</div>
-<div class="d-none d-sm-block col-2">1 Year</div>
-<div class="d-none d-sm-block col-2 text-95">$500</div>
-<div class="col-2 text-secondary-d2">$500</div>
-</div>
-</div>
-<div class="row border-b-2 brc-default-l2"></div>
-
-
-<div class="row mt-3">
-<div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-Extra note such as company or payment information...
-</div>
-<div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-<div class="row my-2">
-<div class="col-7 text-right">
-SubTotal
-</div>
-<div class="col-5">
-<span class="text-120 text-secondary-d1">$2,250</span>
-</div>
-</div>
-<div class="row my-2">
-<div class="col-7 text-right">
-Tax (10%)
-</div>
-<div class="col-5">
-<span class="text-110 text-secondary-d1">$225</span>
-</div>
-</div>
-<div class="row my-2 align-items-center bgc-primary-l3 p-2">
-<div class="col-7 text-right">
-Total Amount
-</div>
-<div class="col-5">
-<span class="text-150 text-success-d3 opacity-2">$2,475</span>
-</div>
-</div>
-</div>
-</div>
-<hr/>
-<div>
-<span class="text-secondary-d1 text-105">Thank you for your business</span>
-<a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-	
-</script>
-</body>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div class="header-faktur">
+        <div class="data-cv">
+            <div id="company" class="clearfix">
+                <div>CV.BERKAT REZEKI YOSEV</div>
+                <div>Perumahan Mulya Asri 2 Blok E7 Kampung Baru Nan XX</div>
+                <div>+628 3184 206039</div>
+            </div>
+        </div>
+        <div class="data-cv">
+            <h1>Faktur Penjualan</h1>
+        </div>
+        <div class="data-toko">
+            <div id="project">
+                <table class="tabel-toko">
+                    <tr>
+                        <th>Nama Toko</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['namatoko']}}</td>
+                    </tr>
+                    <tr>
+                        <th>Alamat Toko</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['alamat']}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div></div>
+            <div id="project-toko">
+                <table class="tabel-toko">
+                    <tr>
+                        <th>Nonota</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['nonota']}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['tglfaktur']}}</td>
+                    </tr>
+                    <tr>
+                        <th>Jatuh Tempo</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['jatuhtempo']}}</td>
+                    </tr>
+                    <tr>
+                        <th>Sales</th>
+                        <td>:</td>
+                        <td>{{$detailtokos[0]['namasales']}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <table class="tabel-produk">
+        <thead>
+          <tr>
+            <th class="no">No</th>
+            <th class="produk">Nama Produk</th>
+            <th class="qty">Kuantitas</th>
+            <th class="satuan">Satuan</th> 
+            <th class="harga">Harga</th>  
+            <th class="disc">Disc</th>
+            <th class="disc">Disc</th>
+            <th class="jumlah">Jumlah</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach($detailproduks as $detail)
+          <tr>
+            <td class="no">{{$detail['kodeproduk']}}</td>
+            <td class="produk">{{$detail['namaproduk']}}</td>
+            <td class="qty">{{$detail['kuantitas']}}</td>
+            <td class="satuan">pcs</td>
+            <td class="harga">{{$detail['harga']}}</td>
+            <td class="disc">{{$detail['diskon']}}</td>
+            <td class="disc">{{$detail['diskon']}}</td>
+            <td class="jumlah">{{$detail['jumlah']}}</td>
+          </tr>
+          @endforeach
+          <tr>
+            <td colspan="7">SUBTOTAL</td>
+            <td class="total">$5,200.00</td>
+          </tr>
+          <tr>
+            <td colspan="7">TAX 25%</td>
+            <td class="total">$1,300.00</td>
+          </tr>
+          <tr>
+            <td colspan="7" class="grand total">GRAND TOTAL</td>
+            <td class="grand total">{{$bayar}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+      </div>
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+  </body>
 </html>

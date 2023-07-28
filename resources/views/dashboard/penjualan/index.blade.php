@@ -8,7 +8,9 @@
       <div class="card mb-4">
         <div class="card-header pb-0">
           <h6>Penjualan</h6>
+          @if(auth()->user()->role != "direksi")
           <a href="/penjualan-dash/create" class="btn btn-primary">Tambah Data</a>
+          @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -18,7 +20,9 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Toko</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Penjualan</th>
+                  @if(auth()->user()->role != "direksi")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                  @endif
                 </tr>
               </thead>
               <tbody>
@@ -37,6 +41,7 @@
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $pj->totalpenjualan }}</span>
                 </td>
+                @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">
                   <a href="/penjualan-dash/{{$pj->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit
@@ -49,6 +54,7 @@
                     </button>
                   </form>
                 </td>
+                @endif
               </tr>
               @endforeach
             </tbody>

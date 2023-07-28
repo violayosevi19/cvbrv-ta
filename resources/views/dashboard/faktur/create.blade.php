@@ -37,8 +37,16 @@
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
                     <select class="form-select" id="keterangan" name="keterangan">
-                      <option value="cash">Cash</option>
-                      <option value="kredit">Kredit</option>
+                      <option value="Dalam Pesanan">Dalam Pesanan</option>
+                      <option value="Sedang Diantar">Sedang Diantar</option>
+                      <option value="Sudah Diantar">Sudah Diantar</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Pembayaran</label>
+                    <select class="form-select" id="pembayaran" name="pembayaran">
+                      <option value="Cash">Cash</option>
+                      <option value="Kredit">Kredit</option>
                     </select>
                   </div>
                    <div class="mb-3">

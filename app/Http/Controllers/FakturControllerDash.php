@@ -55,6 +55,7 @@ class FakturControllerDash extends Controller
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'keterangan' => 'required',
+            'pembayaran' => 'required',
             'total' => 'required'
         ]);
 
@@ -150,6 +151,7 @@ class FakturControllerDash extends Controller
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'keterangan' => 'required',
+            'pembayaran' => 'required',
             'total' => 'required'
         ]);
 

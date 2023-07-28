@@ -125,10 +125,10 @@
                               @endforeach
                             </tr>
                             <tr>
-                                <td colspan="6" style="border:1px solid;" class="align-middle text-center">
+                                <td colspan="6" class="align-middle text-center">
                                   <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Total</span>
                                 </td>
-                                <td style="border:1px solid;" class="align-middle text-center">
+                                <td class="align-middle text-center">
                                   <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">{{ $bayar }}</span>
                                 </td>
                             </tr>
@@ -137,11 +137,15 @@
                  </div>
               </form>
             </div>
-            <!-- <div class="row px-3 py-3">
+            @foreach($detailtokos as $detail)
+            <div class="row px-3 py-3">
               <div class="col col-md-3">
-                <button class="btn btn-primary mt-3" type="button" name="submit" id="submit">Cetak Faktur</button>
+               <a href="/cetak/{{ $detail['nonota'] }}" class="btn btn-info text-secondary font-weight-bold text-xs text-white"  data-toggle="tooltip" data-original-title="Edit user">
+                    Cetak Faktur
+                  </a>
               </div>
-            </div> -->
+            </div>
+            @endforeach
           </div>
         </div>
       </div>

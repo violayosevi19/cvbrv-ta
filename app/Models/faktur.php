@@ -13,4 +13,8 @@ class faktur extends Model
     public function detailPesanan() {
         return $this->hasMany(detailpesanan::class,'nonota','nonota');
     }
+
+    public function penjualan() {
+        return $this->hasOne(penjualan::class,'nonota','nonota');
+    }
 }

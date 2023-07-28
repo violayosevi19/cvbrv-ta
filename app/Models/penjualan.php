@@ -9,5 +9,9 @@ class penjualan extends Model
 {
     use HasFactory;
      protected $guarded=[];
+
+     public function faktur() {
+        return $this->hasOne(faktur::class,'nonota','nonota');
+    }
 }
 

@@ -36,7 +36,9 @@
       <div class="card mb-4">
         <div class="card-header pb-0">
           <h6>Data Faktur</h6>
+          @if(auth()->user()->role != "direksi")
           <a href="/faktur-dash/create" class="btn btn-primary">Tambah Data</a>
+          @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -48,8 +50,12 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal Faktur</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengiriman</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pembayaran</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                  @if(auth()->user()->role != "direksi")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                  @endif
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +81,11 @@
                   <span class="text-secondary text-xs font-weight-bold">{{ $faktur->total }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  @if($faktur->keterangan === "kredit")
+                  @if($faktur->keterangan === "Dalam Pesanan")
+                  <div class="btn btn-danger">
+                  <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->keterangan }}</span>
+                  </div>
+                  @elseif($faktur->keterangan === "Sedang Diantar")
                   <div class="btn btn-warning">
                   <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->keterangan }}</span>
                   </div>
@@ -85,6 +95,23 @@
                   </div>
                   @endif
                 </td>
+                <td class="align-middle text-center">
+                  @if($faktur->pembayaran === "kredit")
+                  <div class="btn btn-warning">
+                  <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->pembayaran }}</span>
+                  </div>
+                  @else
+                  <div class="btn btn-success">
+                  <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->pembayaran }}</span>
+                  </div>
+                  @endif
+                </td>
+                <td class="align-middle text-center">
+                  <div class="btn btn-success">
+                   <i class="far fa-check-square"></i>
+                  </div>
+                </td>
+                @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">
                   <a href="/faktur-dash/{{$faktur->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit
@@ -97,9 +124,10 @@
                     </button>
                   </form>
                   <a href="/faktur-dash/{{$faktur->nonota}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
-                    Cetak Faktur
+                    Read
                   </a>
                 </td>
+                @endif
               </tr>
               @endforeach
             </tbody>

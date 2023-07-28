@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('nonota')->unique();
             $table->string('namatoko',30);
             $table->double('totalpembayaran',10,2);
-            $table->text('keterangan');
+            $table->text('keterangan')-nullable();
+            $table->text('pembayaran')->nullable();
             $table->date('tglbayar');
             $table->timestamps();
         });
