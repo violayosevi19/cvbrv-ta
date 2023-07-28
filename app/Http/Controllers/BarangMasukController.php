@@ -160,7 +160,7 @@ class BarangMasukController extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
-        $detailFaktur = BarangMasuk::select('namasupplier','tanggalmasuk','nonota')->distinct()->get()->toArray();
+        $detailFaktur = BarangMasuk::select('namasupplier','tanggalmasuk','nonota')->distinct()->where('nonota', $nonota)->get()->toArray();
         $totalProdukPerNonota =  BarangMasuk::select(
             'kodeproduk',
             'namaproduk',
@@ -252,7 +252,7 @@ class BarangMasukController extends Controller
                         'kodeproduk' => $takeKodeProduk,
                         'namaproduk' => $input['namaproduk'],
                         'stock' => $input['stock'],
-                        'keterangan' => 'Stok baru masuk sebanyak ' . $input['stock'] . ' pada' . $tanggalmasuk ,
+                        'keterangan' => 'Stok baru masuk sebanyak ' . $input['stock'] . ' pada ' . $tanggalmasuk ,
                     ]);
                 }
             }

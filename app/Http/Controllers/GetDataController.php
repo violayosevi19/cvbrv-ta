@@ -56,8 +56,8 @@ class GetDataController extends Controller
     public function getNamaProduk(Request $request)
     {
         $kodeproduk = $request->input('kodeproduk');
-        $namaproduk = produk::where('kodeproduk','like','%'. $kodeproduk .'%')->first('namaproduk')->toArray()['namaproduk'];
-        $hargaproduk = produk::where('kodeproduk','like','%'. $kodeproduk .'%')->first('harga')->toArray()['harga'];
+        $namaproduk = produk::where('kodeproduk', $kodeproduk)->first('namaproduk')->toArray()['namaproduk'];
+        $hargaproduk = produk::where('kodeproduk',$kodeproduk)->first('harga')->toArray()['harga'];
         // dd($namaproduk, $hargaproduk);
 
         return response()->json([

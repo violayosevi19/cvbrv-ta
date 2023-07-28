@@ -154,7 +154,7 @@
           });
     });
 
-    $(document).on('keyup','#kodeproduk', function() {
+    $(document).on('input','#kodeproduk', function() {
               var kodeproduk = $(this).val();
               var namaprodukField = $(this).closest('tr').find('#namaproduk');
               if(kodeproduk !== '') {
@@ -175,7 +175,7 @@
               }
     });
 
-    $(document).on('keyup', '#diskon', function () {
+    $(document).on('input', '#diskon', function () {
             var diskon = $(this).val();
             var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
             var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
