@@ -16,8 +16,13 @@
                 <form action="/jenisproduk-dash" method="post">
                   @csrf
                   <div class="mb-3">
-                    <label for="jenis" class="form-label">Jenis Produk</label>
-                    <input type="text" class="form-control @error ('jenis') is-invalid @enderror" id="jenis" name="jenis">
+                    <label for="exampleFormControlInput1" class="form-label @error ('jenis') is-invalid @enderror">Jenis Produk</label>
+                    <select class="form-select" id="jenis" name="jenis">
+                      <option value="Kosmetik">Kosmetik</option>
+                      <option value="Beauty">Beauty</option>
+                      <option value="Pewangi">Pewangi</option>
+                      <option value="Kesehatan">Kesehatan</option>
+                    </select>
                   </div>
                   @error('jenis')
                     {{ $message }}

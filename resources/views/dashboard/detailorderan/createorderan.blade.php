@@ -109,7 +109,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="old">
                               <td class="align-middle text-center">
                                 <input type="text" class="form-control kodeproduk" id="kodeproduk" name="inputs[0][kodeproduk]" placeholder="Enter kode produk">
                               </td>
@@ -128,10 +128,10 @@
                                 <input type="text" class="form-control satuan" id="satuan" name="inputs[0][satuan]" placeholder="Enter satuan">
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control harga" id="harga" name="inputs[0][harga]" placeholder="Enter harga produk">
+                                <input type="number" class="form-control harga" id="harga" name="inputs[0][harga]" placeholder="Enter harga produk">
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter diskon">
+                                <input type="number" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter diskon">
                               </td>
                               <td class="align-middle text-center">
                                 <input type="number" class="form-control jumlah" id="jumlah" name="inputs[0][jumlah]" placeholder="Enter jumlah">
@@ -159,15 +159,15 @@
             let counter = 1;
             // Menambahkan baris input baru ke dalam tabel
             const newRow = `
-              <tr>
+              <tr class="new">
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control" id="kodeproduk"  name="inputs[`+counter+`][kodeproduk]" placeholder="Enter kode produk">
+                  <input type="text" class="form-control kodeproduk" id="kodeproduk"  name="inputs[`+counter+`][kodeproduk]" placeholder="Enter kode produk">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control" id="namaproduk"  name="inputs[`+counter+`][namaproduk]" placeholder="Enter nama produk">
+                  <input type="text" class="form-control namaproduk" id="namaproduk"  name="inputs[`+counter+`][namaproduk]" placeholder="Enter nama produk">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control @error('inputs.*.kuantitas') is-invalid  @enderror" id="kuantitas"  name="inputs[`+counter+`][kuantitas]" placeholder="Enter kuantitas">
+                  <input type="number" class="form-control @error('inputs.*.kuantitas') is-invalid  @enderror" id="kuantitas"  name="inputs[`+counter+`][kuantitas]" placeholder="Enter kuantitas">
                   @error('inputs.*.kuantitas')
                       <span class="invalid-feedback">
                           {{ $message }}
@@ -178,13 +178,13 @@
                   <input type="text" class="form-control" id="satuan"  name="inputs[`+counter+`][satuan]" placeholder="Enter satuan">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
+                  <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                  <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                  <input type="number" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                 </td>
                 <td class="align-middle text-center">
                   <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
@@ -233,9 +233,10 @@
           
     });
 
-    $(document).on('keyup','#kodeproduk', function() {
+    $(document).on('input','#kodeproduk', function() {
               var kodeproduk = $(this).val();
               var namaprodukField = $(this).closest('tr').find('#namaproduk');
+              var harga = $(this).closest('tr').find('#harga');
               if(kodeproduk !== '') {
                 $.ajax({
                   url:'/get-produk',
@@ -243,6 +244,7 @@
                   data : { kodeproduk : kodeproduk },
                   success : function (response) {
                     namaprodukField.val(response.namaproduk)
+                    harga.val(response.hargaproduk)
                   },
                   error: function(xhr, status, error) {
                       // Handle the error response
@@ -251,10 +253,11 @@
                 })
               } else {
                 $('#namaproduk').val('');
+                $('#harga').val('');
               }
     });
 
-    $(document).on('keyup', '#diskon', function () {
+    $(document).on('input', '#diskon', function () {
             var diskon = $(this).val();
             var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
             var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;

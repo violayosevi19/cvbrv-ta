@@ -21,6 +21,8 @@ return new class extends Migration
             $table->date('jatuhtempo');
             $table->string('keterangan')->nullable();
             $table->double('total',10,2);
+            $table->string('pembayaran',50);
+            $table->boolean('status_diterima')->default(false);
             $table->timestamps();
         });
     }

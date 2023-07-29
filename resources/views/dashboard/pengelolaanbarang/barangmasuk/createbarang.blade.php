@@ -122,16 +122,16 @@
                   <input type="text" class="form-control namaproduk" id="namaproduk"  name="inputs[`+counter+`][namaproduk]" placeholder="Enter nama produk">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control kuantitas " id="kuantitas" name="inputs[`+counter+`][stock]" placeholder="Enter kuantitas">
+                  <input type="number" class="form-control kuantitas " id="kuantitas" name="inputs[`+counter+`][stock]" placeholder="Enter kuantitas">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
+                  <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control diskon" id="diskon"  name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                  <input type="number" class="form-control diskon" id="diskon"  name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="text" class="form-control jumlah" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                  <input type="number" class="form-control jumlah" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                 </td>
                 <td class="align-middle text-center">
                   <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>

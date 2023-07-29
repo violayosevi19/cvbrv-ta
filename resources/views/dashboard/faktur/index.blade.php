@@ -126,7 +126,7 @@
                   @endif
                 </td>
                 <td class="align-middle text-center">
-                  @if($faktur->status_diterima == 0)
+                  @if($faktur->status_diterima == false)
                   <div class="btn btn-danger checked-btn" data-faktur-nonota="{{ $faktur->nonota }}">
                   <span class="text-secondary text-xs font-weight-bold text-white">Belum Bayar</span>
                   </div>

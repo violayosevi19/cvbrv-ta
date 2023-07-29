@@ -29,7 +29,7 @@
         <div class="card-header pb-0">
           <h6>Data Stock Produk</h6>
           @if(auth()->user()->role != "direksi")
-          <a href="/stock-dash/create" class="btn btn-primary">Tambah Data</a>
+          <a href="/barangmasuk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
@@ -40,7 +40,6 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Produk</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah Stock Tersedia</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                   @if(auth()->user()->role != "direksi")
@@ -65,9 +64,6 @@
                   <span class="text-secondary text-xs font-weight-bold">{{$stock->satuan}}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{$stock->harga}}</span>
-                </td>
-                <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{$stock->stock}}</span>
                 </td>
                 <td class="align-middle text-center">
@@ -81,7 +77,7 @@
                   <form  class="d-inline" action="/stock-dash/{{$stock->id}}"  method="post">
                     @method('delete')
                     @csrf
-                    <button class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" onclick="return confirm('Yakin ingin menghapus data ?')">
+                    <button class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" id="delete">
                       Delete
                     </button>
                   </form>

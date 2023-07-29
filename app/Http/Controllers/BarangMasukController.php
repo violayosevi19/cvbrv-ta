@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangMasuk;
 use App\Models\produk;
 use App\Models\Stock;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class BarangMasukController extends Controller
@@ -96,6 +97,16 @@ class BarangMasukController extends Controller
 
             $stockData = Stock::where('kodeproduk', $kodeproduk)->first();
             $produkData = Produk::where('kodeproduk', $kodeproduk)->first();
+            
+            // $cekSupplier = Supplier::where('namasupplier','like', '%' . $namasupplier . '%')->first();
+            // if(!$cekSupplier) {
+            //     $supplier = new Supplier();
+            //     $supplier->namasupplier = $namasupplier;
+            //     $supplier->tglfaktur = $tanggalmasuk;
+            //     $supplier->nonota = $nonota;
+            //     $supplier->kodeproduk = $kodeproduk;
+            //     $supplier->save();
+            // } 
 
             if ($stockData) {
                 $stockData->stock += $stock;
@@ -228,6 +239,7 @@ class BarangMasukController extends Controller
             $input['tanggalmasuk'] = $tanggalmasuk;
             $input['namasupplier'] = $namasupplier;
 
+            $editStock = $input['stock'];
             $takeKodeProduk = $input['kodeproduk'];
             $existingProduct = BarangMasuk::where('nonota', $nonota)
                 ->where('kodeproduk', $takeKodeProduk)
@@ -235,6 +247,13 @@ class BarangMasukController extends Controller
 
             if ($existingProduct) {
                 // Update data produk yang sudah ada
+                if(isset($editStock) && $editStock !== '') {
+                   Stock::where('kodeproduk', $takeKodeProduk)
+                    ->update([
+                        'stock' => $editStock,
+                        'keterangan' => 'Stock diubah menjadi ' .$editStock. ' pada ' . now()
+                    ]);
+                }
                 $existingProduct->update($input);
             } else {
                 // Tambahkan data produk baru
@@ -254,7 +273,7 @@ class BarangMasukController extends Controller
                         'stock' => $input['stock'],
                         'keterangan' => 'Stok baru masuk sebanyak ' . $input['stock'] . ' pada ' . $tanggalmasuk ,
                     ]);
-                }
+                } 
             }
            
 

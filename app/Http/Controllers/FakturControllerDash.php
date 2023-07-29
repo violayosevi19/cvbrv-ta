@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\toko;
 use Dompdf\Dompdf;
 use App\Models\faktur;
 use App\Models\detailpesanan;
@@ -58,6 +59,14 @@ class FakturControllerDash extends Controller
             'pembayaran' => 'required',
             'total' => 'required'
         ]);
+        
+        $nonota = $request->input('nonota');
+        $namatoko = $request->input('namatoko');
+
+        $toko = new toko();
+        $toko->nonota = $nonota;
+        $toko->namatoko = $namatoko;
+        $toko->save();
 
         Faktur::create($validateData);
         return redirect('/faktur-dash')->with('pesan','Data berhasil ditambah');

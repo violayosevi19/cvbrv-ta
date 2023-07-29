@@ -21,9 +21,18 @@
                 <form action="/jenisproduk-dash/{{ $jenisproduks->id}}" method="post">
                   @csrf
                   @method('put')
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                     <label for="jenis" class="form-label">Jenis Produk</label>
                     <input type="text" class="form-control @error ('jenis') is-invalid @enderror" id="jenis" name="jenis" value="{{ old('jenis',$jenisproduks->jenis) }}">
+                  </div> -->
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label @error ('jenis') is-invalid @enderror">Jenis Produk</label>
+                    <select class="form-select" id="jenis" name="jenis">
+                      <option value="Kosmetik" @if(old('jenis',$jenisproduks->jenis) == 'Kosmetik') selected @endif>Kosmetik</option>
+                      <option value="Beauty" @if(old('jenis',$jenisproduks->jenis) == 'Beauty') selected @endif>Beauty</option>
+                      <option value="Pewangi" @if(old('jenis',$jenisproduks->jenis) == 'Pewangi') selected @endif>Pewangi</option>
+                      <option value="Kesehatan" @if(old('jenis',$jenisproduks->jenis) == 'Kesehatan') selected @endif>Kesehatan</option>
+                    </select>
                   </div>
                   @error('jenis')
                     {{ $message }}

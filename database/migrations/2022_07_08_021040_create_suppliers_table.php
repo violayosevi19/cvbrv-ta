@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->char('nonota',12);
-            $table->char('kodeproduk',12);
-            $table->string('namasupplier',50);
-            $table->char('nohp',12);
-            $table->text('alamat');
-            $table->date('tglfaktur');
-            $table->date('jatuhtempo');
-            $table->double('total',10,2);
+            $table->char('nonota',12)->nullable();
+            $table->char('kodeproduk',12)->nullable();
+            $table->string('namasupplier',50)->nullable();
+            $table->char('nohp',12)->nullable();
+            $table->text('alamat')->nullable();
+            $table->date('tglfaktur')->nullable();
+            $table->date('jatuhtempo')->nullable();
+            $table->double('total',10,2)->nullable();
             $table->timestamps();
         });
     }

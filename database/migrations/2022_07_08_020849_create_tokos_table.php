@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('tokos', function (Blueprint $table) {
             $table->id();
-            $table->char('id_toko',15)->unique();
+            $table->char('id_toko',15)->unique()->nullable();
             $table->string('namatoko',50);
-            $table->string('alamat');
-            $table->char('notelp',20);
-            $table->string('email');
-            $table->char('nonota',12)->unique();
+            $table->string('alamat')->nullable();
+            $table->char('notelp',20)->nullable();
+            $table->string('email')->nullable();
+            $table->char('nonota',12)->unique()->nullable();
             $table->timestamps();
         });
     }

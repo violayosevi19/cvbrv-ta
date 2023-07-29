@@ -322,13 +322,13 @@ class DetailpesananController extends Controller
                 if ($stockData) {
                     if ($takeKuantitas < $kuantitasLama[$nonota][$takeKodeProduk]) {
                         $selisihKuantitas = $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
-                        $stockData->stock -= $selisihKuantitas;
-                        $stockData->keterangan = 'Stok diambil pada perubahan pesanan ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
+                        $stockData->stock += $selisihKuantitas;
+                        $stockData->keterangan = 'Stok ditambahkan lagi karena perubahan stock pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
                         $stockData->save();
                     } else {
                         $tambahkanKuantitas =  $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
-                        $stockData->stock += $tambahkanKuantitas;
-                        $stockData->keterangan = 'Stok telah ditambahkan pada perubahan pesanan ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
+                        $stockData->stock -= $tambahkanKuantitas;
+                        $stockData->keterangan = 'Stok telah diambil lagi karena perubahan pesanan pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
                         $stockData->save();
                     }
                     $existingProduct->update($input);

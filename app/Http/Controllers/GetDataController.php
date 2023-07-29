@@ -57,9 +57,16 @@ class GetDataController extends Controller
     public function getNamaProduk(Request $request)
     {
         $kodeproduk = $request->input('kodeproduk');
-        $namaproduk = produk::where('kodeproduk', $kodeproduk)->first('namaproduk')->toArray()['namaproduk'];
-        $hargaproduk = produk::where('kodeproduk',$kodeproduk)->first('harga')->toArray()['harga'];
-        // dd($namaproduk, $hargaproduk);
+        // $kodeproduk = 'A01';
+        $produk = produk::select('namaproduk','harga')->where('kodeproduk', $kodeproduk)->first();
+        // dd($produk);
+        if($produk){
+            $namaproduk = $produk->namaproduk;
+            $hargaproduk = $produk->harga;
+        } else {
+            $namaproduk = "";
+            $hargaproduk = "";
+        }
 
         return response()->json([
             'namaproduk' => $namaproduk,
@@ -82,6 +89,7 @@ class GetDataController extends Controller
             'jumlahharga' => $jumlahperproduk
         ]);
     }
+
 
     public function getJumlahHargaDetail(Request $request) {
         $kuantitas = (int)$request->input('kuantitas');
@@ -123,7 +131,7 @@ class GetDataController extends Controller
         $fakturNonota = faktur::where('nonota',$nonota)->first();
         // dd($fakturNonota);
 
-        $fakturNonota->update(['status_diterima' => 1]);
+        $fakturNonota->update(['status_diterima' => true]);
         
         $penjualan = new penjualan();
         $penjualan->nonota = $fakturNonota->nonota;
