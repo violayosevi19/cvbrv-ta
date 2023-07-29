@@ -95,7 +95,7 @@ class PenjualanController extends Controller
     public function destroy(penjualan $penjualan,$id)
     {
         Penjualan::destroy($id);
-        return redirect('/penjualan-dash')->with('pesan','Data berhasil dihapus');
+        return redirect('/penjualan-dash');
 
     }
 }

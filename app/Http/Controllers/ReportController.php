@@ -12,6 +12,7 @@ class ReportController extends Controller
     public function index(){
         
         $penjualan = Penjualan::with('faktur')->get()->toArray();
+        // dd($penjualan);
         // $pdf = new Dompdf();
         // $fileView = view('dashboard.report.penjualanreport',[
         //     'penjualans' => $penjualan,
@@ -27,5 +28,24 @@ class ReportController extends Controller
         return view('dashboard.report.penjualanreport',[
             'penjualans' => $penjualan,
         ]);
+    }
+
+    public function bukuBesar(){
+        
+        // $penjualan = Penjualan::with('faktur')->get()->toArray();
+        // dd($penjualan);
+        // $pdf = new Dompdf();
+        // $fileView = view('dashboard.report.penjualanreport',[
+        //     'penjualans' => $penjualan,
+        // ])->render();
+        // $pdf->loadHtml($fileView);
+        // $pdf->setPaper('A4', 'portrait');
+        // // Render PDF
+        // $pdf->render();
+        // // Kode untuk menghasilkan tampilan PDF untuk diunduh
+        // return $pdf->stream('Laporan Penjualan.pdf');
+       
+        // // dd($penjualan);
+        return view('dashboard.report.bukubesar');
     }
 }

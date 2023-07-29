@@ -103,6 +103,6 @@ class TokoController extends Controller
     public function destroy(toko $toko,$id)
     {
         Toko::destroy($id);
-         return redirect('/toko-dash')->with('pesan','Data berhasil dihapus');
+         return redirect('/toko-dash');
     }
 }

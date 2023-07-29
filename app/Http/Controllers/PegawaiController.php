@@ -108,7 +108,7 @@ class PegawaiController extends Controller
     public function destroy(pegawai $pegawai,$id)
     {
         Pegawai::destroy($id);
-        return redirect('/pegawai-dash')->with('pesan','Data berhasil hapus');
+        return redirect('/pegawai-dash');
 
     }
 }

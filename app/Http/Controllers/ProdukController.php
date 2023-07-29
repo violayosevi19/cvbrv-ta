@@ -92,9 +92,7 @@ class ProdukController extends Controller
          $validateData = $request->validate([
             'kodeproduk' => 'required',
             'namaproduk' => 'required',
-            'satuan' => 'required',
             'harga' => 'required',
-            'stock' => 'required',
             'jenisproduk_id' => 'required',
         ]);
 
@@ -111,6 +109,6 @@ class ProdukController extends Controller
     public function destroy(produk $produk,$id)
     {
         Produk::destroy($id);
-        return redirect('/produk-dash')->with('pesan','Data berhasil dihapus');
+        return redirect('/produk-dash');
     }
 }

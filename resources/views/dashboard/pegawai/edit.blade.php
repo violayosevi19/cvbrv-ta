@@ -48,13 +48,30 @@
                     <textarea class="form-control" id="alamat" rows="3" name="alamat">{{ old('alamat',$pegawais->alamat) }}</textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Tamatan</label>
-                    <input type="text" class="form-control" id="
-                    tamatan" name="tamatan" value="{{ old('tamatan',$pegawais->tamatan) }}">
+                    <label for="exampleFormControlInput1" class="form-label">Tamatan (Pendidikan Terakhir)</label>
+                    <select class="form-select" id="tamatan" name="tamatan">
+                      <option value="SLTP/Sederajat" @if(old('tamatan', $pegawais->tamatan) === "SLTP/Sederajat") selected @endif>SLTP/Sederajat</option>
+                      <option value="SMA/SLTA Sederajat" @if(old('tamatan', $pegawais->tamatan) === "SMA/SLTA Sederajat") selected @endif>SMA/SLTA Sederajat</option>
+                      <option value="Diploma I/II" @if(old('tamatan', $pegawais->tamatan) === "Diploma I/II") selected @endif>Diploma I/II</option>
+                      <option value="Akademi/Diploma III/S. Muda" @if(old('tamatan', $pegawais->tamatan) === "Akademi/Diploma III/S. Muda") selected @endif>Akademi/Diploma III/S. Muda</option>
+                      <option value="DilpomaIV/Strata I" @if(old('tamatan', $pegawais->tamatan) === "DilpomaIV/Strata I") selected @endif>DilpomaIV/Strata I</option>
+                      <option value="Strata II" @if(old('tamatan', $pegawais->tamatan) === "Strata II") selected @endif>Strata II</option>
+                      <option value="Strata III" @if(old('tamatan', $pegawais->tamatan) === "Strata III") selected @endif>Strata III</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jabatan</label>
-                    <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{ old('jabatan',$pegawais->jabatan) }}">
+                    <select class="form-select" id="jabatan" name="jabatan">
+                      <option value="Manajer Distribusi" @if(old('jabatan', $pegawais->jabatan) === "Manajer Distribusi") selected @endif>Manajer Distribusi</option>
+                      <option value="Koordinator Gudang" @if(old('jabatan', $pegawais->jabatan) === "Koordinator Gudang") selected @endif>Koordinator Gudang</option>
+                      <option value="Staf Logistik" @if(old('jabatan', $pegawais->jabatan) === "Staf Logistik") selected @endif>Staf Logistik</option>
+                      <option value="Pengemudi/Supir" @if(old('jabatan', $pegawais->jabatan) === "Pengemudi/Supir") selected @endif>Pengemudi/Supir</option>
+                      <option value="Sales Representative" @if(old('jabatan', $pegawais->jabatan) === "Sales Representative") selected @endif>Sales Representative</option>
+                      <option value="Staff Penerimaan Barang" @if(old('jabatan', $pegawais->jabatan) === "Staff Penerimaan Barang") selected @endif>Staff Penerimaan Barang</option>
+                      <option value="Manajer Penjualan" @if(old('jabatan', $pegawais->jabatan) === "Manajer Penjualan") selected @endif>Manajer penjualan</option>
+                      <option value="Direksi" @if(old('jabatan', $pegawais->jabatan) === "Direksi") selected @endif>Direksi</option>
+                      <option value="Supervisor" @if(old('jabatan', $pegawais->jabatan) === "Supervisor") selected @endif>Supervisor</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

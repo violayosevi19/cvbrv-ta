@@ -41,7 +41,7 @@ class JenisprodukController extends Controller
         ]);
 
         Jenisproduk::create($validateData);
-        return redirect('/jenisproduk-dash')->with('pesan','data berhasil ditambah');
+        return redirect('/jenisproduk-dash')->with('pesan','Kategori produk berhasil ditambahkan');
     }
 
     /**
@@ -80,7 +80,7 @@ class JenisprodukController extends Controller
         ]);
 
         Jenisproduk::where('id',$id)->update($validateData);
-        return redirect('/jenisproduk-dash')->with('pesan','data berhasil diupdate');
+        return redirect('/jenisproduk-dash')->with('pesan','Kategori produk berhasil diubah');
     }
 
     /**
@@ -92,6 +92,6 @@ class JenisprodukController extends Controller
     public function destroy(jenisproduk $jenisproduk,$id)
     {
         Jenisproduk::destroy($id);
-        return redirect('/jenisproduk-dash')->with('pesan','Data berhasil dihapus');
+        return redirect('/jenisproduk-dash');
     }
 }

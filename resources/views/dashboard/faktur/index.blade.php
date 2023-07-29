@@ -3,6 +3,26 @@
 @section('JudulPages','Faktur')
 @section('JudulTabel','Faktur')
 <div class="ms-4 me-4">
+    @if(session()->has('pesan'))
+      <div class="alert alert-success d-flex align-items-center alert-faktur text-white" id="alert" role="alert" >
+          <div class="flex-grow-1">{{ session('pesan') }}</div>
+          <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
+      </div>
+    @endif
+    <script>
+      var closeElement = document.querySelectorAll('.close');
+      closeElement.forEach(function(close) {
+          close.addEventListener('click', function() {
+            var closeContent = document.getElementById('alert');
+            console.log(closeContent);
+              if (closeContent) {
+                closeContent.remove();
+              }
+          })
+      });
+    </script>
+</div>
+<div class="ms-4 me-4">
   @if(!empty($alertJatuhTempo))
       @foreach($alertJatuhTempo as $message)
       <div class="alert alert-danger d-flex align-items-center" id="alert" class="alert-faktur" role="alert" >
@@ -16,7 +36,6 @@
       closeElement.forEach(function(close) {
           close.addEventListener('click', function() {
             var closeContent = document.getElementById('alert');
-            console.log(closeContent);
               if (closeContent) {
                 closeContent.remove();
               }
@@ -107,9 +126,15 @@
                   @endif
                 </td>
                 <td class="align-middle text-center">
-                  <div class="btn btn-success">
-                   <i class="far fa-check-square"></i>
+                  @if($faktur->status_diterima == 0)
+                  <div class="btn btn-danger checked-btn" data-faktur-nonota="{{ $faktur->nonota }}">
+                  <span class="text-secondary text-xs font-weight-bold text-white">Belum Bayar</span>
                   </div>
+                  @else
+                  <div class="btn btn-success" data-faktur-nonota="{{ $faktur->nonota }}">
+                  <span class="text-secondary text-xs font-weight-bold text-white">Sudah Bayar</span>
+                  </div>
+                  @endif
                 </td>
                 @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">
@@ -119,7 +144,7 @@
                   <form  class="d-inline" action="/faktur-dash/{{ $faktur->id }}" method="post">
                     @method('delete')
                     @csrf
-                    <button class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" onclick="return confirm('Yakin ingin menghapus data ?')">
+                    <button class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip"  id="delete">
                       Delete
                     </button>
                   </form>
@@ -137,15 +162,78 @@
     </div>
   </div>
 </div>
-@if(session()->has('pesan'))
-<div class="alert alert-danger" id="alert-update" role="alert">
-  {{ session('pesan') }}
-</div>
-@endif
-<script>
-  setTimeout(() => {
-    const alert = document.getElementById('alert-update');
-    alert.style.display = "none";
-  }, 3000);
-</script>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+    // Contoh penggunaan di dalam JavaScript
+    $(function () {
+        $(document).on('click', '#delete', function (e) {
+            e.preventDefault();
+            var form = $(this).closest("form");
+            var link = form.attr("action");
+
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin menghapus?',
+                text: "Anda tidak bisa mengembalikan file ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                      type: "POST",
+                      url: link,
+                      data: form.serialize(),
+                      success : function(response){
+                          Swal.fire(
+                              'Deleted!',
+                              'Data sudah dihapus.',
+                              'success'
+                          ).then(() => {
+                              location.reload();
+                          });
+                      },
+                      error : function(xhr,status,error){
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: error,
+                              footer: '<a href="">Why do I have this issue?</a>'
+                          });
+                      }
+                  });
+                }
+            });
+        });
+
+        $(document).on('click','.checked-btn', function() {
+            var fakturNonota = $(this).data('faktur-nonota');
+            console.log(fakturNonota)
+            $.ajax({
+              type: 'POST',
+              url : '/getpenjualan-cek',
+              data : {
+                nonota : fakturNonota,
+                _token: '{{ csrf_token() }}',
+              },
+              success: function (response) {
+                if (response.success) {
+                    // Update warna tombol menjadi hijau (berhasil)
+                    $(this).removeClass('btn-danger').addClass('btn-success');
+
+                    // Redirect ke halaman penjualan atau lakukan tindakan lain setelah data berhasil masuk ke tabel penjualan
+                    window.location.href = '/penjualan-dash';
+                }
+              },
+              error: function (xhr, status, error) {
+                // Tangani kesalahan jika diperlukan
+                console.error(error);
+              }
+            })
+        });
+    });
+    
+</script>

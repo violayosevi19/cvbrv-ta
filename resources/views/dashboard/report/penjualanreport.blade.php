@@ -49,11 +49,21 @@
     </header>
     <hr>
         <h3>LAPORAN PENJUALAN CV BERKAT REZEKI YOSEV</h3>
-                <h5>Bulan July</h5>
+        @php
+            // Buat associative array untuk mengelompokkan data penjualan berdasarkan bulan
+            $penjualanPerBulan = [];
+            foreach ($penjualans as $item) {
+                $bulan = date('F', strtotime($item['faktur']['tglfaktur']));
+                $penjualanPerBulan[$bulan][] = $item;
+            }
+        @endphp
+        @foreach($penjualanPerBulan as $bulan => $tampilPenjualanPerBulan)
+            <h5>Bulan {{$bulan}}</h5>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>NO.</th>
+                            <th colspan="2">No Nota</th>
                             <th colspan="2">Tanggal Faktur</th>
                             <th colspan="2">Nama Toko</th>
                             <th colspan="2">Penjualan</th>
@@ -64,13 +74,10 @@
                             $totalKeseluruhan = 0;
                             $index = 1;
                         @endphp
-                        @foreach($penjualans as $item)
-                        @php
-                            $bulan = date('F',strtotime($item['faktur']['tglfaktur']));
-                        @endphp
-                        @if($bulan == 'July')
+                        @foreach($tampilPenjualanPerBulan as $item)
                         <tr>
                             <td class="text-center" width="20">{{$index}}</td>
+                            <td colspan="2">{{ $item['nonota']}}</td>
                             <td colspan="2">{{ $item['faktur']['tglfaktur']}}</td>
                             <td colspan="2">{{ $item['namatoko']}}</td>
                             <td colspan="2">{{ $item['totalpenjualan']}}</td>
@@ -79,104 +86,15 @@
                                 $totalKeseluruhan += $item['totalpenjualan'];
                                 $index++; // Increment index for the next row
                             @endphp
-                        @endif
                         @endforeach
                             <tr>
-                                <td colspan="5" style="text-align: right;">Total Keseluruhan</td>
-                                <td colspan="2">{{ $totalKeseluruhan }}</td>
+                                <td colspan="7" style="text-align: right;">Total Keseluruhan</td>
+                                <td colspan="1">{{ $totalKeseluruhan }}</td>
                             </tr>
                     </tbody>
                 </table>
-
-                <h5>Bulan Agustus</h5>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>NO.</th>
-                            <th colspan="2">Tanggal Faktur</th>
-                            <th colspan="2">Nama Toko</th>
-                            <th colspan="2">Penjualan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $totalKeseluruhan = 0;
-                            $index = 1;
-                        @endphp
-                        @foreach($penjualans as $item)
-                        @php
-                            $bulan = date('F',strtotime($item['faktur']['tglfaktur']));
-                        @endphp
-                        @if($bulan == 'August')
-                        <tr>
-                            <td class="text-center" width="20">{{$index}}</td>
-                            <td colspan="2">{{ $item['faktur']['tglfaktur']}}</td>
-                            <td colspan="2">{{ $item['namatoko']}}</td>
-                            <td colspan="2">{{ $item['totalpenjualan']}}</td>
-                        </tr>
-                            @php
-                                $totalKeseluruhan += $item['totalpenjualan'];
-                                $index++; // Increment index for the next row
-                            @endphp
-                        @endif
-                        @endforeach
-                            <tr>
-                                <td colspan="5" style="text-align: right;">Total Keseluruhan</td>
-                                <td colspan="2">{{ $totalKeseluruhan }}</td>
-                            </tr>
-                    </tbody>
-                </table>
-
-                @php
-                    $ambilSemuaBulan = [];
-                    foreach($penjualans as $item){
-                        $tglFaktur = date('F',strtotime($item['faktur']['tglfaktur']));
-                        $ambilSemuaBulan[] = $tglFaktur;
-                    }
-                @endphp
-                @if(!$ambilSemuaBulan)
-                <h5>Bulan September</h5>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>NO.</th>
-                            <th colspan="2">Tanggal Faktur</th>
-                            <th colspan="2">Nama Toko</th>
-                            <th colspan="2">Penjualan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $totalKeseluruhan = 0;
-                            $index = 1;
-                        @endphp
-                        @foreach($penjualans as $item)
-                        @php
-                            $bulan = date('F',strtotime($item['faktur']['tglfaktur']));
-                        @endphp
-                        @if($bulan == 'September')
-                        <tr>
-                            <td class="text-center" width="20">{{$index}}</td>
-                            <td colspan="2">{{ $item['faktur']['tglfaktur']}}</td>
-                            <td colspan="2">{{ $item['namatoko']}}</td>
-                            <td colspan="2">{{ $item['totalpenjualan']}}</td>
-                        </tr>
-                            @php
-                                $totalKeseluruhan += $item['totalpenjualan'];
-                                $index++; // Increment index for the next row
-                            @endphp
-                        @endif
-                        @endforeach
-                            <tr>
-                                <td colspan="5" style="text-align: right;">Total Keseluruhan</td>
-                                <td colspan="2">{{ $totalKeseluruhan }}</td>
-                            </tr>
-                    </tbody>
-                </table>
-                @endif
-
-                
-                @php
+            @endforeach
+                 @php
                     $totalTahunIni = 0;
                     foreach($penjualans as $item){
                         $totalTahunIni += $item['totalpenjualan'];

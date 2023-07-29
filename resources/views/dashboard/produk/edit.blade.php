@@ -40,7 +40,7 @@
                     <label for="exampleFormControlInput1" class="form-label">Jenis Produk</label>
                     <select class="form-select" id="jenisproduk_id" name="jenisproduk_id">
                       @foreach($jenisproduks as $jp)
-                      <option value="{{ $jp->id }} ">{{ $jp->jenis }}</option>
+                      <option value="{{ $jp->id }}" @if(old('jenisproduk_id', $jp->id) == $jp->id) selected @endif>{{ $jp->jenis }}</option>
                       @endforeach
                     </select>
                   </div>

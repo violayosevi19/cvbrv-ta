@@ -168,7 +168,7 @@ class FakturControllerDash extends Controller
     public function destroy(faktur $faktur,$id)
     {
         Faktur::destroy($id);
-        return redirect('/faktur-dash')->with('pesan','Data berhasil dihapus');
+        return redirect('/faktur-dash');
 
     }
 }

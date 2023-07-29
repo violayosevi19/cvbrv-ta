@@ -46,12 +46,30 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="alamat"></textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Tamatan</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="tamatan">
+                    <label for="exampleFormControlInput1" class="form-label">Tamatan (Pendidikan Terakhir)</label>
+                    <select class="form-select" id="tamatan" name="tamatan">
+                      <option value="SLTP/Sederajat">SLTP/Sederajat</option>
+                      <option value="SMA/SLTA Sederajat">SMA/SLTA Sederajat</option>
+                      <option value="Diploma I/II">Diploma I/II</option>
+                      <option value="Akademi/Diploma III/S. Muda">Akademi/Diploma III/S. Muda</option>
+                      <option value="DilpomaIV/Strata I">DilpomaIV/Strata I</option>
+                      <option value="Strata II">Strata II</option>
+                      <option value="Strata III">Strata III</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jabatan</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="jabatan">
+                    <select class="form-select" id="jabatan" name="jabatan">
+                      <option value="Manajer Distribusi">Manajer Distribusi</option>
+                      <option value="Koordinator Gudang">Koordinator Gudang</option>
+                      <option value="Staf Logistik">Staf Logistik</option>
+                      <option value="Pengemudi/Supir">Pengemudi/Supir</option>
+                      <option value="Sales Representative">Sales Representative</option>
+                      <option value="Staff Penerimaan Barang">Staff Penerimaan Barang</option>
+                      <option value="Manajer Penjualan">Manajer penjualan</option>
+                      <option value="Direksi">Direksi</option>
+                      <option value="Supervisor">Supervisor</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

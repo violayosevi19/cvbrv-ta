@@ -104,6 +104,6 @@ class SupplierController extends Controller
     public function destroy(supplier $supplier,$id)
     {
         Supplier::destroy($id);
-        return redirect('/supplier-dash')->with('pesan','Data berhasil dihapus');
+        return redirect('/supplier-dash');
     }
 }

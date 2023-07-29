@@ -72,7 +72,8 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
         return view('dashboard.faktur.invoice');
     });
     Route::get('/cetak/{nonota}',[CetakPaperController::class,'index']);
-    Route::get('/report-dash',[ReportController::class,'index']);
+    Route::get('/report-dash',[ReportController::class,'bukuBesar']);
+    // Route::get('/bukub-dash',[ReportController::class,'index']);
 });
 
 // Route::group(['middleware' => ['auth','cekrole:fakturis']], function() {
@@ -131,6 +132,8 @@ Route::get('/get-produk', [GetDataController::class,'getNamaProduk']);
 Route::get('/get-jumlah', [GetDataController::class,'getJumlahHargaProduk']);
 Route::get('/get-jumlahdetail', [GetDataController::class,'getJumlahHargaDetail']);
 Route::get('/get-faktur', [GetDataController::class,'getPenjualan']);
+Route::post('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
+// Route::get('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
 
 // //front end
 // Route::get('/',[DashboardController::class,'index'])->Middleware('auth');

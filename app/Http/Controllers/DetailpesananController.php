@@ -360,7 +360,7 @@ class DetailpesananController extends Controller
     public function destroy(detailpesanan $detailpesanan,$nonota)
     {
         Detailpesanan::where('nonota', '=', $nonota)->delete();
-         return redirect('/detailorderan-dash')->with('pesan','Data berhasil dihapus');
+         return redirect('/detailorderan-dash');
 
     }
 }

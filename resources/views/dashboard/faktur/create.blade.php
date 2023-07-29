@@ -68,7 +68,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
-        $('#nonota').on('keyup', function () {
+        $('#nonota').on('input', function () {
             var nonota = $(this).val();
             if (nonota !== '') {
                 $.ajax({
@@ -82,6 +82,11 @@
                         $('#jatuhtempo').val(response.jatuhtempo);
                     }
                 });
+            } else {
+              $('#total').val('');
+              $('#namatoko').val('');
+              $('#tglfaktur').val('');
+              $('#jatuhtempo').val('');
             }
         });
     });

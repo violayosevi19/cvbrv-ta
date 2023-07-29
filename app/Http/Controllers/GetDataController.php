@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\faktur;
+use App\Models\penjualan;
 use App\Models\detailpesanan;
 use App\Models\toko;
 use App\Models\produk;
@@ -114,6 +115,24 @@ class GetDataController extends Controller
             'namatoko' => $namatoko,
             'total' => $total
         ]);
+    }
+
+    public function getPenjualanFromChecked(Request $request) {
+        $nonota = $request->input('nonota');
+        // $nonota = 'C182301';
+        $fakturNonota = faktur::where('nonota',$nonota)->first();
+        // dd($fakturNonota);
+
+        $fakturNonota->update(['status_diterima' => 1]);
+        
+        $penjualan = new penjualan();
+        $penjualan->nonota = $fakturNonota->nonota;
+        $penjualan->namatoko = $fakturNonota->namatoko;
+        $penjualan->totalpenjualan = $fakturNonota->total;
+        $penjualan->save();
+
+        return response()->json(['success' => true]);
+
     }
 
 }

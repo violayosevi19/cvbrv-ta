@@ -100,6 +100,6 @@ class PembayaranController extends Controller
     public function destroy(pembayaran $pembayaran,$id)
     {
         Pembayaran::destroy($id);
-          return redirect('/pembayaran-dash')->with('pesan','Data berhasil dihapus');
+          return redirect('/pembayaran-dash');
     }
 }
