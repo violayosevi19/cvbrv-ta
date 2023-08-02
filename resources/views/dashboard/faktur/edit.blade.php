@@ -18,22 +18,26 @@
                   @method('put')
                   <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
-                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota" value="{{ old('nonota',$fakturs->nonota) }}">
+                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota" value="{{ old('nonota',$fakturs->nonota) }}" readonly>
                   </div>
                   @error('nonota')
                   {{ $message }}
                   @enderror
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Toko</label>
-                    <input type="text" class="form-control" id="namatoko" name="namatoko"  value="{{ old('namatoko',$fakturs->namatoko) }}">
+                    <input type="text" class="form-control" id="namatoko" name="namatoko"  value="{{ old('namatoko',$fakturs->namatoko) }}" readonly>
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tanggal Faktur</label>
-                    <input type="date" class="form-control" id="tglfaktur" name="tglfaktur"  value="{{ old('tglfaktur',$fakturs->tglfaktur) }}">
+                    <input type="date" class="form-control" id="tglfaktur" name="tglfaktur"  value="{{ old('tglfaktur',$fakturs->tglfaktur) }}" readonly>
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jatuh Tempo</label>
-                    <input type="date" class="form-control" id="jatuhtempo" name="jatuhtempo" value="{{ old('jatuhtempo',$fakturs->jatuhtempo) }}">
+                    <input type="date" class="form-control" id="jatuhtempo" name="jatuhtempo" value="{{ old('jatuhtempo',$fakturs->jatuhtempo) }}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Sopir</label>
+                    <input type="text" class="form-control" id="sopir" name="sopir" value="{{ old('sopir',$fakturs->sopir) }}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
@@ -52,7 +56,11 @@
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Total</label>
-                    <input type="text" class="form-control" id="total" name="total"  value="{{ old('total',$fakturs->total) }}">
+                    <input type="text" class="form-control" id="total" name="total"  value="{{ old('total',$fakturs->total) }}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Penerima</label>
+                    <input type="text" class="form-control" id="penerima" name="penerima" value="{{ old('penerima',$fakturs->penerima) }}">
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

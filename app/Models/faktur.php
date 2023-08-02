@@ -15,6 +15,6 @@ class faktur extends Model
     }
 
     public function penjualan() {
-        return $this->hasOne(penjualan::class,'nonota','nonota');
+        return $this->belongsTo(penjualan::class,'nonota','nonota');
     }
 }

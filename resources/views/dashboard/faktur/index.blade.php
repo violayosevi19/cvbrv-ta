@@ -56,7 +56,7 @@
         <div class="card-header pb-0">
           <h6>Data Faktur</h6>
           @if(auth()->user()->role != "direksi")
-          <a href="/faktur-dash/create" class="btn btn-primary">Tambah Data</a>
+          <a href="/detailorderan-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">

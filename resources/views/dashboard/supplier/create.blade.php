@@ -16,16 +16,19 @@
                 <form action="/supplier-dash" method="post">
                   @csrf
                   <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Kode Supplier</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="kodesupplier">
+                  </div>
+                  @error('kodesupplier')
+                  {{ $message }}
+                  @enderror
+                  <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
                     <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="exampleFormControlInput1" name="nonota">
                   </div>
                   @error('nonota')
                   {{ $message }}
                   @enderror
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Kode Produk</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="kodeproduk">
-                  </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="namasupplier">

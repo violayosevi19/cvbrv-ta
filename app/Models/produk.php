@@ -16,7 +16,7 @@ class produk extends Model
     }
 
     public function supplier(){
-        return $this->hasMany(supplier::class,'kodeproduk','kodeproduk');
+        return $this->belongsTo(supplier::class,'kodeproduk','kodeproduk');
     }
 
     public function detailPesanan(){

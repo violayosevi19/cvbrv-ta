@@ -11,7 +11,7 @@ class penjualan extends Model
      protected $guarded=[];
 
      public function faktur() {
-        return $this->hasOne(faktur::class,'nonota','nonota');
+        return $this->hasMany(faktur::class,'nonota','nonota');
     }
 }
 

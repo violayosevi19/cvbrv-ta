@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangMasuk;
 use App\Models\detailpesanan;
 use App\Models\faktur;
 use App\Models\produk;
@@ -10,6 +11,7 @@ use App\Models\toko;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class DetailpesananController extends Controller
 {
@@ -37,7 +39,19 @@ class DetailpesananController extends Controller
      */
     public function create()
     {
-        return view('dashboard.detailorderan.createorderan',['details' => Detailpesanan::all()]);
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $day = $currentDate->format('d');
+        $lastInvoice = detailpesanan::orderBy('id', 'desc')->first();
+        $lastNumber = $lastInvoice ? intval(substr($lastInvoice->nonota, 5)) : 0;
+        $invoiceNumber = 'C' . $day . $year . str_pad(($lastNumber + 1), 2, '0', STR_PAD_LEFT);
+        // dd($currentDate,$year,$day,$lastInvoice,$lastNumber,$invoiceNumber);
+
+
+        return view('dashboard.detailorderan.createorderan',[
+            'details' => Detailpesanan::all(),
+            'nonota' => $invoiceNumber
+        ]);
     }
 
     /**
@@ -163,7 +177,7 @@ class DetailpesananController extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
-        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->get()->toArray();
+        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->where('nonota', $nonota)->get()->toArray();
         $totalProdukPerNonota =  Detailpesanan::select(
             'kodeproduk',
             'namaproduk',
@@ -323,11 +337,11 @@ class DetailpesananController extends Controller
                     if ($takeKuantitas < $kuantitasLama[$nonota][$takeKodeProduk]) {
                         $selisihKuantitas = $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
                         $stockData->stock += $selisihKuantitas;
-                        $stockData->keterangan = 'Stok ditambahkan lagi karena perubahan stock pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
+                        $stockData->keterangan = 'Stok telah dikembalikan lagi karena perubahan pesanan pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
                         $stockData->save();
                     } else {
-                        $tambahkanKuantitas =  $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
-                        $stockData->stock -= $tambahkanKuantitas;
+                        $tambahkanKuantitas =  $takeKuantitas - $kuantitasLama[$nonota][$takeKodeProduk] ;
+                        $stockData->stock += $tambahkanKuantitas;
                         $stockData->keterangan = 'Stok telah diambil lagi karena perubahan pesanan pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
                         $stockData->save();
                     }

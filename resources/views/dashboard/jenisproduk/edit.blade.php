@@ -21,19 +21,22 @@
                 <form action="/jenisproduk-dash/{{ $jenisproduks->id}}" method="post">
                   @csrf
                   @method('put')
-                  <!-- <div class="mb-3">
+                  <div class="mb-3">
                     <label for="jenis" class="form-label">Jenis Produk</label>
                     <input type="text" class="form-control @error ('jenis') is-invalid @enderror" id="jenis" name="jenis" value="{{ old('jenis',$jenisproduks->jenis) }}">
-                  </div> -->
-                  <div class="mb-3">
+                  </div>
+                  <!-- <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label @error ('jenis') is-invalid @enderror">Jenis Produk</label>
                     <select class="form-select" id="jenis" name="jenis">
-                      <option value="Kosmetik" @if(old('jenis',$jenisproduks->jenis) == 'Kosmetik') selected @endif>Kosmetik</option>
-                      <option value="Beauty" @if(old('jenis',$jenisproduks->jenis) == 'Beauty') selected @endif>Beauty</option>
-                      <option value="Pewangi" @if(old('jenis',$jenisproduks->jenis) == 'Pewangi') selected @endif>Pewangi</option>
-                      <option value="Kesehatan" @if(old('jenis',$jenisproduks->jenis) == 'Kesehatan') selected @endif>Kesehatan</option>
+                      <option value="Kapas" @if(old('jenis',$jenisproduks->jenis) == 'Kapas') selected @endif>Kapas</option>
+                      <option value="Cutton Bud" @if(old('jenis',$jenisproduks->jenis) == 'Cutton Bud') selected @endif>Cutton Bud</option>
+                      <option value="Parfume Laundry" @if(old('jenis',$jenisproduks->jenis) == 'Parfume Laundry') selected @endif>Parfume Laundry</option>
+                      <option value="Soap" @if(old('jenis',$jenisproduks->jenis) == 'Soap') selected @endif>Soap</option>
+                      <option value="Spon Mandi" @if(old('jenis',$jenisproduks->jenis) == 'Spon Mandi') selected @endif>Spon Mandi</option>
+                      <option value="Pensil Alis" @if(old('jenis',$jenisproduks->jenis) == 'Pensil Alis') selected @endif>Pensil Alis</option>
+                      <option value="Lipstick" @if(old('jenis',$jenisproduks->jenis) == 'Lipstick') selected @endif>Lipstick</option>
                     </select>
-                  </div>
+                  </div> -->
                   @error('jenis')
                     {{ $message }}
                   @enderror

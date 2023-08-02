@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 1</title>
+    <title>Faktur Penjualan</title>
     <link rel="stylesheet" href="style.css" media="all" />
     <style type="text/css">
         @page {
@@ -269,8 +269,8 @@
             <td class="qty">{{$detail['kuantitas']}}</td>
             <td class="satuan">pcs</td>
             <td class="harga">{{$detail['harga']}}</td>
-            <td class="disc">{{$detail['diskon']}}</td>
-            <td class="disc">{{$detail['diskon']}}</td>
+            <td class="disc">{{$detail['diskon']}}%</td>
+            <td class="disc">{{$detail['diskon']}}%</td>
             <td class="jumlah">{{$detail['jumlah']}}</td>
           </tr>
           @endforeach

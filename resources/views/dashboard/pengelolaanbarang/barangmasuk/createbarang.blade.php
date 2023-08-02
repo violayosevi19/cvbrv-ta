@@ -101,8 +101,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
+        let counter = 0;
         $('#add').on('click',function() {
-            let counter = 1;
+          counter++;
             // var multiInput = document.getElementById('multi-input');
             // var multiInputDatas = [];
             // const kodeProduk = $('input[name="kodeproduk"]').val();

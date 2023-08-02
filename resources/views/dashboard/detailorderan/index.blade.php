@@ -50,7 +50,7 @@
                 @foreach($detailtokos as $detail)
                 <tr>
                  <td class="align-middle text-center">
-                 <span class="text-secondary text-xs font-weight-bold">{{ $detail['nonota']}}</span>
+                 <span class="text-secondary text-xs font-weight-bold"><a href="/faktur-dash/create?nonota={{ $detail['nonota']}}">{{ $detail['nonota']}}</a></span>
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $detail['namatoko']}}</span>

@@ -7,6 +7,8 @@ use Dompdf\Dompdf;
 use App\Models\faktur;
 use App\Models\detailpesanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class FakturControllerDash extends Controller
 {
@@ -39,7 +41,19 @@ class FakturControllerDash extends Controller
      */
     public function create()
     {
-        return view('dashboard.faktur.create',['fakturs' => Faktur::all()]);
+        $nonota = request('nonota');
+        $detail = detailpesanan::select(
+            DB::raw('SUM(jumlah) as total_amount'),
+            'namatoko',
+            'tglfaktur',
+            'jatuhtempo'
+        )->where('nonota',$nonota)->groupBy('namatoko', 'tglfaktur', 'jatuhtempo')->get()->toArray();
+        // dd($detail);
+        // dd($nonota);
+        return view('dashboard.faktur.create',[
+            'nonota' => $nonota,
+            'faktur' => $detail
+        ]);
     }
 
     /**
@@ -57,7 +71,8 @@ class FakturControllerDash extends Controller
             'jatuhtempo' => 'required',
             'keterangan' => 'required',
             'pembayaran' => 'required',
-            'total' => 'required'
+            'total' => 'required',
+            'sopir' => 'required'
         ]);
         
         $nonota = $request->input('nonota');
@@ -113,7 +128,7 @@ class FakturControllerDash extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
-        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->get()->toArray();
+        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->where('nonota',$nonota)->get()->toArray();
         $totalProdukPerNonota =  Detailpesanan::select(
             'kodeproduk',
             'namaproduk',
@@ -161,7 +176,9 @@ class FakturControllerDash extends Controller
             'jatuhtempo' => 'required',
             'keterangan' => 'required',
             'pembayaran' => 'required',
-            'total' => 'required'
+            'total' => 'required',
+            'sopir' => 'required',
+            'penerima' => 'required'
         ]);
 
         Faktur::where('id',$id)->update($validateData);

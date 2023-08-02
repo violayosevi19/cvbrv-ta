@@ -17,6 +17,13 @@
                   @csrf
                   @method('put')
                   <div class="mb-3">
+                    <label for="kodeproduk" class="form-label">Kode Supplier</label>
+                    <input type="text" class="form-control @error ('kodesupplier') is-invalid @enderror" id="exampleFormControlInput1" name="kodesupplier" value="{{ old('kodesupplier',$suppliers->kodesupplier) }}">
+                  </div>
+                  @error('nonota')
+                  {{ $message }}
+                  @enderror
+                  <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
                     <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$suppliers->nonota) }}">
                   </div>
@@ -26,6 +33,14 @@
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="namasupplier"  value="{{ old('namasupplier',$suppliers->namasupplier) }}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">No Hp</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nohp" value="{{ old('nohp',$suppliers->nohp) }}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Alamat</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="alamat" value="{{ old('alamat',$suppliers->alamat) }}">
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tanggal Faktur</label>

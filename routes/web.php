@@ -72,57 +72,10 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
         return view('dashboard.faktur.invoice');
     });
     Route::get('/cetak/{nonota}',[CetakPaperController::class,'index']);
-    Route::get('/report-dash',[ReportController::class,'bukuBesar']);
-    // Route::get('/bukub-dash',[ReportController::class,'index']);
+    Route::get('/report-dash',[ReportController::class,'index']);
+    Route::get('/laporanpenjualan',[ReportController::class,'laporanPenjualan']);
+    Route::get('/labarugi',[ReportController::class,'labaRugi']);
 });
-
-// Route::group(['middleware' => ['auth','cekrole:fakturis']], function() {
-//     Route::resource('/produk-dash',ProdukController::class);
-//     Route::resource('/jenisproduk-dash',JenisprodukController::class);
-//     Route::resource('/toko-dash',TokoController::class);
-//     Route::resource('/detailorderan-dash',DetailPesananController::class);
-//     Route::resource('/faktur-dash',FakturControllerDash::class);
-//     Route::resource('/supplier-dash',SupplierController::class);
-//     Route::resource('/barangmasuk-dash',BarangMasukController::class);
-//     Route::resource('/stock-dash',StockController::class);
-//     Route::get('/cetak-faktur',function() {
-//         return view('dashboard.faktur.invoice');
-//     });
-//     Route::get('/cetak/{nonota}',[CetakPaperController::class,'index']);
-// });
-
-// Route::group(['middleware' => ['auth','cekrole:manajer penjualan']], function() {
-//     Route::resource('/penjualan-dash',PenjualanController::class);
-//     Route::get('/report-dash',[ReportController::class,'index']);
-    
-// });
-
-// Route::group(['middleware' => ['auth','cekrole:manajer distribusi']], function() {
-//     Route::resource('/pegawai-dash',PegawaiController::class);
-//     Route::resource('/toko-dash',TokoController::class);
-//     Route::resource('/supplier-dash',SupplierController::class);
-//     Route::resource('/stock-dash',StockController::class);
-// });
-
-// Route::group(['middleware' => ['auth','cekrole:direksi']], function() {
-//     Route::resource('/pegawai-dash',PegawaiController::class);
-//     Route::resource('/produk-dash',ProdukController::class);
-//     Route::resource('/jenisproduk-dash',JenisprodukController::class);
-//     Route::resource('/toko-dash',TokoController::class);
-//     Route::resource('/detailorderan-dash',DetailPesananController::class);
-//     Route::resource('/faktur-dash',FakturControllerDash::class);
-//     Route::resource('/penjualan-dash',PenjualanController::class);
-//     Route::resource('/pembayaran-dash',PembayaranController::class);
-//     Route::resource('/supplier-dash',SupplierController::class);
-//     Route::resource('/barangmasuk-dash',BarangMasukController::class);
-//     Route::resource('/barangkeluar-dash',BarangKeluarController::class);
-//     Route::resource('/stock-dash',StockController::class);
-//     Route::get('/cetak-faktur',function() {
-//         return view('dashboard.faktur.invoice');
-//     });
-//     Route::get('/cetak/{nonota}',[CetakPaperController::class,'index']);
-//     Route::get('/report-dash',[ReportController::class,'index']);
-// });
 
 // mendapatkan data input
 Route::get('/get-stock',[SearchingController::class,'searchingStok']);
@@ -133,6 +86,7 @@ Route::get('/get-jumlah', [GetDataController::class,'getJumlahHargaProduk']);
 Route::get('/get-jumlahdetail', [GetDataController::class,'getJumlahHargaDetail']);
 Route::get('/get-faktur', [GetDataController::class,'getPenjualan']);
 Route::post('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
+Route::get('/getpenjualan',[GetDataController::class,'getPenjualanperBulan']);
 // Route::get('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
 
 // //front end

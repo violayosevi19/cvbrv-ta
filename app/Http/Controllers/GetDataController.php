@@ -8,6 +8,7 @@ use App\Models\penjualan;
 use App\Models\detailpesanan;
 use App\Models\toko;
 use App\Models\produk;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -82,7 +83,7 @@ class GetDataController extends Controller
         // $kuantitas = 12;
         // $harga = 5700;
         // $diskon = 0;
-        $jumlahperproduk = $kuantitas * $harga - $diskon;
+        $jumlahperproduk = $kuantitas * $harga - (($diskon/100) * ($kuantitas*$harga));
         // dd($jumlahperproduk);
 
         return response()->json([
@@ -141,6 +142,50 @@ class GetDataController extends Controller
 
         return response()->json(['success' => true]);
 
+    }
+
+    public function getPenjualanperBulan(){
+        // $penjualan = Penjualan::join('faktur', 'penjualans.nonota', '=', 'faktur.nonota')
+        // ->selectRaw('MONTH(faktur.tglfaktur) as bulan, SUM(penjualans.total) as total')
+        // ->groupBy('bulan')
+        // ->get();
+        // $penjualan = Penjualan::with('faktur')->get();
+        // $penjualan = Penjualan::join('fakturs', 'penjualans.nonota', '=', 'fakturs.nonota')
+        // ->selectRaw("CASE
+        //                 WHEN MONTH(fakturs.tglfaktur) = 1 Then 'Januari'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 2 Then 'Februari'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 3 Then 'Maret'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 4 Then 'April'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 5 Then 'Mei'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 6 Then 'Juni'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 7 Then 'Juli'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 8 Then 'Agustus'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 9 Then 'September'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 10 Then 'Oktober'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 11 Then 'November'
+        //                 WHEN MONTH(fakturs.tglfaktur) = 12 Then 'Desember'
+        //             END as bulan, SUM(fakturs.total) as total_penjualan")
+        // ->groupBy('bulan')
+        // ->get()->toArray();
+
+        $penjualan = Penjualan::join('fakturs', 'penjualans.nonota', '=', 'fakturs.nonota')
+        ->selectRaw("MONTH(fakturs.tglfaktur)  as bulan, SUM(fakturs.total) as total_penjualan")
+        ->groupBy('bulan')
+        ->get()->toArray();
+        $namaBulan  = [];
+        $total = [];
+        foreach($penjualan as $data){
+            // $angkaBulan = Carbon::parse($data['bulan'])->month;
+            $bulan = Carbon::create()->month($data['bulan'])->format('M');
+            $namaBulan[] = $bulan;
+            $total[] = $data['total_penjualan'];
+        }
+    
+        // dd($penjualan,$namaBulan,$total);
+        return view('dashboard.dash.dashboard', [
+            'namaBulan' => $namaBulan,
+            'total' => $total
+        ]);
     }
 
 }

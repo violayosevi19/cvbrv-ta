@@ -7,6 +7,7 @@ use App\Models\produk;
 use App\Models\Stock;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BarangMasukController extends Controller
 {
@@ -17,8 +18,12 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
+        $nonota = BarangMasuk::select(DB::raw('MAX(id) as max_id'), 'nonota', 'namasupplier', 'tanggalmasuk')
+                     ->groupBy('nonota','namasupplier','tanggalmasuk')
+                     ->get();
+        // dd($nonota);
         return view('dashboard.pengelolaanbarang.barangmasuk.index',[
-            'barangmasuks' => BarangMasuk::all()
+            'barangmasuks' => $nonota
         ]);
     }
 
@@ -84,7 +89,8 @@ class BarangMasukController extends Controller
 
         $namasupplier = $request->input('namasupplier');
         $tanggalmasuk = $request->input('tanggalmasuk');
-        $nonota = $request->input('nonota');
+        $nonota = $request->input('nonota'); 
+        $totalFaktur = 0; 
 
         foreach ($request->input('inputs') as $value) {
             $value['namasupplier'] = $namasupplier;
@@ -94,20 +100,11 @@ class BarangMasukController extends Controller
 
             $kodeproduk = $value['kodeproduk'];
             $stock = $value['stock'];
+            $totalFaktur += $value['jumlah'];
 
             $stockData = Stock::where('kodeproduk', $kodeproduk)->first();
             $produkData = Produk::where('kodeproduk', $kodeproduk)->first();
-            
-            // $cekSupplier = Supplier::where('namasupplier','like', '%' . $namasupplier . '%')->first();
-            // if(!$cekSupplier) {
-            //     $supplier = new Supplier();
-            //     $supplier->namasupplier = $namasupplier;
-            //     $supplier->tglfaktur = $tanggalmasuk;
-            //     $supplier->nonota = $nonota;
-            //     $supplier->kodeproduk = $kodeproduk;
-            //     $supplier->save();
-            // } 
-
+        
             if ($stockData) {
                 $stockData->stock += $stock;
                 $stockData->keterangan = 'Data telah ditambahkan pada ' . $tanggalmasuk . ' sebanyak ' . $stock;
@@ -131,6 +128,14 @@ class BarangMasukController extends Controller
             }
         }
 
+            $supplier = new Supplier();
+            $supplier->namasupplier = $namasupplier;
+            $supplier->tglfaktur = $tanggalmasuk;
+            $supplier->nonota = $nonota;
+            $supplier->total = $totalFaktur;
+            $supplier->save();
+    
+
        
         return redirect('/barangmasuk-dash')->with('pesan','Data berhasil ditambahkan');
     }
@@ -142,9 +147,35 @@ class BarangMasukController extends Controller
      * @param  \App\Models\BarangMasuk  $barangMasuk
      * @return \Illuminate\Http\Response
      */
-    public function show(BarangMasuk $barangMasuk)
+    public function show(BarangMasuk $barangMasuk,$nonota)
     {
-        //
+        $detailProduks = BarangMasuk::select(
+            'kodeproduk',
+            'namaproduk',
+            'stock',
+            'harga',
+            'diskon',
+            'jumlah')
+            ->where('nonota','=',$nonota)->get()->toArray();
+        $detailToko = BarangMasuk::select('namasupplier','nonota','tanggalmasuk')->distinct()->get()->toArray();
+        $totalProdukPerNonota =  BarangMasuk::select(
+            'kodeproduk',
+            'namaproduk',
+            'stock',
+            'satuan',
+            'harga',
+            'diskon',
+            'jumlah')
+            ->where('nonota','=',$nonota)->get()->count();;
+        // dd($detailProduks);
+        $totalFaktur = BarangMasuk::where('nonota',$nonota)->sum(\DB::raw('jumlah'));
+        // dd($totalFaktur);
+        return view('dashboard.pengelolaanbarang.barangmasuk.readbarang',[
+            'detailtokos' => $detailToko,
+            'detailproduks' => $detailProduks,
+            'totaldatapernota' => $totalProdukPerNonota,
+            'bayar' => $totalFaktur 
+        ]);
     }
 
     /**
@@ -251,7 +282,6 @@ class BarangMasukController extends Controller
                    Stock::where('kodeproduk', $takeKodeProduk)
                     ->update([
                         'stock' => $editStock,
-                        'keterangan' => 'Stock diubah menjadi ' .$editStock. ' pada ' . now()
                     ]);
                 }
                 $existingProduct->update($input);

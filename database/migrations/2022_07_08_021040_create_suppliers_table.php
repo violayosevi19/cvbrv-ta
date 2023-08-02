@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->char('nonota',12)->nullable();
-            $table->char('kodeproduk',12)->nullable();
+            $table->char('kodesupplier',12)->nullable()->unique();
+            $table->char('nonota',12)->nullable()->unique();
             $table->string('namasupplier',50)->nullable();
             $table->char('nohp',12)->nullable();
             $table->text('alamat')->nullable();

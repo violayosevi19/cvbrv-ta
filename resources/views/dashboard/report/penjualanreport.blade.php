@@ -56,8 +56,10 @@
                 $bulan = date('F', strtotime($item['faktur']['tglfaktur']));
                 $penjualanPerBulan[$bulan][] = $item;
             }
+            $bulanUrutan = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April', 'May', 'June'];
         @endphp
-        @foreach($penjualanPerBulan as $bulan => $tampilPenjualanPerBulan)
+        @foreach($bulanUrutan as $bulan)
+        @if(isset($penjualanPerBulan[$bulan]))
             <h5>Bulan {{$bulan}}</h5>
                 <table class="table">
                     <thead>
@@ -66,7 +68,7 @@
                             <th colspan="2">No Nota</th>
                             <th colspan="2">Tanggal Faktur</th>
                             <th colspan="2">Nama Toko</th>
-                            <th colspan="2">Penjualan</th>
+                            <th colspan="1">Penjualan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,13 +76,13 @@
                             $totalKeseluruhan = 0;
                             $index = 1;
                         @endphp
-                        @foreach($tampilPenjualanPerBulan as $item)
+                        @foreach($penjualanPerBulan[$bulan] as $item)
                         <tr>
                             <td class="text-center" width="20">{{$index}}</td>
                             <td colspan="2">{{ $item['nonota']}}</td>
                             <td colspan="2">{{ $item['faktur']['tglfaktur']}}</td>
                             <td colspan="2">{{ $item['namatoko']}}</td>
-                            <td colspan="2">{{ $item['totalpenjualan']}}</td>
+                            <td colspan="1">{{ $item['totalpenjualan']}}</td>
                         </tr>
                             @php
                                 $totalKeseluruhan += $item['totalpenjualan'];
@@ -93,6 +95,7 @@
                             </tr>
                     </tbody>
                 </table>
+                @endif
             @endforeach
                  @php
                     $totalTahunIni = 0;
@@ -101,7 +104,7 @@
                     }
 
                 @endphp
-                <p>Total Penjualan Tahun 2022 adalah : Rp. {{$totalTahunIni}}</p>
+                <p>Total Penjualan Tahun adalah : Rp. {{$totalTahunIni}}</p>
 
     </section>
 </body>

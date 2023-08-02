@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->char('kodeproduk',10)->unique()->nullable();
             $table->string('namaproduk',50)->nullable();
-            $table->integer('harga')->nullable();
             $table->string('satuan',10)->nullable();
             $table->integer('stock')->nullable();
             $table->integer('stock_minimum')->default(10);

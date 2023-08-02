@@ -10,27 +10,32 @@ use App\Models\faktur;
 class ReportController extends Controller
 {
     public function index(){
-        
-        $penjualan = Penjualan::with('faktur')->get()->toArray();
-        // dd($penjualan);
-        // $pdf = new Dompdf();
-        // $fileView = view('dashboard.report.penjualanreport',[
-        //     'penjualans' => $penjualan,
-        // ])->render();
-        // $pdf->loadHtml($fileView);
-        // $pdf->setPaper('A4', 'portrait');
-        // // Render PDF
-        // $pdf->render();
-        // // Kode untuk menghasilkan tampilan PDF untuk diunduh
-        // return $pdf->stream('Laporan Penjualan.pdf');
-       
-        // // dd($penjualan);
-        return view('dashboard.report.penjualanreport',[
-            'penjualans' => $penjualan,
+        return view('dashboard.report.daftarlaporan',[
+            
         ]);
     }
 
-    public function bukuBesar(){
+    public function laporanPenjualan(){
+        $penjualan = Penjualan::with('faktur')->get()->toArray();
+        // dd($penjualan);
+        $pdf = new Dompdf();
+        $fileView = view('dashboard.report.penjualanreport',[
+            'penjualans' => $penjualan,
+        ])->render();
+        $pdf->loadHtml($fileView);
+        $pdf->setPaper('A4', 'portrait');
+        // Render PDF
+        $pdf->render();
+        // Kode untuk menghasilkan tampilan PDF untuk diunduh
+        return $pdf->stream('Laporan Penjualan.pdf');
+       
+        // // dd($penjualan);
+        // return view('dashboard.report.penjualanreport',[
+        //     'penjualans' => $penjualan,
+        // ]);
+    }
+
+    public function labaRugi(){
         
         // $penjualan = Penjualan::with('faktur')->get()->toArray();
         // dd($penjualan);
@@ -46,6 +51,6 @@ class ReportController extends Controller
         // return $pdf->stream('Laporan Penjualan.pdf');
        
         // // dd($penjualan);
-        return view('dashboard.report.bukubesar');
+        return view('dashboard.report.labarugi');
     }
 }

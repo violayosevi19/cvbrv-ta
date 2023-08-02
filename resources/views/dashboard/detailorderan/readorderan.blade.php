@@ -117,7 +117,7 @@
                                 <span class="text-xs">{{ $details['harga'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">{{ $details['diskon'] }}</span>
+                                <span class="text-xs">{{ $details['diskon'] }}%</span>
                               </td>
                               <td class="align-middle text-center">
                                 <span class="text-xs">{{ $details['jumlah'] }}</span>
@@ -137,15 +137,15 @@
                  </div>
               </form>
             </div>
-            @foreach($detailtokos as $detail)
-            <div class="row px-3 py-3">
-              <div class="col col-md-3">
-               <a href="/cetak/{{ $detail['nonota'] }}" class="btn btn-info text-secondary font-weight-bold text-xs text-white"  data-toggle="tooltip" data-original-title="Edit user">
-                    Cetak Faktur
-                  </a>
-              </div>
-            </div>
-            @endforeach
+            @if(isset($detailtokos) && count($detailtokos) > 0)
+                <div class="row px-3 py-3">
+                    <div class="col col-md-3">
+                        <a href="/cetak/{{ $detailtokos[0]['nonota'] }}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                            Cetak Faktur
+                        </a>
+                    </div>
+                </div>
+            @endif
           </div>
         </div>
       </div>

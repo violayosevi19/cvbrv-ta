@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('container')
-@section('JudulPages','Supplier')
-@section('JudulTabel','Supplier')
+@section('JudulPages','Report')
+@section('JudulTabel','Report')
 <div class="ms-4 me-4">
     @if(session()->has('pesan'))
       <div class="alert alert-success d-flex align-items-center alert-faktur text-white" id="alert" role="alert" >
@@ -27,71 +27,58 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>Data Supplier</h6>
-          @if(auth()->user()->role != "direksi")
-          <a href="/supplier-dash/create" class="btn btn-primary">Tambah Data</a>
-          @endif
+          <h4>Daftar Laporan Perusahaan</h4>
+          <div class="col col-md-3 py-2">
+            <div class="d-flex">
+            <input type="date" class="form-control" placeholder="masukkan nama bulan">
+            <label for="exampleFormControlInput1" class="form-label mt-2 ms-2">s/d</label>
+            <input type="date" class="form-control ms-3" placeholder="masukkan nama bulan">
+            </div>
+            <button type="button" class="btn btn-primary mt-2">Cari</button>
+          </div>
         </div>
-        <div class="card-body px-0 pt-0 pb-2">
+        <div class="card-body px-6 pt-2 pb-2">
           <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+            <table class="table table-bordered align-items-center mb-0">
               <thead>
                 <tr>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Supplier</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Supplier</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Hp</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
-                  @if(auth()->user()->role != "direksi")
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-                  @endif
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nomor</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Laporan</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($suppliers as $sp)
                 <tr>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->kodesupplier }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">1</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="badge badge-sm bg-gradient-secondary">{{ $sp->nonota }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">Laporan Penjualan</span>
                 </td>
-                <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->namasupplier }}</span>
-                </td>
-                <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->nohp }}</span>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->tglfaktur }}</span>
-                </td>
-                <td class="align-middle text-center text-sm">
-                  <span class="badge badge-sm bg-gradient-secondary">{{ $sp->jatuhtempo }}</span>
-                </td>
-                <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->total }}</span>
-                </td>
-                @if(auth()->user()->role != "direksi")
-                <td class="align-middle text-center">
-                  <a href="/supplier-dash/{{$sp->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
-                    Edit
-                  </a>
-                  <form  class="d-inline" action="/supplier-dash/{{ $sp->id }}" method="post">
-                    @method('delete')
-                    @csrf
-                    <button id="delete" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip">
-                      Delete
-                    </button>
-                  </form>
-                  <a href="/supplier-dash/{{$sp->nonota}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
-                    Read
-                  </a>
-                </td>
-                @endif
               </tr>
-              @endforeach
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">2</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">Laporan Laba Rugi</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">3</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">Laporan Stock Tersedia</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">4</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">Laporan Barang Masuk</span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

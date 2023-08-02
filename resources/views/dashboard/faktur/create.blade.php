@@ -17,22 +17,26 @@
                   @csrf
                   <div class="mb-3">
                     <label for="kodeproduk" class="form-label">No Nota</label>
-                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota">
+                    <input type="text" class="form-control @error ('nonota') is-invalid @enderror" id="nonota" name="nonota" value="{{ $nonota }}" readonly>
                   </div>
                   @error('nonota')
                   {{ $message }}
                   @enderror
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Toko</label>
-                    <input type="text" class="form-control" id="namatoko" name="namatoko">
+                    <input type="text" class="form-control" id="namatoko" name="namatoko" value="{{ $faktur[0]['namatoko'] }}" readonly>
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tanggal Faktur</label>
-                    <input type="date" class="form-control" id="tglfaktur" name="tglfaktur">
+                    <input type="date" class="form-control" id="tglfaktur" name="tglfaktur" value="{{ $faktur[0]['tglfaktur'] }}" readonly>
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jatuh Tempo</label>
-                    <input type="date" class="form-control" id="jatuhtempo" name="jatuhtempo">
+                    <input type="date" class="form-control" id="jatuhtempo" name="jatuhtempo" value="{{ $faktur[0]['jatuhtempo'] }}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Sopir</label>
+                    <input type="text" class="form-control" id="sopir" name="sopir">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
@@ -51,7 +55,7 @@
                   </div>
                    <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Total</label>
-                    <input type="text" class="form-control" id="total" name="total">
+                    <input type="number" class="form-control" id="total" name="total" value="{{ $faktur[0]['total_amount'] }}" readonly>
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

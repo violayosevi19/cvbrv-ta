@@ -37,8 +37,8 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nomor Nota</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Supplier</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Masuk</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                   @if(auth()->user()->role != "direksi")
@@ -52,18 +52,18 @@
                  <td>
                   <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">{{$data->kodeproduk}}</h6>
+                      <h6 class="mb-0 text-sm">{{$data->nonota}}</h6>
                     </div>
                   </div>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{$data->namaproduk}}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{$data->namasupplier}}</span>
                 </td>
                 <td class="align-middle text-center">
                   <p class="text-xs font-weight-bold mb-0">{{$data->tanggalmasuk}}</p>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">gfffghj</span>
+                  <span class="text-secondary text-xs font-weight-bold">Sudah Masuk</span>
                 </td>
                 @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">
@@ -77,9 +77,11 @@
                       Delete
                     </button>
                   </form>
-                  <a href="#" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                
+                  <a href="/barangmasuk-dash/{{$data->nonota}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Read
                   </a>
+
                 </td>
                 @endif
               </tr>

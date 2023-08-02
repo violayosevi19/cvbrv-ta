@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangMasuk;
 use App\Models\supplier;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class SupplierController extends Controller
     {
         $validateData=$request->validate([
             'nonota' => 'required|unique:suppliers',
-            'kodeproduk' => 'required',
+            'kodesupplier' => 'required|unique:suppliers',
             'namasupplier' => 'required',
             'nohp' => 'required',
             'alamat' => 'required',
@@ -56,11 +57,15 @@ class SupplierController extends Controller
      * @param  \App\Models\supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(supplier $supplier,$kodeproduk)
+    public function show(supplier $supplier,$nonota)
     {
-        $takeDataSupplier = supplier::where('kodeproduk','=',$kodeproduk)->get()->all();
-        // dd($takeDataSupplier);
-        return view('dashboard.supplier.read',['detailSupplier' => $takeDataSupplier]);
+        $takeDataSupplier = supplier::where('nonota','=',$nonota)->get()->all();
+        $produk = supplier::with('barangMasuk')->get()->toArray();
+        // dd($produk);
+        return view('dashboard.supplier.read',[
+            'detailSupplier' => $takeDataSupplier,
+            'produks' => $produk
+        ]);
     }
 
     /**
@@ -84,8 +89,11 @@ class SupplierController extends Controller
     public function update(Request $request, supplier $supplier,$id)
     {
           $validateData=$request->validate([
+            'kodesupplier' => 'required',
             'nonota' => 'required',
             'namasupplier' => 'required',
+            'nohp' => 'required',
+            'alamat' => 'required',
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'total' => 'required',

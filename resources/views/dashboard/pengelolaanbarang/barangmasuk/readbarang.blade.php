@@ -1,40 +1,27 @@
 @extends('dashboard.layout.main')
 @section('container')
-@section('JudulPages','Edit Detail Orderan')
-@section('JudulTabel','Edit Detail Orderan')
+@section('JudulPages','Barang Masuk')
+@section('JudulTabel','Barang Masuk')
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3 text-center">Edit Detail Orderan</h6>
+          <h4 class="mx-3 text-center">Detail Barang Masuk</h4>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
             <div class="row mx-3 mt-3">
                 @foreach($detailtokos as $detail)
-              <form action="/detailorderan-dash/{{ $detail['nonota'] }}" method="post">
-                @csrf
-                @method('put')
+              <form action="/barangmasuk-dash/{{ $detail['nonota'] }}" method="post">
               <div class="row">
-                <div class="col col-md-4">
+              <div class="col col-md-4">
                   <table class="table">
                         <tr>
-                            <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Toko</th>
+                            <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Supplier</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control namatoko" placeholder="Enter nama toko" name="namatoko" value="{{ $detail['namatoko'] }}">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col col-md-4">
-                  <table class="table">
-                        <tr>
-                            <th class="align-middle  text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
-                            <td class="align-middle text-center">:</td>
-                            <td class="align-middle text-center">
-                                <input type="text" class="form-control alamat" placeholder="Enter alamat" name="alamat" value="{{ $detail['alamat'] }}">
+                                <span class="text-secondary text-m font-weight-bold" name="nonota">{{ $detail['namasupplier'] }}</span>
                             </td>
                         </tr>
                     </table>
@@ -45,51 +32,27 @@
                             <th class="align-middle  text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="date" class="form-control" name="tglfaktur" value="{{ $detail['tglfaktur'] }}">
+                                <span class="text-secondary text-m font-weight-bold">{{ $detail['tanggalmasuk'] }}</span>
                             </td>
                         </tr>
                     </table>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col col-md-4">
                   <table class="table">
                         <tr>
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control" placeholder="Enter no faktur" name="nonota" value="{{ $detail['nonota'] }}">
+                            <span class="text-secondary text-m font-weight-bold">{{ $detail['nonota'] }}</span>
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div class="col col-md-4">
-                  <table class="table">
-                        <tr>
-                            <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
-                            <td class="align-middle text-center">:</td>
-                            <td class="align-middle text-center">
-                                <input type="date" class="form-control" placeholder="Enter jatuh tempo" name="jatuhtempo" value="{{ $detail['jatuhtempo'] }}">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col col-md-4">
-                  <table class="table">
-                        <tr>
-                            <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Sales</th>
-                            <td class="align-middle text-center">:</td>
-                            <td class="align-middle text-center">
-                                <input type="text" class="form-control" placeholder="Enter sales" name="namasales" value="{{ $detail['namasales'] }}">
-                            </td>
-                        </tr>
-                  </table>
                 </div>
               </div>
               @endforeach
               <div class="row">
                 <div class="col">
-                  <h4 class="mx-3 text-center mt-4">FAKTUR PENJUALAN</h4>
+                  <h4 class="mx-3 text-center mt-4">FAKTUR BARANG MASUK</h4>
                 </div>
               </div>
               <div class="col mt-3 justify-content-center produk-div">
@@ -103,46 +66,44 @@
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga Satuan</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diskon</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($detailproduks as $index => $details)
                             <tr>
-                              <td class="align-middle text-center">
-                                <input type="text" class="form-control kodeproduk" id="kodeproduk{{$index}}" name="inputs[{{$index}}][kodeproduk]" placeholder="Enter kode produk" value="{{ $details['kodeproduk'] }}">
+                            <td class="align-middle text-center">
+                                <span class="text-xs">{{ $details['kodeproduk'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control namaproduk" id="namaproduk{{$index}}"  name="inputs[{{$index}}][namaproduk]" placeholder="Enter nama produk" value="{{ $details['namaproduk'] }}">
+                                <span class="text-xs">{{ $details['namaproduk'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control @error('inputs.*.kuantitas') is-invalid  @enderror kuantitas" id="kuantitas{{$index}}"  name="inputs[{{$index}}][kuantitas]" placeholder="Enter kuantitas" value="{{ $details['kuantitas'] }}">
-                                @error('inputs.*.kuantitas')
-                                  <span class="invalid-feedback">
-                                      {{ $message }}
-                                  </span>
-                                @enderror
+                                <span class="text-xs">{{ $details['stock'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control satuan" id="satuan{{$index}}"  name="inputs[{{$index}}][satuan]" placeholder="Enter satuan" value="{{ $details['satuan'] }}">
+                                <span class="text-xs">pcs</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control harga" id="harga{{$index}}" name="inputs[{{$index}}][harga]" placeholder="Enter harga produk" value="{{ $details['harga'] }}">
+                                <span class="text-xs">{{ $details['harga'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control diskon" id="diskon{{$index}}"  name="inputs[{{$index}}][diskon]" placeholder="Enter diskon" value="{{ $details['diskon'] }}">
+                                <span class="text-xs">{{ $details['diskon'] }}%</span>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control jumlah" id="jumlah{{$index}}" name="inputs[{{$index}}][jumlah]" placeholder="Enter jumlah" value="{{ $details['jumlah'] }}">
+                                <span class="text-xs">{{ $details['jumlah'] }}</span>
                               </td>
                               @endforeach
-                              <td class="align-middle text-center">
-                                <button class="btn btn-success mt-3" type="button" name="add" id="add">Tambah</button>
-                              </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="align-middle text-center">
+                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Total</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">{{ $bayar }}</span>
+                                </td>
                             </tr>
                         </tbody>
                       </table>
-                    <button class="btn btn-primary mt-3" type="submit" name="submit" id="submit">Submit</button>
                  </div>
               </form>
             </div>
@@ -157,7 +118,7 @@
     $(document).ready(function () {
         const totalData = {!! $totaldatapernota !!};
         let counter = totalData;
-        // console.log(counter);
+        console.log(counter);
         $('#add').on('click',function() {
             // Menambahkan baris input baru ke dalam tabel
             function addNewRow(){
@@ -165,30 +126,22 @@
                 const newRow = `
                 <tr>
                     <td class="align-middle text-center">
-                    <input type="text" class="form-control kodeproduk" id="kodeproduk"  name="inputs[`+counter+`][kodeproduk]" placeholder="Enter kode produk">
+                    <input type="text" class="form-control" id="kodeproduk"  name="inputs[`+counter+`][kodeproduk]" placeholder="Enter kode produk">
                     </td>
                     <td class="align-middle text-center">
-                    <input type="text" class="form-control namaproduk" id="namaproduk" name="inputs[`+counter+`][namaproduk]" placeholder="Enter nama produk">
+                    <input type="text" class="form-control" id="namaproduk" name="inputs[`+counter+`][namaproduk]" placeholder="Enter nama produk">
                     </td>
                     <td class="align-middle text-center">
-                    <input type="number" class="form-control @error('inputs.*.kuantitas') is-invalid  @enderror" id="kuantitas"  name="inputs[`+counter+`][kuantitas]" placeholder="Enter kuantitas">
-                    @error('inputs.*.kuantitas')
-                      <span class="invalid-feedback">
-                          {{ $message }}
-                      </span>
-                    @enderror
+                    <input type="number" class="form-control" id="kuantitas" name="inputs[`+counter+`][stock]" placeholder="Enter kuantitas">
                     </td>
                     <td class="align-middle text-center">
-                    <input type="text" class="form-control" id="satuan"  name="inputs[`+counter+`][satuan]" placeholder="Enter satuan">
-                    </td>
-                    <td class="align-middle text-center">
-                    <input type="number" class="form-control harga" id="harga" name="inputs[`+counter+`][harga]" placeholder="Enter harga">
+                    <input type="number" class="form-control" id="harga" name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                     </td>
                     <td class="align-middle text-center">
                     <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
                     </td>
                     <td class="align-middle text-center">
-                    <input type="number" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                    <input type="number" class="form-control" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                     </td>
                     <td class="align-middle text-center">
                     <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
@@ -212,26 +165,8 @@
             $('input[name="diskon"]').val('');
             $('input[name="jumlah"]').val('');
           });
-
-          $('.namatoko').on('input',function() {
-              var namatoko = $(this).val();
-              if(namatoko !== '') {
-                $.ajax({
-                  url:'/get-alamat',
-                  type: 'GET',
-                  data : { namatoko : namatoko },
-                  success : function (response) {
-                    $('.alamat').val(response.alamat)
-                  }
-                })
-              } else {
-                $('.alamat').val('');
-              }
-          });
-
     });
 
-    
     $(document).on('input','#kodeproduk', function() {
               var kodeproduk = $(this).val();
               var namaprodukField = $(this).closest('tr').find('#namaproduk');
@@ -283,7 +218,27 @@
       }
     });
 
-    $(document).on('input', '.diskon', function () {
+    $(document).on('input', '#diskon', function () {
+            var diskon = $(this).val();
+            var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
+            var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
+            var jumlahField = $(this).closest('tr').find('#jumlah');
+
+            if (diskon !== '') {
+                $.ajax({
+                    url: '/get-jumlah', // Ganti dengan URL yang sesuai
+                    type: 'GET',
+                    data: { diskon: diskon, stock: kuantitas, harga: harga },
+                    success: function (response) {
+                        jumlahField.val(response.jumlahharga);
+                    }
+                });
+            } else {
+                jumlahField.val(0);
+            }
+      });
+
+      $(document).on('input', '.diskon', function () {
       var diskon = $(this).val();
       var currentRow = $(this).closest('tr');
 
@@ -305,29 +260,4 @@
         jumlahField.val(jumlahSetelahDiskon);
       }
     });
-
-
-
-
-
-    $(document).on('input', '#diskon', function () {
-            var diskon = $(this).val();
-            var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
-            var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
-            var jumlahField = $(this).closest('tr').find('#jumlah');
-
-            if (diskon !== '') {
-                $.ajax({
-                    url: '/get-jumlahdetail', // Ganti dengan URL yang sesuai
-                    type: 'GET',
-                    data: { diskon: diskon, kuantitas: kuantitas, harga: harga },
-                    success: function (response) {
-                        jumlahField.val(response.jumlahharga);
-                    }
-                });
-            } else {
-                jumlahField.val(0);
-            }
-    });
-    
 </script>

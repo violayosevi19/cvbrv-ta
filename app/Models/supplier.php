@@ -11,6 +11,10 @@ class supplier extends Model
     protected $guarded=[];
 
     public function produk(){
-        return $this->belongsTo(produk::class);
+        return $this->hasMany(produk::class);
+    }
+
+    public function barangMasuk() {
+        return $this->hasMany(BarangMasuk::class, 'nonota', 'nonota');
     }
 }

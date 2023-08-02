@@ -42,7 +42,6 @@ class StockController extends Controller
             'kodeproduk' => 'required',
             'namaproduk' => 'required',
             'satuan' => 'required',
-            'harga' => 'required',
             'stock' => 'required',
         ]);
 
@@ -92,7 +91,6 @@ class StockController extends Controller
             'kodeproduk' => 'required',
             'namaproduk' => 'required',
             'satuan' => 'required',
-            'harga' => 'required',
             'stock' => 'required',
         ]);
 

@@ -12,7 +12,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3 text-center">Data Detail Orderan</h6>
+          <h4 class="mx-3 text-center">Data Detail Orderan</h4>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -61,7 +61,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control nonota" placeholder="Enter no faktur" name="nonota">
+                                <input type="text" class="form-control nonota" placeholder="Enter no faktur" name="nonota" value="{{ $nonota }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -72,7 +72,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control jatuhtempo" placeholder="Enter jatuh tempo" name="jatuhtempo">
+                                <input type="date" class="form-control jatuhtempo" placeholder="Enter jatuh tempo" name="jatuhtempo">
                             </td>
                         </tr>
                     </table>
@@ -155,8 +155,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
+      let counter = 0;
         $('#add').on('click',function() {
-            let counter = 1;
+            counter++
             // Menambahkan baris input baru ke dalam tabel
             const newRow = `
               <tr class="new">
