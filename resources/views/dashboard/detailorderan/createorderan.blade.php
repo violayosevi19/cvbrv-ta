@@ -131,7 +131,10 @@
                                 <input type="number" class="form-control harga" id="harga" name="inputs[0][harga]" placeholder="Enter harga produk">
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter diskon">
+                                <div class="input-group">
+                                  <input type="number" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter disc">
+                                  <span class="input-group-text" id="basic-addon1">%</span>
+                                </div>
                               </td>
                               <td class="align-middle text-center">
                                 <input type="number" class="form-control jumlah" id="jumlah" name="inputs[0][jumlah]" placeholder="Enter jumlah">
@@ -182,7 +185,10 @@
                   <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                    <div class="input-group">
+                       <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                        <span class="input-group-text" id="basic-addon1">%</span>
+                    </div>
                 </td>
                 <td class="align-middle text-center">
                   <input type="number" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">

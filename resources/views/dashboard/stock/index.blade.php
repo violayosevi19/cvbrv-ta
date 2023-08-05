@@ -31,6 +31,7 @@
           @if(auth()->user()->role != "direksi")
           <a href="/barangmasuk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
+          <a href="/cetakstok" class="btn btn-success fa-lg"><i class="fas fa-print"></i></a>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">

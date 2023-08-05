@@ -47,22 +47,20 @@
                 </thead>
                 <tbody>
                 @foreach($produks as $item)
-                    @foreach($item['barang_masuk'] as $barangMasuk)
                         <tr>
                             <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">{{ $barangMasuk['kodeproduk'] }}</span>
+                            <span class="text-secondary text-xs font-weight-bold">{{ $item['kodeproduk'] }}</span>
                             </td>
                             <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">{{ $barangMasuk['namaproduk'] }}</span>
+                            <span class="text-secondary text-xs font-weight-bold">{{ $item['namaproduk'] }}</span>
                             </td>
                         </tr>
-                    @endforeach
                 @endforeach
                 </tbody>
               </table>
               <div class="card-header pb-0 align-items-center ">
                   <a href="/barangmasuk-dash/create" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
-                      Pesan Produk Baru
+                      Masukkan Barang Masuk 
                   </a>
               </div>
               </div>

@@ -58,7 +58,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control" placeholder="Enter no faktur" name="nonota" value="{{ $detail['nonota'] }}">
+                                <input type="text" class="form-control" placeholder="Enter no faktur" name="nonota" value="{{ $detail['nonota'] }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -130,7 +130,10 @@
                                 <input type="text" class="form-control harga" id="harga{{$index}}" name="inputs[{{$index}}][harga]" placeholder="Enter harga produk" value="{{ $details['harga'] }}">
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control diskon" id="diskon{{$index}}"  name="inputs[{{$index}}][diskon]" placeholder="Enter diskon" value="{{ $details['diskon'] }}">
+                                <div class="input-group">
+                                  <input type="number" class="form-control diskon" id="diskon{{$index}}"  name="inputs[{{$index}}][diskon]" placeholder="Enter diskon" value="{{ $details['diskon'] }}">
+                                  <span class="input-group-text" id="basic-addon1">%</span>
+                                </div>
                               </td>
                               <td class="align-middle text-center">
                                 <input type="number" class="form-control jumlah" id="jumlah{{$index}}" name="inputs[{{$index}}][jumlah]" placeholder="Enter jumlah" value="{{ $details['jumlah'] }}">
@@ -185,7 +188,10 @@
                     <input type="number" class="form-control harga" id="harga" name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                     </td>
                     <td class="align-middle text-center">
-                    <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                        <span class="input-group-text" id="basic-addon1">%</span>
+                    </div>
                     </td>
                     <td class="align-middle text-center">
                     <input type="number" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">

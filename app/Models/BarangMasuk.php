@@ -17,4 +17,8 @@ class BarangMasuk extends Model
     public function supplier() {
         return $this->belongsTo(supplier::class, 'nonota', 'nonota');
     }
+
+    public function produk(){
+        return $this->hasMany(produk::class,'kodeproduk','kodeproduk');
+    }
 }

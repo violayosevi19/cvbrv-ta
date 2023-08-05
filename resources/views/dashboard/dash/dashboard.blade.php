@@ -48,7 +48,7 @@
                   {{ $pendapatan }}
                 </h5>
                 <p class="mb-0">
-                  <span class="text-success text-sm font-weight-bolder">+55%</span>
+                  <span class="text-success text-sm font-weight-bolder">{{$persentase}}%</span>
                   since yesterday
                 </p>
               </div>
@@ -68,9 +68,9 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
+                <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Stock Tersedia</p>
                 <h5 class="font-weight-bolder">
-                  2,300
+                  {{ $stock }}
                 </h5>
                 <p class="mb-0">
                   <span class="text-success text-sm font-weight-bolder">+3%</span>
@@ -93,9 +93,9 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
+                <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Orderan belum Selesai</p>
                 <h5 class="font-weight-bolder">
-                  +3,462
+                  {{ $jml }}
                 </h5>
                 <p class="mb-0">
                   <span class="text-danger text-sm font-weight-bolder">-2%</span>
@@ -118,9 +118,9 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
+                <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Toko yang Order</p>
                 <h5 class="font-weight-bolder">
-                  $103,430
+                  {{ $jmlToko }}
                 </h5>
                 <p class="mb-0">
                   <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
@@ -141,10 +141,10 @@
     <div class="col-lg-7 mb-lg-0 mb-4">
       <div class="card z-index-2 h-100">
         <div class="card-header pb-0 pt-3 bg-transparent">
-          <h6 class="text-capitalize">Sales overview</h6>
+          <h6 class="text-capitalize">Grafik Penjualan</h6>
           <p class="text-sm mb-0">
             <i class="fa fa-arrow-up text-success"></i>
-            <span class="font-weight-bold">4% more</span> in 2021
+            <span class="font-weight-bold">Result </span> in 2023
           </p>
         </div>
         <div class="card-body p-3">
@@ -158,34 +158,34 @@
       <div class="card card-carousel overflow-hidden h-100 p-0">
         <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
           <div class="carousel-inner border-radius-lg h-100">
-            <div class="carousel-item h-100 active" style="background-image: url('../assets/img/carousel-1.jpg');
+            <div class="carousel-item h-100 active" style="background-image: url('../assets/img/KAPAS SELECTION 50 GRAM 1.jpg');
             background-size: cover;">
             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
               <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                 <i class="ni ni-camera-compact text-dark opacity-10"></i>
               </div>
-              <h5 class="text-white mb-1">Get started with Argon</h5>
-              <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
+              <h5 class="text-white mb-1">The Best Beauty Cutton</h5>
+              <p>Have a smooth textures and clean effectively</p>
             </div>
           </div>
-          <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-2.jpg');
+          <div class="carousel-item h-100" style="background-image: url('../assets/img/Fasma Cutton Bud.jpeg');
           background-size: cover;">
           <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
             <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
               <i class="ni ni-bulb-61 text-dark opacity-10"></i>
             </div>
-            <h5 class="text-white mb-1">Faster way to create web pages</h5>
-            <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
+            <h5 class="text-white mb-1">Fasma Care Reguler and B</h5>
+            <p>100% lembut dan tidak mudah copot</p>
           </div>
         </div>
-        <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-3.jpg');
+        <div class="carousel-item h-100" style="background-image: url('../assets/img/Hanasui.png');
         background-size: cover;">
         <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
           <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
             <i class="ni ni-trophy text-dark opacity-10"></i>
           </div>
-          <h5 class="text-white mb-1">Share with us your design tips!</h5>
-          <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
+          <h5 class="text-white mb-1">Hanasui Lips</h5>
+          <p>The best way to make your lips beauty</p>
         </div>
       </div>
     </div>
@@ -463,7 +463,7 @@
           labels: namaBulanData,
           datasets: [
             {
-              label: "Mobile apps",
+              label: "Penjualan",
               tension: 0.4,
               borderWidth: 0,
               pointRadius: 0,

@@ -31,29 +31,29 @@ class CetakPaperController extends Controller
             ->where('nonota','=',$nonota)->get()->count();;
         // dd($detailProduks,$detailToko[0]['namatoko'],$totalProdukPerNonota);
         $totalFaktur = detailpesanan::where('nonota',$nonota)->sum(\DB::raw('jumlah-diskon'));
-        $pdf = new Dompdf();
-        $html = view('dashboard.faktur.invoice',[
-            'detailtokos' => $detailToko,
-            'detailproduks' => $detailProduks,
-            'totaldatapernota' => $totalProdukPerNonota,
-            'bayar' => $totalFaktur 
-        ])->render();
-        $pdf->loadHtml($html);
-
-        // Atur opsi (opsional)
-        $pdf->setPaper('A4', 'portrait');
-
-        // Render PDF
-        $pdf->render();
-
-        // Kode untuk menghasilkan tampilan PDF untuk diunduh
-        return $pdf->stream('invoice.pdf');
-        // return view('dashboard.faktur.invoice',[
+        // $pdf = new Dompdf();
+        // $html = view('dashboard.faktur.invoice',[
         //     'detailtokos' => $detailToko,
         //     'detailproduks' => $detailProduks,
         //     'totaldatapernota' => $totalProdukPerNonota,
         //     'bayar' => $totalFaktur 
-        // ]);
+        // ])->render();
+        // $pdf->loadHtml($html);
+
+        // // Atur opsi (opsional)
+        // $pdf->setPaper('A4', 'portrait');
+
+        // // Render PDF
+        // $pdf->render();
+
+        // // Kode untuk menghasilkan tampilan PDF untuk diunduh
+        // return $pdf->stream('invoice.pdf');
+        return view('dashboard.faktur.invoice',[
+            'detailtokos' => $detailToko,
+            'detailproduks' => $detailProduks,
+            'totaldatapernota' => $totalProdukPerNonota,
+            'bayar' => $totalFaktur 
+        ]);
       
         
     }

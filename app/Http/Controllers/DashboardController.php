@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\produk;
 use App\Models\Stock;
 use App\Models\penjualan;
+use App\Models\faktur;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -72,16 +73,37 @@ class DashboardController extends Controller
         $pendapatan = penjualan::select(\DB::raw("SUM(totalpenjualan) as total"))->get()->toArray()[0]['total'];
         if(!$pendapatan){
             $hasilPenjualan = 0;
+            $persentase = 0;
         } else {
             $hasilPenjualan = $pendapatan;
+            $persentase = $pendapatan/30000000 * 100;
         }
-        // dd($pendapatan);
 
+        //cek all stock
+        $stock = Stock::select(\DB::raw("SUM(stock) as jumlahStock"))->get()->toArray()[0]['jumlahStock'];
+        if(!$stock){
+            $hasilStock = 0;
+        } else {
+            $hasilStock = $stock;
+        }
+         //cek orderan belum selesai
+         $belumSelesai = faktur::select(\DB::raw("COUNT(status_diterima) as orderanSelesai"))->where('status_diterima',0)->get()->toArray()[0]['orderanSelesai'];
+
+
+         // cek data toko yang pernah order
+         $tokoUnique = [];
+         $cekToko = faktur::selectRaw("COUNT(DISTINCT namatoko) as jmlToko")->get()->toArray()[0]['jmlToko'];
+       
+        //  dd($cekToko,$tokoUnique);
         return view('dashboard.dash.dashboard',[
             'stockAlerts' => $message,
             'namaBulan' => $namaBulan,
             'total' => $total,
-            'pendapatan' => $hasilPenjualan
+            'pendapatan' => $hasilPenjualan,
+            'persentase' => $persentase,
+            'stock' => $hasilStock,
+            'jml' => $belumSelesai,
+            'jmlToko' => $cekToko
         ]);
     }
 

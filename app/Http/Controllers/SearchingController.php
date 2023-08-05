@@ -14,8 +14,12 @@ class SearchingController extends Controller
 
     }
 
-    public function searchingPenjualanperMonth(Request $request) {
-
+    public function searchingProduk(Request $request) {
+        $input = $request->input('inputSearch');
+        // $input = "Ka";
+        $produk = Produk::where('namaproduk','like' , '%' . $input . '%')->get();
+        // dd($produk);
+        return response()->json($produk);
     }
 
     public function searchingProdukperKategori(Request $request) {

@@ -216,7 +216,7 @@ class DetailpesananController extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
-        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->get()->toArray();
+        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->where('nonota',$nonota)->get()->toArray();
         $totalProdukPerNonota =  Detailpesanan::select(
             'kodeproduk',
             'namaproduk',

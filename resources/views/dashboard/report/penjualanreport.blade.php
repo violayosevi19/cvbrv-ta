@@ -53,8 +53,12 @@
             // Buat associative array untuk mengelompokkan data penjualan berdasarkan bulan
             $penjualanPerBulan = [];
             foreach ($penjualans as $item) {
-                $bulan = date('F', strtotime($item['faktur']['tglfaktur']));
-                $penjualanPerBulan[$bulan][] = $item;
+                foreach($item['faktur'] as $faktur){
+                    $tglFaktur = $faktur['tglfaktur'];
+                    $bulan = date('F', strtotime($tglFaktur));
+                    $penjualanPerBulan[$bulan][] = $item;
+                }
+ 
             }
             $bulanUrutan = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April', 'May', 'June'];
         @endphp
@@ -80,7 +84,7 @@
                         <tr>
                             <td class="text-center" width="20">{{$index}}</td>
                             <td colspan="2">{{ $item['nonota']}}</td>
-                            <td colspan="2">{{ $item['faktur']['tglfaktur']}}</td>
+                            <td colspan="2">{{ $item['faktur'][0]['tglfaktur']}}</td>
                             <td colspan="2">{{ $item['namatoko']}}</td>
                             <td colspan="1">{{ $item['totalpenjualan']}}</td>
                         </tr>

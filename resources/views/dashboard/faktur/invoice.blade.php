@@ -217,16 +217,16 @@
                         <td>:</td>
                         <td>{{$detailtokos[0]['alamat']}}</td>
                     </tr>
-                </table>
-            </div>
-            <div></div>
-            <div id="project-toko">
-                <table class="tabel-toko">
                     <tr>
                         <th>Nonota</th>
                         <td>:</td>
                         <td>{{$detailtokos[0]['nonota']}}</td>
                     </tr>
+                </table>
+            </div>
+            <div></div>
+            <div id="project-toko">
+                <table class="tabel-toko">
                     <tr>
                         <th>Tanggal</th>
                         <td>:</td>

@@ -157,7 +157,7 @@ class BarangMasukController extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
-        $detailToko = BarangMasuk::select('namasupplier','nonota','tanggalmasuk')->distinct()->get()->toArray();
+        $detailToko = BarangMasuk::select('namasupplier','nonota','tanggalmasuk')->distinct()->where('nonota',$nonota)->get()->toArray();
         $totalProdukPerNonota =  BarangMasuk::select(
             'kodeproduk',
             'namaproduk',
@@ -169,6 +169,7 @@ class BarangMasukController extends Controller
             ->where('nonota','=',$nonota)->get()->count();;
         // dd($detailProduks);
         $totalFaktur = BarangMasuk::where('nonota',$nonota)->sum(\DB::raw('jumlah'));
+
         // dd($totalFaktur);
         return view('dashboard.pengelolaanbarang.barangmasuk.readbarang',[
             'detailtokos' => $detailToko,

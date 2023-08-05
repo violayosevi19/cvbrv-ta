@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
     Route::get('/report-dash',[ReportController::class,'index']);
     Route::get('/laporanpenjualan',[ReportController::class,'laporanPenjualan']);
     Route::get('/labarugi',[ReportController::class,'labaRugi']);
+    Route::get('/cetakstok',[ReportController::class,'cetakStok']);
+    Route::get('/cetakproduk',[ReportController::class,'cetakProduk']);
 });
 
 // mendapatkan data input
@@ -88,6 +90,7 @@ Route::get('/get-faktur', [GetDataController::class,'getPenjualan']);
 Route::post('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
 Route::get('/getpenjualan',[GetDataController::class,'getPenjualanperBulan']);
 // Route::get('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
+Route::get('/searchProduk', [SearchingController::class,'searchingProduk']);
 
 // //front end
 // Route::get('/',[DashboardController::class,'index'])->Middleware('auth');

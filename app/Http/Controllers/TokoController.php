@@ -41,7 +41,6 @@ class TokoController extends Controller
             'alamat' => 'required',
             'notelp' => 'required',
             'email' => 'required',
-            'nonota' => 'required'
         ]);
 
         Toko::create($validateData);

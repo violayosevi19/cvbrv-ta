@@ -22,6 +22,26 @@
       });
     </script>
 </div>
+<div class="ms-4 me-4">
+    @if(session()->has('error'))
+      <div class="alert alert-danger d-flex align-items-center alert-faktur text-white" id="alert" role="alert" >
+          <div class="flex-grow-1">{{ session('error') }}</div>
+          <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
+      </div>
+    @endif
+    <script>
+      var closeElement = document.querySelectorAll('.close');
+      closeElement.forEach(function(close) {
+          close.addEventListener('click', function() {
+            var closeContent = document.getElementById('alert');
+            console.log(closeContent);
+              if (closeContent) {
+                closeContent.remove();
+              }
+          })
+      });
+    </script>
+</div>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -31,10 +51,12 @@
           @if(auth()->user()->role != "direksi")
           <a href="/produk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
+          <a href="/cetakproduk" class="btn btn-success fa-lg"><i class="fas fa-print"></i></a>
         </div>
+        <div id="searchResults"></div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+          <div class="table-responsive p-3">
+            <table id="myTable" class="table align-items-center mb-0 px-3 py-3 display">
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
@@ -52,7 +74,7 @@
                  <td>
                   <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm"><a href="/supplier-dash/{{$produk->kodeproduk}}">{{ $produk->kodeproduk }}</a></h6>
+                      <h6 class="mb-0 text-sm"><a href="/produk-dash/{{$produk->kodeproduk}}">{{ $produk->kodeproduk }}</a></h6>
                     </div>
                   </div>
                 </td>
@@ -83,7 +105,7 @@
                       Delete
                     </button>
                   </form>
-                  <a href="/produk-dash/{{$produk->id}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                  <a href="/produk-dash/{{$produk->kodeproduk}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Read
                   </a>
                 </td>
@@ -100,6 +122,7 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     // Contoh penggunaan di dalam JavaScript
     $(function () {
@@ -145,4 +168,39 @@
         });
     });
     
+</script>
+<script type="text/javascript">
+ $(document).ready(function () {
+      $('#myTable').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#myTable').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+});
+ 
 </script>

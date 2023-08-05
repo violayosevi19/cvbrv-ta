@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangMasuk;
 use App\Models\produk;
 use App\Models\jenisproduk;
 use App\Models\supplier;
@@ -60,10 +61,41 @@ class ProdukController extends Controller
      */
     public function show(produk $produk,$kodeproduk)
     {
-        $takeSupplier = supplier::where('kodeproduk','=',$kodeproduk)->get()->all();
-        dd($takeSupplier);
-        return view('dashboard.supplier.read',['detailSupplier' => $takeSupplier]);
+        $takeBarangMasuk = BarangMasuk::where('kodeproduk','=',$kodeproduk)->first();
+        if (!$takeBarangMasuk) {
+            return redirect('/produk-dash')->with('error', 'Tidak ada supplier dengan nama tersebut ditemukan');
+        }
+
+        $namasupplier = $takeBarangMasuk->namasupplier;
+        $takeSupplier = supplier::where('namasupplier', $namasupplier)->first();
+        if(!$takeSupplier){
+            return redirect('/produk-dash')->with('error','Nama supplier tidak ada');
+        }
+        $takeDataSupplier = supplier::where('namasupplier', $takeSupplier->namasupplier)->get()->all();
+        $produk = supplier::with('barangMasuk')->get()->toArray();
+        $dataProduk = [];
+        foreach($produk as $data){
+           foreach($data['barang_masuk'] as $value){
+                $dataProduk[] = [
+                    'kodeproduk' => $value['kodeproduk'],
+                    'namaproduk' => $value['namaproduk']
+                ];
+           }
+        }
+        // Get unique entries based on 'kodeproduk'
+        $ambilProdukUnik = array_unique($dataProduk, SORT_REGULAR);
+        // If you need to reset the keys of the resulting array
+        $result = array_values($ambilProdukUnik);
+        // dd($takeBarangMasuk,$takeSupplier->namasupplier,$namasupplier,$takeDataSupplier);
+        return view('dashboard.supplier.read',[
+            'detailSupplier' => $takeDataSupplier,
+            'produks' => $result
+        ]);
     }
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

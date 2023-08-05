@@ -52,7 +52,7 @@
                   <span class="text-secondary text-xs font-weight-bold">1</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">Laporan Penjualan</span>
+                  <span class="text-secondary text-xs font-weight-bold"><a href="{{ url('laporanpenjualan') }}">Laporan Penjualan</a></span>
                 </td>
               </tr>
               <tr>
@@ -68,7 +68,7 @@
                   <span class="text-secondary text-xs font-weight-bold">3</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">Laporan Stock Tersedia</span>
+                  <span class="text-secondary text-xs font-weight-bold"> <a href="/cetakstok">Daftar Stock </a></span>
                 </td>
               </tr>
               <tr>
@@ -76,7 +76,7 @@
                   <span class="text-secondary text-xs font-weight-bold">4</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">Laporan Barang Masuk</span>
+                  <span class="text-secondary text-xs font-weight-bold"><a href="/cetakproduk">Daftar Produk</a></span>
                 </td>
               </tr>
             </tbody>

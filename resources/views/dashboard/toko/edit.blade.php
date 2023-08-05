@@ -47,7 +47,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">No Nota</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$tokos->nonota) }}">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$tokos->nonota) }}" readonly>
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

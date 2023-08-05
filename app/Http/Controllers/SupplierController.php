@@ -60,11 +60,26 @@ class SupplierController extends Controller
     public function show(supplier $supplier,$nonota)
     {
         $takeDataSupplier = supplier::where('nonota','=',$nonota)->get()->all();
-        $produk = supplier::with('barangMasuk')->get()->toArray();
-        // dd($produk);
+        $produk = supplier::with('barangMasuk')
+        ->get()->toArray();
+
+        $dataProduk = [];
+        foreach($produk as $data){
+           foreach($data['barang_masuk'] as $value){
+                $dataProduk[] = [
+                    'kodeproduk' => $value['kodeproduk'],
+                    'namaproduk' => $value['namaproduk']
+                ];
+           }
+        }
+        // Get unique entries based on 'kodeproduk'
+        $ambilProdukUnik = array_unique($dataProduk, SORT_REGULAR);
+        // If you need to reset the keys of the resulting array
+        $result = array_values($ambilProdukUnik);
+        // dd($uniqueDataProduk,$uniqueDataProduk);
         return view('dashboard.supplier.read',[
             'detailSupplier' => $takeDataSupplier,
-            'produks' => $produk
+            'produks' => $result
         ]);
     }
 
