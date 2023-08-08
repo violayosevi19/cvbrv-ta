@@ -54,14 +54,14 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>Data Faktur</h6>
+        <h4 class="mx-3 text-center">Daftar Faktur</h4>
           @if(auth()->user()->role != "direksi")
           <a href="/detailorderan-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+          <div class="table-responsive p-3">
+            <table id="myTable" class="table align-items-center mb-0">
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
@@ -72,6 +72,7 @@
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengiriman</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pembayaran</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
                   @if(auth()->user()->role != "direksi")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                   @endif
@@ -98,6 +99,9 @@
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $faktur->total }}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <img src="{{ asset('storage/test/' . $faktur->file) }}" class="img-fluid" alt="...">
                 </td>
                 <td class="align-middle text-center">
                   @if($faktur->keterangan === "Dalam Pesanan")
@@ -162,6 +166,41 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Input Bukti dan Total</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/getpenjualan-cek" enctype="multipart/form-data" method="POST">
+              @csrf
+              <div class="modal-body">
+                      <input type="hidden" id="nonotaInput" name="nonota" value="">
+                      <div class="form-group">
+                          <label for="buktiInput">Bukti Transaksi:</label>
+                          <input type="file" class="form-control" id="buktiInput" name="buktiInput">
+                      </div>
+                      <div class="form-group">
+                          <label for="totalInput">Penerima</label>
+                          <input type="text" class="form-control" id="penerima" name="penerima">
+                      </div>
+                      <div class="form-group">
+                          <label for="totalInput">Total Diterima:</label>
+                          <input type="number" class="form-control" id="totalInput" name="totalInput">
+                      </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" id="submitModal">Submit</button>
+                  <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -209,31 +248,104 @@
             });
         });
 
-        $(document).on('click','.checked-btn', function() {
-            var fakturNonota = $(this).data('faktur-nonota');
-            console.log(fakturNonota)
-            $.ajax({
-              type: 'POST',
-              url : '/getpenjualan-cek',
-              data : {
-                nonota : fakturNonota,
-                _token: '{{ csrf_token() }}',
-              },
-              success: function (response) {
-                if (response.success) {
-                    // Update warna tombol menjadi hijau (berhasil)
-                    $(this).removeClass('btn-danger').addClass('btn-success');
+        $(document).on('click', '.checked-btn', function() {
+          var fakturNonota = $(this).data('faktur-nonota')
+          console.log(fakturNonota)
+          $('#nonotaInput').val(fakturNonota);
+             
+          $('#modal').modal('show'); // Gantikan '#modal' dengan ID modal Anda
+       });
 
-                    // Redirect ke halaman penjualan atau lakukan tindakan lain setelah data berhasil masuk ke tabel penjualan
-                    window.location.href = '/penjualan-dash';
-                }
-              },
-              error: function (xhr, status, error) {
-                // Tangani kesalahan jika diperlukan
-                console.error(error);
-              }
-            })
-        });
+       $('.close').on('click', function() {
+            $('#buktiInput').val('');
+            $('#totalInput').val('');
+            $('#modal').modal('hide'); 
+          });
+
     });
     
+</script>
+<script type="text/javascript">
+    // Contoh penggunaan di dalam JavaScript
+    $(function () {
+        $(document).on('click', '#delete', function (e) {
+            e.preventDefault();
+            var form = $(this).closest("form");
+            var link = form.attr("action");
+
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin menghapus?',
+                text: "Data tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                      type: "POST",
+                      url: link,
+                      data: form.serialize(),
+                      success : function(response){
+                          Swal.fire(
+                              'Deleted!',
+                              'Data Anda sudah dihapus.',
+                              'success'
+                          ).then(() => {
+                              location.reload();
+                          });
+                      },
+                      error : function(xhr,status,error){
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: error,
+                              footer: '<a href="">Why do I have this issue?</a>'
+                          });
+                      }
+                  });
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+ $(document).ready(function () {
+      $('#myTable').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#myTable').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('#myTable_info').css({
+      'font-family': 'Open Sans, sans-serif',
+      'font-size' : '12px'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+});
+ 
 </script>

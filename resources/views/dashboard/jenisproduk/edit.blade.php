@@ -7,7 +7,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3">Edit Jenis Produk</h6>
+          <h4 class="mx-3 text-center">Edit Jenis Produk</h4>
           @if(session()->has('pesan'))
           <div class="alert alert-danger" role="alert">
             {{ session('pesan') }}

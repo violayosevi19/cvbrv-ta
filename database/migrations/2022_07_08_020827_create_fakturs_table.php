@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('status_diterima')->default(false);
             $table->string('sopir',15);
             $table->string('penerima',20)->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

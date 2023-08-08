@@ -63,4 +63,8 @@ class ReportController extends Controller
     public function cetakProduk(){
         return view('dashboard.report.cetakproduk', ['produks' => produk::all()]);
     }
+
+    public function informasiLabaRugi(){
+        return view('dashboard.report.indexlabarugi',['produks' => produk::all()]);
+    }
 }

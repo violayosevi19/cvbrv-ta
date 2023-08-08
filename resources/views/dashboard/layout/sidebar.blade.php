@@ -112,15 +112,7 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-database text-info text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Penjualan</span>
-          </a>
-        </li>
-        <li class="nav-item">
-         <a class="nav-link {{ Request::is('report-dash') ? 'active' : ''}} " href="{{ url('report-dash') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-file-pdf-o text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Report</span>
+            <span class="nav-link-text ms-1">Penjualan dan Report</span>
           </a>
         </li>
         @elseif(auth()->user()->role == "fakturis")
@@ -206,15 +198,7 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-database text-info text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Penjualan</span>
-          </a>
-        </li>
-        <li class="nav-item">
-         <a class="nav-link {{ Request::is('report-dash') ? 'active' : ''}} " href="{{ url('report-dash') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-file-pdf-o text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Report</span>
+            <span class="nav-link-text ms-1">Penjualan dan Report</span>
           </a>
         </li>
         @endif

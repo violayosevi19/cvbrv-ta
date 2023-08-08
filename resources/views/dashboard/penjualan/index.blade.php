@@ -27,14 +27,14 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>Penjualan</h6>
+          <h4>Data Penjualan Selesai</h4>
           @if(auth()->user()->role != "direksi")
           <a href="/penjualan-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+          <div class="table-responsive p-3">
+            <table id="myTable" class="table align-items-center mb-0">
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
@@ -84,6 +84,70 @@
     </div>
   </div>
 </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h4>Daftar Laporan Perusahaan</h4>
+          <div class="col col-md-3 py-2">
+            <div class="d-flex">
+            <input type="date" class="form-control" placeholder="masukkan nama bulan">
+            <label for="exampleFormControlInput1" class="form-label mt-2 ms-2">s/d</label>
+            <input type="date" class="form-control ms-3" placeholder="masukkan nama bulan">
+            </div>
+            <button type="button" class="btn btn-primary mt-2">Cari</button>
+          </div>
+        </div>
+        <div class="card-body px-6 pt-2 pb-2">
+          <div class="table-responsive p-0">
+            <table id="tabelReport" class="table table-bordered align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nomor</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Laporan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">1</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"><a href="{{ url('laporanpenjualan') }}">Laporan Penjualan</a></span>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">2</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"><a href="{{ url('informasiprofit') }}">Laporan Laba Rugi</a></span>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">3</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"> <a href="/cetakstok">Daftar Stock </a></span>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">4</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"><a href="/cetakproduk">Daftar Produk</a></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -132,4 +196,123 @@
         });
     });
     
+</script>
+<script type="text/javascript">
+    // Contoh penggunaan di dalam JavaScript
+    $(function () {
+        $(document).on('click', '#delete', function (e) {
+            e.preventDefault();
+            var form = $(this).closest("form");
+            var link = form.attr("action");
+
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin menghapus?',
+                text: "Data tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                      type: "POST",
+                      url: link,
+                      data: form.serialize(),
+                      success : function(response){
+                          Swal.fire(
+                              'Deleted!',
+                              'Data Anda sudah dihapus.',
+                              'success'
+                          ).then(() => {
+                              location.reload();
+                          });
+                      },
+                      error : function(xhr,status,error){
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: error,
+                              footer: '<a href="">Why do I have this issue?</a>'
+                          });
+                      }
+                  });
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+ $(document).ready(function () {
+      $('#myTable').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#myTable').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('#myTable_info').css({
+      'font-family': 'Open Sans, sans-serif',
+      'font-size' : '12px'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+
+    $('#tabelReport').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#tabelReport').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('#tabelReport_info').css({
+      'font-family': 'Open Sans, sans-serif',
+      'font-size' : '12px'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+});
+ 
 </script>

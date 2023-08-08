@@ -178,7 +178,6 @@ class FakturControllerDash extends Controller
             'pembayaran' => 'required',
             'total' => 'required',
             'sopir' => 'required',
-            'penerima' => 'required'
         ]);
 
         Faktur::where('id',$id)->update($validateData);

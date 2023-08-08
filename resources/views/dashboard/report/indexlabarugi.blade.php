@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('container')
-@section('JudulPages','Produk')
-@section('JudulTabel','Produk')
+@section('JudulPages','Informasi Laba Rugi')
+@section('JudulTabel','Informasi Laba Rugi')
 <div class="ms-4 me-4">
     @if(session()->has('pesan'))
       <div class="alert alert-success d-flex align-items-center alert-faktur text-white" id="alert" role="alert" >
@@ -47,7 +47,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-        <h4 class="mx-3 text-center">Daftar Produk</h4>
+          <h6>Data Produk</h6>
           @if(auth()->user()->role != "direksi")
           <a href="/produk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif

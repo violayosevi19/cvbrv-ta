@@ -7,7 +7,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3">Edit Stock Produk</h6>
+          <h4 class="mx-3 text-center">Edit Jumlah Stok</h4>
           @if(session()->has('pesan'))
           <div class="alert alert-danger" role="alert">
             {{ session('pesan') }}
@@ -37,8 +37,12 @@
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="satuan" value="{{ old('satuan',$stocks->satuan) }}">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Stock</label>
+                    <label for="exampleFormControlInput1" class="form-label">Jumlah Stok Tersedia</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="stock" value="{{ old('stock',$stocks->stock) }}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Batas Stok Minimum</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="stock_minimum" value="{{ old('stock_minimum',$stocks->stock_minimum) }}">
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

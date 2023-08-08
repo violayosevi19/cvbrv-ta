@@ -1,19 +1,19 @@
 @extends('dashboard.layout.main')
 @section('container')
-@section('JudulPages','Edit Detail Orderan')
-@section('JudulTabel','Edit Detail Orderan')
+@section('JudulPages','Detail Orderan')
+@section('JudulTabel','Detail Orderan')
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h4 class="mx-3 text-center">Edit Detail Orderan</h4>
+          <h3 class="mx-3 text-center">Form Return Orderan</h3>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
             <div class="row mx-3 mt-3">
                 @foreach($detailtokos as $detail)
-              <form action="/detailorderan-dash/{{ $detail['nonota'] }}" method="post">
+              <form action="/return-dash/{{ $detail['nonota'] }}" method="post">
                 @csrf
                 @method('put')
               <div class="row">
@@ -23,7 +23,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Toko</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control namatoko" placeholder="Enter nama toko" name="namatoko" value="{{ $detail['namatoko'] }}">
+                                <input type="text" class="form-control namatoko" placeholder="Enter nama toko" name="namatoko" value="{{ $detail['namatoko'] }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -34,7 +34,7 @@
                             <th class="align-middle  text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control alamat" placeholder="Enter alamat" name="alamat" value="{{ $detail['alamat'] }}">
+                                <input type="text" class="form-control alamat" placeholder="Enter alamat" name="alamat" value="{{ $detail['alamat'] }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -45,7 +45,7 @@
                             <th class="align-middle  text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="date" class="form-control" name="tglfaktur" value="{{ $detail['tglfaktur'] }}">
+                                <input type="date" class="form-control" name="tglfaktur" value="{{ $detail['tglfaktur'] }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -69,7 +69,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="date" class="form-control" placeholder="Enter jatuh tempo" name="jatuhtempo" value="{{ $detail['jatuhtempo'] }}">
+                                <input type="date" class="form-control" placeholder="Enter jatuh tempo" name="jatuhtempo" value="{{ $detail['jatuhtempo'] }}" readonly>
                             </td>
                         </tr>
                     </table>
@@ -80,7 +80,7 @@
                             <th class=" align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Sales</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <input type="text" class="form-control" placeholder="Enter sales" name="namasales" value="{{ $detail['namasales'] }}">
+                                <input type="text" class="form-control" placeholder="Enter sales" name="namasales" value="{{ $detail['namasales'] }}" readonly>
                             </td>
                         </tr>
                   </table>
@@ -103,7 +103,6 @@
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga Satuan</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diskon</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,9 +138,6 @@
                                 <input type="number" class="form-control jumlah" id="jumlah{{$index}}" name="inputs[{{$index}}][jumlah]" placeholder="Enter jumlah" value="{{ $details['jumlah'] }}">
                               </td>
                               @endforeach
-                              <td class="align-middle text-center">
-                                <button class="btn btn-success mt-3" type="button" name="add" id="add">Tambah</button>
-                              </td>
                             </tr>
                         </tbody>
                       </table>

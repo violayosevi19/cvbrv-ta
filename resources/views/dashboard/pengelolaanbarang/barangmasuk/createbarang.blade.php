@@ -7,7 +7,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6 class="mx-3 text-center">Masukkan Data Barang Masuk</h6>
+          <h4 class="mx-3 text-center">Masukkan Data Barang Masuk</h4>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -77,7 +77,10 @@
                                 <input type="text" class="form-control"  name="inputs[0][harga]" id="harga" placeholder="Enter harga produk">
                               </td>
                               <td class="align-middle text-center">
-                                <input type="text" class="form-control"  name="inputs[0][diskon]" id="diskon" placeholder="Enter diskon">
+                               <div class="input-group">
+                                  <input type="number" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter disc">
+                                  <span class="input-group-text" id="basic-addon1">%</span>
+                                </div>
                               </td>
                               <td class="align-middle text-center">
                                 <input type="number" class="form-control"  name="inputs[0][jumlah]" id="jumlah" placeholder="Enter jumlah">
@@ -129,7 +132,10 @@
                   <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="number" class="form-control diskon" id="diskon"  name="inputs[`+counter+`][diskon]" placeholder="Enter diskon">
+                  <div class="input-group">
+                       <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                        <span class="input-group-text" id="basic-addon1">%</span>
+                    </div>
                 </td>
                 <td class="align-middle text-center">
                   <input type="number" class="form-control jumlah" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">

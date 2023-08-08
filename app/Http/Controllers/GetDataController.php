@@ -128,21 +128,34 @@ class GetDataController extends Controller
 
     public function getPenjualanFromChecked(Request $request) {
         $nonota = $request->input('nonota');
-        // $nonota = 'C182301';
-        $fakturNonota = faktur::where('nonota',$nonota)->first();
-        // dd($fakturNonota);
+        $total = $request->input('totalInput');   
+        $penerima = $request->input('penerima');
+    
+        $fakturNonota = faktur::where('nonota', $nonota)->first();
+    
+        if (!$fakturNonota) {
+            return response()->json(['success' => false, 'message' => 'Faktur not found']);
+        }
+    
+        $fakturNonota->update([
+            'status_diterima' => true,
+            'total' => $total,
+            'penerima' => $penerima
+        ]);
 
-        $fakturNonota->update(['status_diterima' => true]);
-        
-        $penjualan = new penjualan();
-        $penjualan->nonota = $fakturNonota->nonota;
-        $penjualan->namatoko = $fakturNonota->namatoko;
-        $penjualan->totalpenjualan = $fakturNonota->total;
-        $penjualan->save();
-
-        return response()->json(['success' => true]);
+        if ($request->hasFile('buktiInput')) {
+            $bukti = $request->file('buktiInput');
+            $filename = time() . '.' . $bukti->getClientOriginalExtension();
+            $bukti->storeAs('public/test', $filename);
+            $fakturNonota->file = $filename;
+            $fakturNonota->save();
+        }
+        // dd($nonota,$total,$bukti);
+    
+        return redirect('/penjualan-dash');
 
     }
+
 
     public function getPenjualanperBulan(){
         // $penjualan = Penjualan::join('faktur', 'penjualans.nonota', '=', 'faktur.nonota')
@@ -168,8 +181,7 @@ class GetDataController extends Controller
         // ->groupBy('bulan')
         // ->get()->toArray();
 
-        $penjualan = Penjualan::join('fakturs', 'penjualans.nonota', '=', 'fakturs.nonota')
-        ->selectRaw("MONTH(fakturs.tglfaktur)  as bulan, SUM(fakturs.total) as total_penjualan")
+        $penjualan = faktur::selectRaw("MONTH(tglfaktur)  as bulan, SUM(total) as total_penjualan")
         ->groupBy('bulan')
         ->get()->toArray();
         $namaBulan  = [];

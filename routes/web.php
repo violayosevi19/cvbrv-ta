@@ -29,6 +29,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\CetakPaperController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReturnBarangController;
 
 
 /*
@@ -54,7 +55,7 @@ use App\Http\Controllers\ReportController;
 Route::get('/',[DashboardController::class,'index'])->Middleware('auth');
 Route::get('/dashboard',[DashboardController::class,'index']);
 //route group
-Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan,manajer distribusi,direksi']], function() {
+Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan']], function() {
     //front end
     Route::resource('/pegawai-dash',PegawaiController::class);
     Route::resource('/produk-dash',ProdukController::class);
@@ -68,6 +69,7 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
     Route::resource('/barangmasuk-dash',BarangMasukController::class);
     Route::resource('/barangkeluar-dash',BarangKeluarController::class);
     Route::resource('/stock-dash',StockController::class);
+    Route::resource('/return-dash',ReturnBarangController::class);
     Route::get('/cetak-faktur',function() {
         return view('dashboard.faktur.invoice');
     });
@@ -77,6 +79,7 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
     Route::get('/labarugi',[ReportController::class,'labaRugi']);
     Route::get('/cetakstok',[ReportController::class,'cetakStok']);
     Route::get('/cetakproduk',[ReportController::class,'cetakProduk']);
+    Route::get('/informasiprofit',[ReportController::class,'informasiLabaRugi']);
 });
 
 // mendapatkan data input

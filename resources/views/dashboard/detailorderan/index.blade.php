@@ -27,14 +27,14 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>Detail Orderan</h6>
+        <h4 class="mx-3 text-center">Detail Orderan</h4>
           @if(auth()->user()->role != "direksi")
           <a href="/detailorderan-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+          <div class="table-responsive p-3">
+            <table id="myTable" class="table align-items-center mb-0">
               <thead>
                 <tr>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
@@ -75,6 +75,9 @@
                   </form>
                   <a href="/detailorderan-dash/{{$detail['nonota']}}" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Read
+                  </a>
+                  <a href="/return-dash/{{$detail['nonota']}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                   Return
                   </a>
                 </td>
                 @endif
@@ -135,4 +138,88 @@
         });
     });
     
+</script>
+<script type="text/javascript">
+    // Contoh penggunaan di dalam JavaScript
+    $(function () {
+        $(document).on('click', '#delete', function (e) {
+            e.preventDefault();
+            var form = $(this).closest("form");
+            var link = form.attr("action");
+
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin menghapus?',
+                text: "Data tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                      type: "POST",
+                      url: link,
+                      data: form.serialize(),
+                      success : function(response){
+                          Swal.fire(
+                              'Deleted!',
+                              'Data Anda sudah dihapus.',
+                              'success'
+                          ).then(() => {
+                              location.reload();
+                          });
+                      },
+                      error : function(xhr,status,error){
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: error,
+                              footer: '<a href="">Why do I have this issue?</a>'
+                          });
+                      }
+                  });
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+ $(document).ready(function () {
+      $('#myTable').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#myTable').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('#myTable_info').css({
+      'font-family': 'Open Sans, sans-serif',
+      'font-size' : '12px'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+});
+ 
 </script>

@@ -92,6 +92,7 @@ class StockController extends Controller
             'namaproduk' => 'required',
             'satuan' => 'required',
             'stock' => 'required',
+            'stock_minimum' => 'required'
         ]);
 
         $stock = $validateData['stock'];

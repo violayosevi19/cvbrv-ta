@@ -187,7 +187,7 @@ class DetailpesananController extends Controller
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->count();;
-        // dd($detailProduks);
+        // dd($detailProduks[0]['harga']);
         $totalFaktur = detailpesanan::where('nonota',$nonota)->sum(\DB::raw('jumlah-diskon'));
         // dd($totalFaktur);
         return view('dashboard.detailorderan.readorderan',[

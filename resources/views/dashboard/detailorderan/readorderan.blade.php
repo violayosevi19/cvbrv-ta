@@ -21,7 +21,7 @@
                             <th class="align-middle text-start text-capitalize text-secondary text-m font-weight-bolder">Nama Toko</th>
                             <td class="align-middle texxt-start">:</td>
                             <td class="align-middle text-start">
-                                <span class="text-secondary text-m font-weight-bold">{{$detail[0]['namatoko']}}</span>
+                                <span class="text-secondary text-m font-weight-bold">{{$detail['namatoko']}}</span>
                             </td>
                         </tr>
                     </table>
@@ -32,7 +32,7 @@
                             <th class="align-middle text-start text-capitalize text-secondary text-m font-weight-bolder">Alamat</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-m font-weight-bold">{{$detail[0]['alamat']}}</span>
+                                <span class="text-secondary text-m font-weight-bold">{{$detail['alamat']}}</span>
                             </td>
                         </tr>
                     </table>

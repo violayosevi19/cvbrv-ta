@@ -27,14 +27,14 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>Data Barang Masuk</h6>
+        <h4 class="mx-3 text-center">Data Barang Masuk</h4>
           @if(auth()->user()->role != "direksi")
           <a href="/barangmasuk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
         <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
+          <div class="table-responsive p-3">
+            <table id="myTable" class="table align-items-center mb-0">
               <thead>
                 <tr>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nomor Nota</th>
@@ -140,5 +140,43 @@
             });
         });
     });
-    
+</script>
+<script type="text/javascript">
+ $(document).ready(function () {
+      $('#myTable').DataTable({
+      paging: true,
+      pageLength: 10,
+      // scrollX:true,
+      lengthMenu: [
+          [20, 25, 50, -1],
+          [10, 25, 50, "All"]
+      ],
+      language: {
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+          infoFiltered: "(disaring dari _MAX_ total data)",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Tidak ada data yang cocok",
+          search: "Cari:",
+          paginate: {
+              first: "Pertama",
+              last: "Terakhir",
+              next: ">",
+              previous: "<"
+          }
+      }
+  });
+  $('#myTable').parent().css('text-align', 'right');
+    $('.dataTables_length label .form-select').css({
+      'padding-right': '20px',
+      'white-space': 'nowrap',
+      'width' : '30%'
+    });
+    $('#myTable_info').css({
+      'font-family': 'Open Sans, sans-serif',
+      'font-size' : '12px'
+    });
+    $('.dataTables_paginate .pagination .active .page-link').css('color', 'white');
+});
+ 
 </script>
