@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LabaRugiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PegawaiController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\CetakPaperController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReturnBarangController;
+
 
 
 /*
@@ -64,6 +66,7 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
     Route::resource('/detailorderan-dash',DetailPesananController::class);
     Route::resource('/faktur-dash',FakturControllerDash::class);
     Route::resource('/penjualan-dash',PenjualanController::class);
+    Route::resource('/labarugi-dash',LabaRugiController::class);
     Route::resource('/pembayaran-dash',PembayaranController::class);
     Route::resource('/supplier-dash',SupplierController::class);
     Route::resource('/barangmasuk-dash',BarangMasukController::class);
@@ -79,7 +82,10 @@ Route::group(['middleware' => ['auth', 'cekrole:admin,fakturis,manajer penjualan
     Route::get('/labarugi',[ReportController::class,'labaRugi']);
     Route::get('/cetakstok',[ReportController::class,'cetakStok']);
     Route::get('/cetakproduk',[ReportController::class,'cetakProduk']);
+    Route::get('/cetaktoko',[ReportController::class,'cetakToko']);
+    Route::get('/cetaksupplier',[ReportController::class,'cetakSupplier']);
     Route::get('/informasiprofit',[ReportController::class,'informasiLabaRugi']);
+    Route::get('/labarugi-dash/{id}/cetak',[ReportController::class,'cetak']);
 });
 
 // mendapatkan data input
@@ -94,6 +100,9 @@ Route::post('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromCheck
 Route::get('/getpenjualan',[GetDataController::class,'getPenjualanperBulan']);
 // Route::get('/getpenjualan-cek',[GetDataController::class,'getPenjualanFromChecked']);
 Route::get('/searchProduk', [SearchingController::class,'searchingProduk']);
+Route::get('/get-paginate', [GetDataController::class,'paginateDataProduk']);
+Route::get('/get-data-report/{tglawal}/{tglakhir}', [GetDataController::class,'getDataPenjualanBulan']);
+Route::get('/get-data-barang-masuk/{tglawal}/{tglakhir}', [GetDataController::class,'getDataBarangMasukBulan']);
 
 // //front end
 // Route::get('/',[DashboardController::class,'index'])->Middleware('auth');

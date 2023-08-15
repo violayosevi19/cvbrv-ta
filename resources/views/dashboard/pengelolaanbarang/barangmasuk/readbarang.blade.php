@@ -32,7 +32,7 @@
                             <th class="align-middle  text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-m font-weight-bold">{{ $detail['tanggalmasuk'] }}</span>
+                                <span class="text-secondary text-m font-weight-bold">{{ date('d-m-Y',strtotime($detail['tanggalmasuk'])) }}</span>
                             </td>
                         </tr>
                     </table>
@@ -61,8 +61,8 @@
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kuantitas</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(pcs)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(lsn/krt)</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga Satuan</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diskon</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
@@ -81,16 +81,16 @@
                                 <span class="text-xs">{{ $details['stock'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">pcs</span>
+                                <span class="text-xs">{{ $details['satuan'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">{{ $details['harga'] }}</span>
+                                <span class="text-xs">Rp{{ number_format($details['harga'], 0, ',', '.') }}</span>
                               </td>
                               <td class="align-middle text-center">
                                 <span class="text-xs">{{ $details['diskon'] }}%</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">{{ $details['jumlah'] }}</span>
+                                <span class="text-xs">Rp{{ number_format($details['jumlah'], 0, ',', '.') }}</span>
                               </td>
                               @endforeach
                             </tr>
@@ -99,7 +99,7 @@
                                   <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Total</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">{{ $bayar }}</span>
+                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Rp{{ number_format($bayar, 0, ',', '.') }}</span>
                                 </td>
                             </tr>
                         </tbody>

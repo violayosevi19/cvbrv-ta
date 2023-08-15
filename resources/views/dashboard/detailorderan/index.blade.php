@@ -22,6 +22,26 @@
       });
     </script>
 </div>
+<div class="ms-4 me-4">
+    @if(session()->has('error'))
+      <div class="alert alert-danger d-flex align-items-center alert-faktur text-white" id="alert" role="alert" >
+          <div class="flex-grow-1">{{ session('error') }}</div>
+          <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
+      </div>
+    @endif
+    <script>
+      var closeElement = document.querySelectorAll('.close');
+      closeElement.forEach(function(close) {
+          close.addEventListener('click', function() {
+            var closeContent = document.getElementById('alert');
+            console.log(closeContent);
+              if (closeContent) {
+                closeContent.remove();
+              }
+          })
+      });
+    </script>
+</div>
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
@@ -59,7 +79,7 @@
                   <span class="text-secondary text-xs font-weight-bold">{{ $detail['alamat']}}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $detail['tglfaktur']}}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ date('d-m-Y', strtotime($detail['tglfaktur']))}}</span>
                 </td>
                 @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">

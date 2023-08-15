@@ -14,7 +14,15 @@ class TokoController extends Controller
      */
     public function index()
     {
-        return view('dashboard.toko.index',['tokos'=> Toko::all()]);
+        $tokos = Toko::select('id_toko','namatoko', 'alamat', 'notelp', 'email')
+        ->whereIn('id_toko', function ($query) {
+            $query->selectRaw('MIN(id_toko)')
+                ->from('tokos')
+                ->groupBy('namatoko')
+                ->havingRaw('COUNT(*) > 1');
+        })
+        ->get();
+        return view('dashboard.toko.index',['tokos'=> $tokos]);
     }
 
     /**
@@ -66,8 +74,11 @@ class TokoController extends Controller
      */
     public function edit(toko $toko,$id)
     {
+        // dd($id);
+        $tokos = Toko::where('id_toko',$id)->get()->toArray()[0];
+        // dd($tokos);
         return view('dashboard.toko.edit',[
-            'tokos' => Toko::find($id)
+            'tokos' => $tokos
         ]);
     }
 
@@ -101,7 +112,7 @@ class TokoController extends Controller
      */
     public function destroy(toko $toko,$id)
     {
-        Toko::destroy($id);
-         return redirect('/toko-dash');
+        Toko::where('id_toko',$id)->delete();
+        return redirect('/toko-dash');
     }
 }

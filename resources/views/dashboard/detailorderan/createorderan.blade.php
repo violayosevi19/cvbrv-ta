@@ -95,6 +95,10 @@
                 </div>
               </div>
               <div class="col mt-3 justify-content-center produk-div">
+                <div class="col col-md-4">
+                  <button type="button" class="btn btn-warning btn-view" data-toggle="modal" data-target="#productModal">Pilih Produk</button>
+                  <button type="button" class="btn btn-danger btn-toko" data-toggle="modal" data-target="#supplierModal">Cek Toko</button>
+                </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -109,7 +113,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="old">
+                            <!-- <tr class="old">
                               <td class="align-middle text-center">
                                 <input type="text" class="form-control kodeproduk" id="kodeproduk" name="inputs[0][kodeproduk]" placeholder="Enter kode produk">
                               </td>
@@ -142,7 +146,7 @@
                               <td class="align-middle text-center">
                                 <button class="btn btn-success mt-3" type="button" name="add" id="add">Tambah</button>
                               </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                       </table>
                        <button class="btn btn-primary mt-3" type="submit" name="submit" id="submit">Submit</button>
@@ -154,6 +158,116 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Daftar Produk</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive p-3">
+          <div class="col col-md-6">
+            <input type="text" class="form-control" id="searchInput" placeholder="Cari...">
+          </div>
+        <table id="tableProduct" class="table">
+          <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Kode Produk</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Nama Produk</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jenis Produk</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+              </tr>
+            </thead>
+          <tbody>
+            @foreach($produks as $item)
+            <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->kodeproduk}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->namaproduk}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">Rp{{ number_format($item->harga, 0, ',', '.') }}</span>
+                </td>
+                @if($item->jenisproduk !== null)
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->jenisproduk->jenis}}</span>
+                </td>
+                @else
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">Jenis Kosong</span>
+                </td>
+                @endif
+                <td class="align-middle text-center">
+                  <a href="#" class="btn btn-success text-secondary font-weight-bold text-xs text-white select-product"
+                    data-kodeproduk="{{ $item->kodeproduk }}"
+                    data-namaproduk="{{ $item->namaproduk }}"
+                    data-harga="{{ $item->harga }}"
+                    data-diskon=""
+                    data-jenisproduk="{{ $item->jenisproduk ? $item->jenisproduk->jenis : ''}}"
+                    >
+                    Pilih
+                  </a>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="tokoModal" tabindex="-1" aria-labelledby="tokoModallabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Daftar Toko</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive p-3">
+          <div class="col col-md-6">
+            <input type="text" class="form-control" id="searchInput" placeholder="Cari...">
+          </div>
+        <table id="tableToko" class="table">
+          <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Id Toko</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Nama Toko</th>
+              </tr>
+            </thead>
+          <tbody>
+            @foreach($tokos as $item)
+            <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->id_toko}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->namatoko}}</span>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   @endsection
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -182,16 +296,16 @@
                   <input type="text" class="form-control" id="satuan"  name="inputs[`+counter+`][satuan]" placeholder="Enter satuan">
                 </td>
                 <td class="align-middle text-center">
-                  <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
+                  <input type="text" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
                     <div class="input-group">
-                       <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                       <input type="text" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
                         <span class="input-group-text" id="basic-addon1">%</span>
                     </div>
                 </td>
                 <td class="align-middle text-center">
-                  <input type="number" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                  <input type="text" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                 </td>
                 <td class="align-middle text-center">
                   <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
@@ -237,6 +351,14 @@
           $('#kuantitas').on('change', function () {
               clearInputError();
           });
+
+          // close modal
+          $('.close').on('click', function() {
+            $('#productModal').modal('hide'); 
+          });
+          $('.close').on('click', function() {
+            $('#tokoModal').modal('hide'); 
+          });
           
     });
 
@@ -263,12 +385,29 @@
                 $('#harga').val('');
               }
     });
+        function formatRupiah(angka) {
+        var number_string = angka.toString();
+        var split = number_string.split(',');
+        var sisa = split[0].length % 3;
+        var rupiah = split[0].substr(0, sisa);
+        var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+        return 'Rp ' + rupiah;
+        }
+
 
     $(document).on('input', '#diskon', function () {
-            var diskon = $(this).val();
+            var diskon = parseInt($(this).val());
             var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
             var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
             var jumlahField = $(this).closest('tr').find('#jumlah');
+            console.log(harga, kuantitas,diskon);
 
             if (diskon !== '') {
                 $.ajax({
@@ -276,7 +415,8 @@
                     type: 'GET',
                     data: { diskon: diskon, kuantitas: kuantitas, harga: harga },
                     success: function (response) {
-                        jumlahField.val(response.jumlahharga);
+                      var formattedJumlah = formatRupiah(response.jumlahharga);
+                      jumlahField.val(formattedJumlah);
                     }
                 });
             } else {
@@ -284,5 +424,80 @@
             }
     });
 
-   
+    $(document).on('click','.btn-view',function(){
+      $('#productModal').modal('show');
+    });
+    $(document).on('click','.btn-toko',function(){
+      $('#tokoModal').modal('show');
+    });
+
+    $(document).on('click','#remove', function () {
+              $(this).parents('tr').remove();
+    })
+
+    let counter = 0;
+    $(document).on('click', '.select-product', function() {
+            const kodeproduk = $(this).data('kodeproduk');
+            const namaproduk = $(this).data('namaproduk');
+            const harga = $(this).data('harga');
+            const jenisproduk = $(this).data('jenisproduk');
+         
+            const newRow = `
+              <tr class="new">
+                <td class="align-middle text-center">
+                  <input type="text" class="form-control kodeproduk" id="kodeproduk" name="inputs[${counter}][kodeproduk]" value="${kodeproduk}">
+                </td>
+                <td class="align-middle text-center">
+                  <input type="text" class="form-control namaproduk" id="namaproduk" name="inputs[${counter}][namaproduk]" value="${namaproduk}">
+                </td>
+                <td class="align-middle text-center">
+                  <input type="number" class="form-control @error('inputs.*.kuantitas') is-invalid  @enderror kuantitas" id="kuantitas" name="inputs[${counter}][kuantitas]" placeholder="Enter kuantitas">
+                </td>
+                <td class="align-middle text-center">
+                  <input type="text" class="form-control" id="satuan"  name="inputs[`+counter+`][satuan]" placeholder="Enter satuan">
+                </td>
+                <td class="align-middle text-center">
+                  <input type="text" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga" value="${harga}">
+                </td>
+                <td class="align-middle text-center">
+                    <div class="input-group">
+                       <input type="text" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                        <span class="input-group-text" id="basic-addon1">%</span>
+                    </div>
+                </td>
+                <td class="align-middle text-center">
+                  <input type="text" class="form-control" id="jumlah"  name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                </td>
+                <td class="align-middle text-center">
+                  <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
+                </td>
+                </tr>
+            `;
+            
+            // Append the new row to the table
+            $('form .produk-div .table tbody').append(newRow);
+
+            // Increment the counter
+            counter++;
+
+            // Close the product modal
+            $('#productModal').modal('hide');
+          });
+
+</script>
+<script>
+  $(document).ready(function() {
+    $("#searchInput").on("input", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableProduct tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+    $("#searchInput").on("input", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableToko tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 </script>

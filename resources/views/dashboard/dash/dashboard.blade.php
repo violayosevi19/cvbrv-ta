@@ -12,7 +12,7 @@
     @endforeach
     @else
     <div class="alert alert-success d-flex align-items-center" id="stock" class="stock" role="alert">
-      <div class="flex-grow-1">Stok ado lai ma</div>
+      <div class="flex-grow-1">Semua Stok Masih Tersedia!</div>
         <div id="close" class="d-flex justify-content-end close"><i class="fas fa-times"></i></div>
       </div>
     @endif

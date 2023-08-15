@@ -17,22 +17,22 @@
                     <tr class="text-center text-capitalize text-dark text-m ">
                         <th>Kode Supplier</th>
                         <td>:</td>
-                        <td>{{$detailSupplier[0]->kodesupplier}}</td>
+                        <td>{{$detailSupplier['kodesupplier']}}</td>
                     </tr>
                     <tr class="text-center text-capitalize text-dark text-m ">
                         <th>Nama Supplier</th>
                         <td>:</td>
-                        <td>{{$detailSupplier[0]->namasupplier}}</td>
+                        <td>{{$detailSupplier['namasupplier']}}</td>
                     </tr>
                     <tr class="text-center text-capitalize text-dark text-m ">
                         <th>No Hp</th>
                         <td>:</td>
-                        <td>{{$detailSupplier[0]->nohp}}</td>
+                        <td>{{$detailSupplier['nohp']}}</td>
                     </tr>
                     <tr class="text-center text-capitalize text-dark text-m ">
                         <th>Alamat</th>
                         <td>:</td>
-                        <td>{{$detailSupplier[0]->alamat}}</td>
+                        <td>{{$detailSupplier['alamat']}}</td>
                     </tr>
                 </table>
                 <div class="card-header pb-0">

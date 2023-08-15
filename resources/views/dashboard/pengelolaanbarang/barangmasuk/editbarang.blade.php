@@ -58,13 +58,17 @@
                 </div>
               </div>
               <div class="col mt-3 justify-content-center produk-div">
+              <div class="col col-md-4">
+                  <button type="button" class="btn btn-warning btn-view" data-toggle="modal" data-target="#productModal">Cek Produk</button>
+                </div>
                     <table class="table">
                         <thead>
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kuantitas</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga Satuan</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(pcs)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(lsn/krtn)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diskon</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
@@ -83,16 +87,19 @@
                                 <input type="number" class="form-control kuantitas" id="kuantitas{{$index}}" name="inputs[{{$index}}][stock]" placeholder="Enter kuantitas" value="{{ $details['stock'] }}">
                               </td>
                               <td class="align-middle text-center">
+                                <input type="text" class="form-control satuan" id="satuan{{$index}}" name="inputs[{{$index}}][satuan]" placeholder="Enter satuan" value="{{ $details['satuan'] }}">
+                              </td>
+                              <td class="align-middle text-center">
                                 <input type="number" class="form-control harga" id="harga{{$index}}"  name="inputs[{{$index}}][harga]" placeholder="Enter harga produk" value="{{ $details['harga'] }}">
                               </td>
                               <td class="align-middle text-center">
                                 <div class="input-group">
-                                  <input type="number" class="form-control diskon" id="diskon{{$index}}" name="inputs[{{$index}}][diskon]" placeholder="Enter diskon" value="{{ $details['diskon'] }}">
+                                  <input type="text" class="form-control diskon" id="diskon{{$index}}" name="inputs[{{$index}}][diskon]" placeholder="Enter diskon" value="{{ $details['diskon'] }}">
                                   <span class="input-group-text" id="basic-addon1">%</span>
                                 </div>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control jumlah" id="jumlah{{$index}}"  name="inputs[{{$index}}][jumlah]" placeholder="Enter jumlah" value="{{ $details['jumlah'] }}">
+                                <input type="text" class="form-control jumlah" id="jumlah{{$index}}"  name="inputs[{{$index}}][jumlah]" placeholder="Enter jumlah" value="{{ $details['jumlah'] }}">
                               </td>
                               @endforeach
                               <td class="align-middle text-center">
@@ -110,6 +117,49 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Daftar Produk</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive p-3">
+          <div class="col col-md-6">
+            <input type="text" class="form-control" id="searchInput" placeholder="Cari...">
+          </div>
+        <table id="tableProduct" class="table">
+          <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Kode Produk</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Nama Produk</th>
+              </tr>
+            </thead>
+          <tbody>
+            @foreach($produks as $item)
+            <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->kodeproduk}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->namaproduk}}</span>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   @endsection
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -133,16 +183,19 @@
                     <input type="number" class="form-control" id="kuantitas" name="inputs[`+counter+`][stock]" placeholder="Enter kuantitas">
                     </td>
                     <td class="align-middle text-center">
+                      <input type="text" class="form-control satuan " id="satuan" name="inputs[`+counter+`][satuan]" placeholder="Enter banyaknya">
+                    </td>
+                    <td class="align-middle text-center">
                     <input type="number" class="form-control" id="harga" name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                     </td>
                     <td class="align-middle text-center">
                       <div class="input-group">
-                        <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                        <input type="text" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
                           <span class="input-group-text" id="basic-addon1">%</span>
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                    <input type="number" class="form-control" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                    <input type="text" class="form-control" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                     </td>
                     <td class="align-middle text-center">
                     <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
@@ -152,6 +205,7 @@
                 $('form .produk-div .table tbody').append(newRow);
             }
             addNewRow();
+            counter++;
 
             $(document).on('click','#remove', function () {
               $(
@@ -165,6 +219,10 @@
             $('input[name="harga"]').val('');
             $('input[name="diskon"]').val('');
             $('input[name="jumlah"]').val('');
+          });
+
+          $('.close').on('click', function() {
+            $('#productModal').modal('hide'); 
           });
     });
 
@@ -221,7 +279,7 @@
 
     $(document).on('input', '#diskon', function () {
             var diskon = $(this).val();
-            var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
+            // var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
             var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
             var jumlahField = $(this).closest('tr').find('#jumlah');
 
@@ -229,7 +287,7 @@
                 $.ajax({
                     url: '/get-jumlah', // Ganti dengan URL yang sesuai
                     type: 'GET',
-                    data: { diskon: diskon, stock: kuantitas, harga: harga },
+                    data: { diskon: diskon, harga: harga },
                     success: function (response) {
                         jumlahField.val(response.jumlahharga);
                     }
@@ -243,15 +301,15 @@
       var diskon = $(this).val();
       var currentRow = $(this).closest('tr');
 
-      var kuantitas = parseInt(currentRow.find('[id^="kuantitas"]').val()) || 0;
+      // var kuantitas = parseInt(currentRow.find('[id^="kuantitas"]').val()) || 0;
       var harga = parseInt(currentRow.find('[id^="harga"]').val()) || 0;
       var jumlahField = currentRow.find('[id^="jumlah"]');
 
-      if (Number.isNaN(kuantitas) || Number.isNaN(harga) || Number.isNaN(diskon)) {
+      if (Number.isNaN(harga) || Number.isNaN(diskon)) {
         return; // Tidak melakukan perhitungan jika ada nilai yang tidak valid
       }
 
-      var total = kuantitas * harga;
+      var total = harga;
       var potonganDiskon = total * (diskon / 100);
       var jumlahSetelahDiskon = total - potonganDiskon;
 
@@ -261,4 +319,41 @@
         jumlahField.val(jumlahSetelahDiskon);
       }
     });
+
+    $(document).on('click','.btn-view',function(){
+      $('#productModal').modal('show');
+      // loadProducts(1);
+    });
+
+    $(document).on('click','#remove', function () {
+              $(this).parents('tr').remove();
+    })
+
+    // $(document).on('click', '.pagination a', function(e) {
+    //     e.preventDefault();
+    //     var page = $(this).attr('href').split('page=')[1];
+    //     loadProducts(page);
+    // });
+
+    // function loadProducts(page) {
+    //     $.ajax({
+    //         url: '/get-paginate?page=' + page,
+    //         method: 'GET',
+    //         success: function(response) {
+    //           console.log(response)
+    //             $('#tableProduct').html(response);
+    //         }
+    //     });
+    // }
+</script>
+<script>
+  $(document).ready(function() {
+    $("#searchInput").on("input", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableProduct tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+  });
 </script>

@@ -11,6 +11,7 @@ use App\Models\toko;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class DetailpesananController extends Controller
@@ -27,7 +28,7 @@ class DetailpesananController extends Controller
         // dd($detailProduks,$detail);
         return view('dashboard.detailorderan.index',[
             'detailtokos' => $detailToko,
-            'detailproduks' => $detailProduks
+            'detailproduks' => $detailProduks,
         ]);
     }
     
@@ -46,11 +47,23 @@ class DetailpesananController extends Controller
         $lastNumber = $lastInvoice ? intval(substr($lastInvoice->nonota, 5)) : 0;
         $invoiceNumber = 'C' . $day . $year . str_pad(($lastNumber + 1), 2, '0', STR_PAD_LEFT);
         // dd($currentDate,$year,$day,$lastInvoice,$lastNumber,$invoiceNumber);
-
-
+        $produks = produk::join('stocks','stocks.kodeproduk','=','produks.kodeproduk')
+        ->where('stocks.stock','!=',0)
+        ->get();
+        // dd($produks);
+        $tokos = Toko::select('id_toko','namatoko', 'alamat', 'notelp', 'email')
+        ->whereIn('id_toko', function ($query) {
+            $query->selectRaw('MIN(id_toko)')
+                ->from('tokos')
+                ->groupBy('namatoko')
+                ->havingRaw('COUNT(*) > 1');
+        })
+        ->get();
         return view('dashboard.detailorderan.createorderan',[
             'details' => Detailpesanan::all(),
-            'nonota' => $invoiceNumber
+            'nonota' => $invoiceNumber,
+            'produks' => $produks,
+            'tokos' => $tokos
         ]);
     }
 
@@ -84,12 +97,13 @@ class DetailpesananController extends Controller
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'namasales' => 'required',
-            'inputs.*.kodeproduk' => [
-                'required',
-                Rule::exists('stocks', 'kodeproduk')->where(function ($query) use ($request) {
-                    $query->where('stock', '>=', $request->input('inputs.*.kuantitas', 0));
-                }),
-            ],
+            // 'inputs.*.kodeproduk' => [
+            //     'required',
+            //     Rule::exists('stocks', 'kodeproduk')->where(function ($query) use ($request) {
+            //         $query->where('stock', '>=', $request->input('inputs.*.kuantitas', 0));
+            //     }),
+            // ],
+            'inputs.*.kodeproduk' => 'required',
             'inputs.*.namaproduk' => 'required',
             'inputs.*.kuantitas' => 'required',
             'inputs.*.satuan' => 'required',
@@ -108,6 +122,7 @@ class DetailpesananController extends Controller
          $tglfaktur = $request->input('tglfaktur');
          $jatuhtempo = $request->input('jatuhtempo');
          $namasales = $request->input('namasales');
+        //  $kuantitas =  $request->input('inputs.*.kuantitas');
 
          foreach ($request->input('inputs') as $input) {
             $input['nonota'] = $nonota;
@@ -116,20 +131,24 @@ class DetailpesananController extends Controller
             $input['tglfaktur'] = $tglfaktur;
             $input['jatuhtempo'] = $jatuhtempo;
             $input['namasales'] = $namasales;
-
-            Detailpesanan::create($input);
+            $input['jumlah'] = (int) preg_replace('/\D/', '', $input['jumlah']); // Menghapus semua karakter non-digit
 
             $takeKodeProduk = $input['kodeproduk'];
             $takeKuantitas = $input['kuantitas'];
+        
 
             $stockData = Stock::where('kodeproduk', $takeKodeProduk)->first();
+            // dd($takeKuantitas,$stockData->stock);
             if ($stockData) {
                 if ($stockData->stock >= $takeKuantitas) {
                     $stockData->stock -= $takeKuantitas;
-                    $stockData->keterangan = 'Data telah dikurangkan pada pemesanan tanggal ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
+                    $stockData->keterangan = 'Data telah dikurangkan pada pemesanan tanggal ' .date('d-m-Y',strtotime($tglfaktur)) . ' sebanyak ' . $takeKuantitas;
                     $stockData->save();
+                } else {
+                    return redirect('/detailorderan-dash')->with('error','Stock Tidak cukup!');
                 }
             } 
+            Detailpesanan::create($input);
 
         }
 
@@ -176,8 +195,9 @@ class DetailpesananController extends Controller
             'harga',
             'diskon',
             'jumlah')
-            ->where('nonota','=',$nonota)->get()->toArray();
+            ->where('nonota','=',$nonota)->orderBy('kodeproduk','asc')->get()->toArray();
         $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->where('nonota', $nonota)->get()->toArray();
+        // dd($detailToko);
         $totalProdukPerNonota =  Detailpesanan::select(
             'kodeproduk',
             'namaproduk',
@@ -207,16 +227,20 @@ class DetailpesananController extends Controller
      */
     public function edit(detailpesanan $detailpesanan,$nonota)
     {
-        $detailProduks = Detailpesanan::select(
-            'kodeproduk',
-            'namaproduk',
-            'kuantitas',
-            'satuan',
-            'harga',
-            'diskon',
-            'jumlah')
-            ->where('nonota','=',$nonota)->get()->toArray();
-        $detailToko = Detailpesanan::select('namatoko','alamat','tglfaktur','nonota','jatuhtempo','namasales')->distinct()->where('nonota',$nonota)->get()->toArray();
+        // $detailProduks = Detailpesanan::select(
+        //     'kodeproduk',
+        //     'namaproduk',
+        //     'kuantitas',
+        //     'satuan',
+        //     'harga',
+        //     'diskon',
+        //     'jumlah')
+        //     ->where('nonota','=',$nonota)->get()->toArray();
+         
+        // $detailToko = Detailpesanan::select('namatoko','alamat', DB::raw('DATE_FORMAT(tglfaktur, "%d-%m-%Y") as tglfaktur'),'nonota','jatuhtempo','namasales')->distinct()->where('nonota',$nonota)->get()->toArray();
+        // dd($detailToko);
+        $detailToko = Detailpesanan::where('nonota',$nonota)->get()->toArray();
+        // dd($detailToko);
         $totalProdukPerNonota =  Detailpesanan::select(
             'kodeproduk',
             'namaproduk',
@@ -228,9 +252,11 @@ class DetailpesananController extends Controller
             ->where('nonota','=',$nonota)->get()->count();;
         // dd($detailProduks);
         return view('dashboard.detailorderan.editorderan',[
+            // 'detailtokos' => $detailToko,
+            // 'detailproduks' => $detailProduks,
             'detailtokos' => $detailToko,
-            'detailproduks' => $detailProduks,
-            'totaldatapernota' => $totalProdukPerNonota
+            'totaldatapernota' => $totalProdukPerNonota,
+            'produks' => produk::all()
         ]);
     }
 
@@ -265,12 +291,13 @@ class DetailpesananController extends Controller
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
             'namasales' => 'required',
-            'inputs.*.kodeproduk' => [
-                'required',
-                Rule::exists('stocks', 'kodeproduk')->where(function ($query) use ($request) {
-                    $query->where('stock', '>=', $request->input('inputs.*.kuantitas', 0));
-                }),
-            ],
+            // 'inputs.*.kodeproduk' => [
+            //     'required',
+            //     Rule::exists('stocks', 'kodeproduk')->where(function ($query) use ($request) {
+            //         $query->where('stock', '>=', $request->input('inputs.*.kuantitas', 0));
+            //     }),
+            // ],
+            'inputs.*.kodeproduk' => 'required',
             'inputs.*.namaproduk' => 'required',
             'inputs.*.kuantitas' =>  'required',
             'inputs.*.satuan' => 'required',
@@ -289,6 +316,7 @@ class DetailpesananController extends Controller
          $tglfaktur = $request->input('tglfaktur');
          $jatuhtempo = $request->input('jatuhtempo');
          $namasales = $request->input('namasales');
+     
 
         // Update data nonota dan informasi toko
         $detailpesanan->where('nonota', $nonota)->update([
@@ -313,6 +341,7 @@ class DetailpesananController extends Controller
                 $kuantitasLama[$nonota][$kodeproduk] = $existingProduk->kuantitas;
             }
         }
+        // dd($kuantitasLama);
 
         foreach ($request->input('inputs') as $input) {
             $input['nonota'] = $nonota;
@@ -321,6 +350,7 @@ class DetailpesananController extends Controller
             $input['tglfaktur'] = $tglfaktur;
             $input['jatuhtempo'] = $jatuhtempo;
             $input['namasales'] = $namasales;
+            $input['jumlah'] = (int) preg_replace('/\D/', '', $input['jumlah']); // Menghapus semua karakter non-digit
 
             //ambil input jikalau ada menambahkan/update field
             $takeKodeProduk = $input['kodeproduk'];
@@ -331,21 +361,37 @@ class DetailpesananController extends Controller
             $existingProduct = Detailpesanan::where('nonota', $nonota)
             ->where('kodeproduk', $takeKodeProduk)
             ->first();
+            // $selisih = $takeKuantitas - $kuantitasLama[$nonota][$takeKodeProduk];
+            // dd($stockData->stock, $takeKuantitas,$selisih);
+
 
             if ($existingProduct) {
                 if ($stockData) {
-                    if ($takeKuantitas < $kuantitasLama[$nonota][$takeKodeProduk]) {
-                        $selisihKuantitas = $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
-                        $stockData->stock += $selisihKuantitas;
-                        $stockData->keterangan = 'Stok telah dikembalikan lagi karena perubahan pesanan pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
-                        $stockData->save();
-                    } else {
-                        $tambahkanKuantitas =  $takeKuantitas - $kuantitasLama[$nonota][$takeKodeProduk] ;
-                        $stockData->stock += $tambahkanKuantitas;
-                        $stockData->keterangan = 'Stok telah diambil lagi karena perubahan pesanan pada ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
-                        $stockData->save();
-                    }
-                    $existingProduct->update($input);
+                        if ($takeKuantitas < $kuantitasLama[$nonota][$takeKodeProduk]) {
+                            $selisihKuantitas = $kuantitasLama[$nonota][$takeKodeProduk] - $takeKuantitas;
+                            $stockData->stock += $selisihKuantitas;
+                            // dd($takeKuantitas, $kuantitasLama[$nonota][$takeKodeProduk], $selisihKuantitas);
+                            $stockData->keterangan = 'Stok telah dikembalikan lagi karena perubahan pesanan pada ' . date('d-m-Y',strtotime($tglfaktur)) . ' sebanyak ' . $takeKuantitas;
+                            $stockData->save();
+                        } else {
+                            $tambahkanKuantitas =  $takeKuantitas - $kuantitasLama[$nonota][$takeKodeProduk] ;
+                            if($stockData->stock > $tambahkanKuantitas){
+                                $stockData->stock -= $tambahkanKuantitas;
+                                $stockData->keterangan = 'Stok telah diambil lagi karena perubahan pesanan pada ' . date('d-m-Y',strtotime($tglfaktur)) . ' sebanyak ' . $takeKuantitas;
+                                $stockData->save();
+                            } else if($stockData->stock = $tambahkanKuantitas){
+                                $stockData->stock -= $tambahkanKuantitas;
+                                $stockData->keterangan = 'Stok telah diambil lagi karena perubahan pesanan pada ' . date('d-m-Y',strtotime($tglfaktur)) . ' sebanyak ' . $takeKuantitas;
+                                $stockData->save();
+                            } else {
+                                // dd($stockData->stock, $tambahkanKuantitas);
+                                return redirect('/detailorderan-dash')->with('error','Stok tidak cukup!');
+                            }
+                            // dd($tambahkanKuantitas);
+                          
+                        }
+                        $existingProduct->update($input);
+                  
                 }
             } else {
                 // Tambahkan data produk baru
@@ -353,8 +399,10 @@ class DetailpesananController extends Controller
                 if ($stockData) {
                     if ($stockData->stock >= $takeKuantitas) {
                         $stockData->stock -= $takeKuantitas;
-                        $stockData->keterangan = 'Data telah dikurangkan pada pemesanan tanggal ' . $tglfaktur . ' sebanyak ' . $takeKuantitas;
+                        $stockData->keterangan = 'Data telah dikurangkan pada pemesanan tanggal ' . date('d-m-Y',strtotime($tglfaktur)) . ' sebanyak ' . $takeKuantitas;
                         $stockData->save();
+                    } else {
+                        return redirect('/detailorderan-dash')->with('error','Stok tidak cukup!');
                     }
                 } 
             }

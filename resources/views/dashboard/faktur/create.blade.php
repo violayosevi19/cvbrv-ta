@@ -61,6 +61,7 @@
                         <label for="exampleFormControlInput1" class="form-label">Total</label>
                         <input type="number" class="form-control" id="total" name="total" value="{{ $faktur[0]['total_amount'] }}" readonly>
                       </div>
+                      <input type="hidden" class="form-control" id="id_toko" name="id_toko">
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mb-3">

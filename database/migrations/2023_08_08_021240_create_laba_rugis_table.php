@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pegawais', function (Blueprint $table) {
+        Schema::create('laba_rugis', function (Blueprint $table) {
             $table->id();
-            $table->char('idpegawai',12)->unique();
-            $table->string('nama',50);
-            $table->date('tgllahir');
-            $table->enum('jekel',['L','P']);
-            $table->string('alamat');
-            $table->string('tamatan',30);
-            $table->string('jabatan',30);
-            $table->string('ijazah');
+            $table->date('tglmulai');
+            $table->date('tglakhir');
+            $table->integer('modal');
+            $table->integer('biayalistrik');
+            $table->integer('gajikaryawan');
+            $table->integer('biayaoperasional');
+            $table->integer('biayaATK');
+            $table->integer('biayainternet');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pegawais');
+        Schema::dropIfExists('laba_rugis');
     }
 };

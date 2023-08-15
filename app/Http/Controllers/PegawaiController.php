@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
@@ -38,6 +39,7 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+
          $validateData = $request->validate([
             'idpegawai' => 'required|unique:pegawais|size:10',
             'nama' => 'required',
@@ -45,12 +47,22 @@ class PegawaiController extends Controller
             'jekel' => 'required|in:L,P',
             'alamat' => 'required',
             'tamatan' => 'required',
-            'jabatan' => 'required'
+            'jabatan' => 'required',
+            'ijazah' => 'image|file|max:1024'
         ]);
-
+     
+        if ($request->hasFile('ijazah')) {
+            $bukti = $request->file('ijazah');
+            $filename = time() . '.' . $bukti->getClientOriginalExtension();
+            $bukti->storeAs('ijazah', $filename); 
+            $validateData['ijazah'] = $filename; 
+        }
+       
         Pegawai::create($validateData);
         return redirect('/pegawai-dash')->with('pesan','Data berhasil ditambah');
     }
+
+   
 
     /**
      * Display the specified resource.
@@ -92,8 +104,16 @@ class PegawaiController extends Controller
             'jekel' => 'required|in:L,P',
             'alamat' => 'required',
             'tamatan' => 'required',
-            'jabatan' => 'required'
+            'jabatan' => 'required',
+            'ijazah' => 'image|file|max:1024'
         ]);
+
+        if ($request->hasFile('ijazah')) {
+            $bukti = $request->file('ijazah');
+            $filename = time() . '.' . $bukti->getClientOriginalExtension();
+            $bukti->storeAs('ijazah', $filename); 
+            $validateData['ijazah'] = $filename; 
+        }
 
         Pegawai::where('id',$id)->update($validateData);
         return redirect('/pegawai-dash')->with('pesan','Data berhasil diupdates');

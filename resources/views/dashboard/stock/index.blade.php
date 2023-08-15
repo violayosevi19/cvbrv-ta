@@ -29,7 +29,7 @@
         <div class="card-header pb-0">
         <h4 class="mx-3 text-center">Daftar Stok Produk</h4>
           @if(auth()->user()->role != "direksi")
-          <a href="/barangmasuk-dash/create" class="btn btn-primary">Tambah Data</a>
+          <a href="/stock-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
           <a href="/cetakstok" class="btn btn-success fa-lg"><i class="fas fa-print"></i></a>
         </div>

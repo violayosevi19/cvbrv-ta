@@ -230,12 +230,12 @@
                     <tr>
                         <th>Tanggal</th>
                         <td>:</td>
-                        <td>{{$detailtokos[0]['tglfaktur']}}</td>
+                        <td>{{date('d-m-Y', strtotime($detailtokos[0]['tglfaktur']))}}</td>
                     </tr>
                     <tr>
                         <th>Jatuh Tempo</th>
                         <td>:</td>
-                        <td>{{$detailtokos[0]['jatuhtempo']}}</td>
+                        <td>{{date('d-m-Y', strtotime($detailtokos[0]['jatuhtempo']))}}</td>
                     </tr>
                     <tr>
                         <th>Sales</th>
@@ -268,29 +268,29 @@
             <td class="produk">{{$detail['namaproduk']}}</td>
             <td class="qty">{{$detail['kuantitas']}}</td>
             <td class="satuan">pcs</td>
-            <td class="harga">{{$detail['harga']}}</td>
+            <td class="harga">Rp{{ number_format($detail['harga'], 0, ',', '.') }}</td>
             <td class="disc">{{$detail['diskon']}}%</td>
             <td class="disc">{{$detail['diskon']}}%</td>
-            <td class="jumlah">{{$detail['jumlah']}}</td>
+            <td class="jumlah">Rp{{ number_format($detail['jumlah'], 0, ',', '.') }}</td>
           </tr>
           @endforeach
           <tr>
-            <td colspan="7">SUBTOTAL</td>
-            <td class="total">$5,200.00</td>
+            <td colspan="7">Total Kotor</td>
+            <td class="total">Rp{{ number_format($bayar, 0, ',', '.') }}</td>
           </tr>
           <tr>
-            <td colspan="7">TAX 25%</td>
-            <td class="total">$1,300.00</td>
+            <td colspan="7">Ppn</td>
+            <td class="total">-</td>
           </tr>
           <tr>
-            <td colspan="7" class="grand total">GRAND TOTAL</td>
-            <td class="grand total">{{$bayar}}</td>
+            <td colspan="7">Total Bersih</td>
+            <td class="total">Rp{{ number_format($bayar, 0, ',', '.') }}</td>
           </tr>
         </tbody>
       </table>
       <div id="notices">
-        <div>NOTICE:</div>
-        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+        <div>Terbilang:</div>
+        <div class="notice">Tiga Ratus Dua Puluh Empat Ribu Rupiah</div>
       </div>
     </main>
     <footer>

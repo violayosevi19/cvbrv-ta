@@ -31,6 +31,7 @@
           @if(auth()->user()->role != "direksi")
           <a href="/toko-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
+          <a href="/cetaktoko" class="btn btn-success fa-lg"><i class="fas fa-print"></i></a>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-3">
@@ -42,9 +43,10 @@
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Telepon</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
-                  @if(auth()->user()->role != "direksi")
+                  <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th> -->
+                  @if(auth()->user()->role == "admin")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                  @else
                   @endif
                 </tr>
               </thead>
@@ -70,15 +72,15 @@
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $toko->email }}</span>
                 </td>
-                <td class="align-middle text-center">
+                <!-- <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $toko->nonota }}</span>
-                </td>
-                @if(auth()->user()->role != "direksi")
+                </td> -->
+                @if(auth()->user()->role == "admin")
                 <td class="align-middle text-center">
-                  <a href="/toko-dash/{{$toko->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
+                  <a href="/toko-dash/{{ $toko->id_toko }}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit
                   </a>
-                  <form  class="d-inline" action="/toko-dash/{{ $toko->id }}" method="post">
+                  <form  class="d-inline" action="/toko-dash/{{ $toko->id_toko }}" method="post">
                     @method('delete')
                     @csrf
                     <button id="delete" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip">
@@ -86,6 +88,7 @@
                     </button>
                   </form>
                 </td>
+                @else
                 @endif
               </tr>
               @endforeach

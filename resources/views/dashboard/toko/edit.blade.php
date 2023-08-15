@@ -18,36 +18,36 @@
           <div class="table-responsive p-0">
             <div class="row mx-5 mt-3">
               <div class="col col-md-6">
-                <form action="/toko-dash/{{ $tokos->id }}" method="post">
+                <form action="/toko-dash/{{ $tokos['id_toko'] }}" method="post">
                   @csrf
                   @method('put')
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Id Toko</label>
-                    <input type="text" class="form-control @error ('id_toko') is-invalid @enderror" id="exampleFormControlInput1" name="id_toko" value="{{ old('id_toko',$tokos->id_toko) }}">
+                    <input type="text" class="form-control @error ('id_toko') is-invalid @enderror" id="exampleFormControlInput1" name="id_toko" value="{{ old('id_toko',$tokos['id_toko']) }}">
                   </div>
                   @error('id_toko')
                     {{ $message }}
                   @enderror
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Toko</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="namatoko" value="{{ old('namatoko',$tokos->namatoko) }}">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="namatoko" value="{{ old('namatoko',$tokos['namatoko']) }}">
                   </div>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Alamat</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="alamat">{{ old('alamat',$tokos->alamat)}}</textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="alamat">{{ old('alamat',$tokos['alamat'])}}</textarea>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">No Telepon</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="notelp" value="{{ old('notelp',$tokos->notelp) }}">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="notelp" value="{{ old('notelp',$tokos['notelp']) }}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="{{ old('email',$tokos->email) }}">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="{{ old('email',$tokos['email']) }}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">No Nota</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$tokos->nonota) }}" readonly>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="nonota" value="{{ old('nonota',$tokos['nonota']) }}" readonly>
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-warning">Submit</button>

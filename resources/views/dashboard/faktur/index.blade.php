@@ -73,6 +73,7 @@
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pembayaran</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diterima Pada</th>
                   @if(auth()->user()->role != "direksi")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                   @endif
@@ -92,16 +93,16 @@
                   <span class="text-secondary text-xs font-weight-bold">{{ $faktur->namatoko }}</span>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ $faktur->tglfaktur }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ date('d-m-Y', strtotime($faktur->tglfaktur ))}}</p>
                 </td>
                 <td class="align-middle text-center text-sm">
-                  <span class="badge badge-sm bg-gradient-secondary">{{ $faktur->jatuhtempo }}</span>
+                  <span class="badge badge-sm bg-gradient-secondary">{{ date('d-m-Y', strtotime($faktur->jatuhtempo)) }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $faktur->total }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">Rp{{ number_format($faktur->total, 0, ',', '.') }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <img src="{{ asset('storage/test/' . $faktur->file) }}" class="img-fluid" alt="...">
+                  <img src="{{ asset('storage/test/' . $faktur->file) }}" class="img-fluid text-secondary text-xs font-weight-bold" alt="bukti">
                 </td>
                 <td class="align-middle text-center">
                   @if($faktur->keterangan === "Dalam Pesanan")
@@ -119,7 +120,7 @@
                   @endif
                 </td>
                 <td class="align-middle text-center">
-                  @if($faktur->pembayaran === "kredit")
+                  @if($faktur->pembayaran === "Kredit")
                   <div class="btn btn-warning">
                   <span class="text-secondary text-xs font-weight-bold text-white">{{ $faktur->pembayaran }}</span>
                   </div>
@@ -131,14 +132,17 @@
                 </td>
                 <td class="align-middle text-center">
                   @if($faktur->status_diterima == false)
-                  <div class="btn btn-danger checked-btn" data-faktur-nonota="{{ $faktur->nonota }}">
+                  <div class="btn btn-danger checked-btn" data-faktur-nonota="{{ $faktur->nonota }}" data-faktur-total="{{ $faktur->total }}">
                   <span class="text-secondary text-xs font-weight-bold text-white">Belum Bayar</span>
                   </div>
                   @else
-                  <div class="btn btn-success" data-faktur-nonota="{{ $faktur->nonota }}">
+                  <div class="btn btn-success done-btn" data-faktur-nonota="{{ $faktur->nonota }}" data-faktur-total="{{ $faktur->total }}" data-faktur-penerima="{{ $faktur->penerima }}" data-faktur-diterimapada="{{ $faktur->diterimapada }}">
                   <span class="text-secondary text-xs font-weight-bold text-white">Sudah Bayar</span>
                   </div>
                   @endif
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ date('d-m-Y', strtotime($faktur->diterimapada)) }}</span>
                 </td>
                 @if(auth()->user()->role != "direksi")
                 <td class="align-middle text-center">
@@ -189,7 +193,11 @@
                       </div>
                       <div class="form-group">
                           <label for="totalInput">Total Diterima:</label>
-                          <input type="number" class="form-control" id="totalInput" name="totalInput">
+                          <input type="number" class="form-control" id="totalInput" name="totalInput" value="">
+                      </div>
+                      <div class="form-group">
+                          <label for="totalInput">Diterima Pada:</label>
+                          <input type="date" class="form-control" id="diterimapada" name="diterimapada">
                       </div>
               </div>
               <div class="modal-footer">
@@ -250,8 +258,24 @@
 
         $(document).on('click', '.checked-btn', function() {
           var fakturNonota = $(this).data('faktur-nonota')
-          console.log(fakturNonota)
+          var fakturTotal = $(this).data('faktur-total')
+          console.log(fakturNonota,fakturTotal)
           $('#nonotaInput').val(fakturNonota);
+          $('#totalInput').val(fakturTotal);
+             
+          $('#modal').modal('show'); // Gantikan '#modal' dengan ID modal Anda
+       });
+
+       $(document).on('click', '.done-btn', function() {
+          var fakturNonota = $(this).data('faktur-nonota')
+          var fakturTotal = $(this).data('faktur-total')
+          var fakturpenerima = $(this).data('faktur-penerima')
+          var fakturditerima = $(this).data('faktur-diterimapada')
+          console.log(fakturNonota,fakturTotal)
+          $('#nonotaInput').val(fakturNonota);
+          $('#totalInput').val(fakturTotal);
+          $('#penerima').val(fakturpenerima);
+          $('#diterimapada').val(fakturditerima);
              
           $('#modal').modal('show'); // Gantikan '#modal' dengan ID modal Anda
        });

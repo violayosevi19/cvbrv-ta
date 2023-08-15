@@ -82,7 +82,7 @@
                   <p class="text-xs font-weight-bold mb-0">{{ $produk->namaproduk }}</p>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $produk->harga }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">Rp{{ number_format($produk->harga,0,',','.') }}</span>
                 </td>
                 @if($produk->jenisproduk !== null)
                 <td class="align-middle text-center">

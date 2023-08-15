@@ -43,7 +43,7 @@
                             <th class="align-middle text-start text-capitalize text-secondary text-m font-weight-bolder">Tanggal Faktur</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-m font-weight-bold" name="tglfaktur">{{ $detail['tglfaktur'] }}</span>
+                                <span class="text-secondary text-m font-weight-bold" name="tglfaktur">{{ date('d-m-Y',strtotime($detail['tglfaktur'])) }}</span>
                             </td>
                         </tr>
                     </table>
@@ -67,7 +67,7 @@
                             <th class="align-middle text-start text-capitalize text-secondary text-m font-weight-bolder">Jatuh Tempo</th>
                             <td class="align-middle text-center">:</td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-m font-weight-bold"  name="jatuhtempo">{{ $detail['jatuhtempo'] }}</span>
+                                <span class="text-secondary text-m font-weight-bold"  name="jatuhtempo">{{ date('d-m-Y',strtotime($detail['jatuhtempo'])) }}</span>
                             </td>
                         </tr>
                     </table>
@@ -114,13 +114,13 @@
                                 <span class="text-xs">{{ $details['satuan'] }}</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">{{ $details['harga'] }}</span>
+                                <span class="text-xs">Rp{{ number_format($details['harga'], 0, ',', '.') }}</span>
                               </td>
                               <td class="align-middle text-center">
                                 <span class="text-xs">{{ $details['diskon'] }}%</span>
                               </td>
                               <td class="align-middle text-center">
-                                <span class="text-xs">{{ $details['jumlah'] }}</span>
+                                <span class="text-xs">Rp{{ number_format($details['jumlah'], 0, ',', '.') }}</span>
                               </td>
                               @endforeach
                             </tr>
@@ -129,7 +129,7 @@
                                   <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Total</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">{{ $bayar }}</span>
+                                  <span class="text-center text-uppercase text-danger fs-3 font-weight-bolder opacity-7">Rp{{ number_format($bayar, 0, ',', '.') }}</span>
                                 </td>
                             </tr>
                         </tbody>

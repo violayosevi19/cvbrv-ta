@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\BarangMasuk;
 use App\Models\faktur;
 use App\Models\penjualan;
 use App\Models\detailpesanan;
@@ -83,7 +84,7 @@ class GetDataController extends Controller
         // $kuantitas = 12;
         // $harga = 5700;
         // $diskon = 0;
-        $jumlahperproduk = $kuantitas * $harga - (($diskon/100) * ($kuantitas*$harga));
+        $jumlahperproduk =  $harga - (($diskon/100) * ($harga));
         // dd($jumlahperproduk);
 
         return response()->json([
@@ -100,7 +101,7 @@ class GetDataController extends Controller
         // $kuantitas = 12;
         // $harga = 5700;
         // $diskon = 0;
-        $jumlahperproduk = $kuantitas * $harga - $diskon;
+        $jumlahperproduk = $kuantitas * $harga - ($diskon * ($kuantitas * $harga) / 100);
         // dd($jumlahperproduk);
 
         return response()->json([
@@ -130,6 +131,7 @@ class GetDataController extends Controller
         $nonota = $request->input('nonota');
         $total = $request->input('totalInput');   
         $penerima = $request->input('penerima');
+        $diterimapada = $request->input('diterimapada');
     
         $fakturNonota = faktur::where('nonota', $nonota)->first();
     
@@ -140,19 +142,20 @@ class GetDataController extends Controller
         $fakturNonota->update([
             'status_diterima' => true,
             'total' => $total,
-            'penerima' => $penerima
+            'penerima' => $penerima,
+            'diterimapada' => $diterimapada
         ]);
 
         if ($request->hasFile('buktiInput')) {
             $bukti = $request->file('buktiInput');
             $filename = time() . '.' . $bukti->getClientOriginalExtension();
-            $bukti->storeAs('public/test', $filename);
+            $bukti->storeAs('test', $filename);
             $fakturNonota->file = $filename;
             $fakturNonota->save();
         }
         // dd($nonota,$total,$bukti);
     
-        return redirect('/penjualan-dash');
+        return back()->with('pesan','Data Penjualan Sudah Diterima!');
 
     }
 
@@ -200,4 +203,87 @@ class GetDataController extends Controller
         ]);
     }
 
+    public function paginateDataProduk(){
+        $produks = Produk::paginate(7);
+        // dd($produks);
+        return response()->json([
+            'produks' => $produks
+        ]);
+    }
+
+    public function getDataPenjualanBulan($tglawal, $tglakhir){
+        $penjualanBulan = faktur::whereBetween('tglfaktur',[$tglawal,$tglakhir])->get();
+        $takeTanggal = $penjualanBulan->toArray()[0]['tglfaktur'];
+        $month = date('m', strtotime($takeTanggal));
+        if($month === '01'){
+            $namaBulan = "Januari";
+        } else if($month === '02'){
+            $namaBulan = "Februari";
+        } else if($month === '03'){
+            $namaBulan = "Maret";
+        } else if($month === '04'){
+            $namaBulan = "April";
+        } else if($month === '05'){
+            $namaBulan = "Mei";
+        } else if($month === '06'){
+            $namaBulan = "Juni";
+        } else if($month === '07'){
+            $namaBulan = "Juli";
+        } else if($month === '08'){
+            $namaBulan = "Agustus";
+        } else if($month === '09'){
+            $namaBulan = "September";
+        } else if($month === '10'){
+            $namaBulan = "Oktober";
+        } else if($month === '11'){
+            $namaBulan = "November";
+        } else {
+            $namaBulan = "Desember";
+        }
+        // dd($month); 
+        // dd($penjualanBulan);
+        return view('dashboard.report.penjualanbulan',[
+            'fakturs' => $penjualanBulan,
+            'namaBulan' => $namaBulan
+        ]);
+    }
+
+    public function getDataBarangMasukBulan($tglawal, $tglakhir){
+        $barangMasukBulan = BarangMasuk::select('namaproduk','stock','tanggalmasuk')->whereBetween('tanggalmasuk',[$tglawal,$tglakhir])->get();
+        // dd($barangMasukBulan);
+        $takeTanggal = $barangMasukBulan->toArray()[0]['tanggalmasuk'];
+        // dd($takeTanggal);
+        $month = date('m', strtotime($takeTanggal));
+        if($month === '01'){
+            $namaBulan = "Januari";
+        } else if($month === '02'){
+            $namaBulan = "Februari";
+        } else if($month === '03'){
+            $namaBulan = "Maret";
+        } else if($month === '04'){
+            $namaBulan = "April";
+        } else if($month === '05'){
+            $namaBulan = "Mei";
+        } else if($month === '06'){
+            $namaBulan = "Juni";
+        } else if($month === '07'){
+            $namaBulan = "Juli";
+        } else if($month === '08'){
+            $namaBulan = "Agustus";
+        } else if($month === '09'){
+            $namaBulan = "September";
+        } else if($month === '10'){
+            $namaBulan = "Oktober";
+        } else if($month === '11'){
+            $namaBulan = "November";
+        } else {
+            $namaBulan = "Desember";
+        }
+        // dd($month); 
+        // dd($penjualanBulan);
+        return view('dashboard.report.barangmasukbulan',[
+            'barangmasuks' => $barangMasukBulan,
+            'namaBulan' => $namaBulan
+        ]);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\penjualan;
+use App\Models\LabaRugi;
 use Illuminate\Http\Request;
 
 class PenjualanController extends Controller
@@ -14,7 +15,7 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        return view('dashboard.penjualan.index',['penjualans' => Penjualan::all()]);
+        return view('dashboard.labarugi.index',['l' => Penjualan::all()]);
     }
 
     /**
@@ -24,7 +25,7 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        return view('dashboard.penjualan.create',['penjualans' => Penjualan::all()]);
+        return view('dashboard.labarugi.create',['penjualans' => Penjualan::all()]);
     }
 
     /**
@@ -64,7 +65,7 @@ class PenjualanController extends Controller
      */
     public function edit(penjualan $penjualan,$id)
     {
-        return view('dashboard.penjualan.edit',['penjualans' => Penjualan::find($id)]);
+        return view('dashboard.labarugi.edit',['penjualans' => Penjualan::find($id)]);
     }
 
     /**

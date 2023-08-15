@@ -27,11 +27,29 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-        <h4 class="mx-3 text-center">Data Barang Masuk</h4>
+          <h4 class="mx-3 text-center">Data Barang Masuk</h4>
           @if(auth()->user()->role != "direksi")
           <a href="/barangmasuk-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
         </div>
+        <!-- <div class="row mt-2 justify-content-end">
+          <div class="col">
+              <div class="input-group ms-3">
+                  <span class="input-group-text">Pilih Tanggal</span>
+                  <input type="date" aria-label="Tanggal Awal" class="form-control" name="tglawal" id="tglawal">
+                  <input type="date" aria-label="Tanggal Akhir" class="form-control" name="tglakhir" id="tglakhir">
+              </div>
+          </div>
+          <div class="col">
+              <div class="input-group-append">
+                  <a href="#"
+                      onclick="this.href='/get-data-barang-masuk/' + document.getElementById('tglawal').value + '/' + document.getElementById('tglakhir').value"
+                      target="_blank" 
+                      class="btn btn-info">Cetak</a>
+              </div>
+          </div>
+       </div> -->
+
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-3">
             <table id="myTable" class="table align-items-center mb-0">
@@ -60,7 +78,7 @@
                   <span class="text-secondary text-xs font-weight-bold">{{$data->namasupplier}}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <p class="text-xs font-weight-bold mb-0">{{$data->tanggalmasuk}}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ date('d-m-Y', strtotime($data->tanggalmasuk))}}</p>
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">Sudah Masuk</span>
@@ -70,7 +88,7 @@
                   <a href="/barangmasuk-dash/{{$data->nonota}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit
                   </a>
-                  <form  class="d-inline" action="/barangmasuk-dash/{{$data->id}}" method="post">
+                  <form  class="d-inline" action="/barangmasuk-dash/{{$data->nonota}}" method="post">
                     @method('delete')
                     @csrf
                     <button class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" id="delete">

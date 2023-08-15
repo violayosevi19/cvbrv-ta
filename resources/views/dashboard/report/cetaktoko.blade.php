@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CETAK STOK BARANG CVBRV</title>
+    <title>CETAK TOKO CVBRV</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
     <style type="text/css">
         header .nohp, header h1 {
@@ -28,14 +28,17 @@
             width: 5%;
         }
 
-        .kode-col, .satuan-col {
+        .kode-col, .harga-col {
             width: 20%;
         }
 
         .stok-col {
-            width: 50%;
+            width: 40%;
         }
 
+        .harga-col {
+            width:15%;
+        }
         /* Rest of the CSS */
         body {
             font-family: Arial, sans-serif;
@@ -76,10 +79,6 @@
 
         tr:last-child {
             background-color: #ddd;
-        }
-
-        tr:last-child td {
-            font-weight: bold;
         }
 
         th, td {
@@ -141,7 +140,6 @@
             line-height: 1.2;
         }
 
-
       
     </style>
 </head>
@@ -152,7 +150,7 @@
             <img src="{{asset('assets/img/CV BERKAT REZEKI YOSEV.png')}}"></img>
         </div>
         <div class="title">
-            <h2>Data Stock Barang Yang Tersedia</h2>
+            <h2>Data Toko</h2>
             <h2>CV. BERKAT REZEKI YOSEV</h2>
             <p class="nohp">No Hp: 083184206039</p>
             <p>Perumahan Mulya Asri 2 Blok E7 Kampung Baru Nan XX, Kecamatan Lubuk Begalung <br>Padang, Sumatera Barat</br></p>
@@ -160,37 +158,33 @@
         
     </header>
     <div class="container">
-        <h1>Daftar Stok CV BRV</h1>
+        <h1>Daftar TOKO CV BRV</h1>
         <table>
             <tr>
                 <th class="small-col">No</th>
-                <th class="kode-col">Kode Produk</th>
-                <th class="stok-col">Nama Produk</th>
-                <th class="satuan-col">Jumlah Stok Tersedia</th>
-                <th>Satuan</th>
+                <th class="kode-col">Id Toko</th>
+                <th class="stok-col">Nama Toko</th>
+                <th class="harga-col">No HP</th>
+                <th>Alamat</th>
+                <th>Email</th>
             </tr>
             @php
-                $totalKeseluruhan = 0;
                 $index = 1;
             @endphp
-            @foreach($stock as $item)
+            @foreach($tokos as $item)
             <tr>
                 <td class="small-col">{{$index}}</td>
-                <td class="kode-col">{{ $item->kodeproduk }}</td>
-                <td class="stok-col">{{ $item->namaproduk }}</td>
-                <td class="satuan-col">{{ $item->stock }}</td>
-                <td>pcs</td>
+                <td class="kode-col">{{ $item->id_toko }}</td>
+                <td class="stok-col">{{ $item->namatoko }}</td>
+                <td class="harga-col">{{ $item->notelp }}</td>
+                <td class="harga-col">{{ $item->alamat }}</td>
+                <td class="harga-col">{{ $item->email }}</td>
             </tr>
             @php
-                $totalKeseluruhan += $item['stock'];
+                
                 $index++; // Increment index for the next row
             @endphp
             @endforeach
-            <!-- Add more rows for other income and expense items -->
-            <tr>
-                <td colspan="3" class="total-stock"><strong>Total</strong></td>
-                <td colspan="2"><strong>{{ $totalKeseluruhan }}</strong></td>
-            </tr>
         </table>
     </div>
     </section>

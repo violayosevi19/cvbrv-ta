@@ -48,6 +48,8 @@ class ProdukController extends Controller
             'harga' => 'required',
             'jenisproduk_id' => 'required',
         ]);
+        $harga = (int) str_replace(['Rp', '.','.', ','], '', $validateData['harga']);
+        $validateData['harga'] = $harga;
 
         Produk::create($validateData);
         return redirect('/produk-dash')->with('pesan','Data berhasil ditambah');
@@ -63,7 +65,7 @@ class ProdukController extends Controller
     {
         $takeBarangMasuk = BarangMasuk::where('kodeproduk','=',$kodeproduk)->first();
         if (!$takeBarangMasuk) {
-            return redirect('/produk-dash')->with('error', 'Tidak ada supplier dengan nama tersebut ditemukan');
+            return redirect('/produk-dash')->with('error', 'Tidak ada supplier dengan nama produk tersebut ditemukan');
         }
 
         $namasupplier = $takeBarangMasuk->namasupplier;
@@ -71,22 +73,20 @@ class ProdukController extends Controller
         if(!$takeSupplier){
             return redirect('/produk-dash')->with('error','Nama supplier tidak ada');
         }
-        $takeDataSupplier = supplier::where('namasupplier', $takeSupplier->namasupplier)->get()->all();
-        $produk = supplier::with('barangMasuk')->get()->toArray();
+        $takeDataSupplier = supplier::where('namasupplier', $takeSupplier->namasupplier)->first()->toArray();
+        $produk = supplier::with('barangMasuk')->where('namasupplier',$takeDataSupplier['namasupplier'])->first()->toArray();
+        // dd($takeDataSupplier,$produk);
         $dataProduk = [];
-        foreach($produk as $data){
-           foreach($data['barang_masuk'] as $value){
+        foreach($produk['barang_masuk'] as $data){
                 $dataProduk[] = [
-                    'kodeproduk' => $value['kodeproduk'],
-                    'namaproduk' => $value['namaproduk']
-                ];
-           }
+                    'kodeproduk' => $data['kodeproduk'],
+                    'namaproduk' => $data['namaproduk']
+                ]; 
         }
         // Get unique entries based on 'kodeproduk'
         $ambilProdukUnik = array_unique($dataProduk, SORT_REGULAR);
         // If you need to reset the keys of the resulting array
         $result = array_values($ambilProdukUnik);
-        // dd($takeBarangMasuk,$takeSupplier->namasupplier,$namasupplier,$takeDataSupplier);
         return view('dashboard.supplier.read',[
             'detailSupplier' => $takeDataSupplier,
             'produks' => $result
@@ -105,9 +105,10 @@ class ProdukController extends Controller
      */
     public function edit(produk $produk,$id)
     {
+      
         return view('dashboard.produk.edit',[
             'produks' => Produk::find($id),
-            'jenisproduks' => Jenisproduk::all()
+            'jenisproduks' => jenisproduk::all()
         ]);
     }
 
@@ -127,6 +128,8 @@ class ProdukController extends Controller
             'harga' => 'required',
             'jenisproduk_id' => 'required',
         ]);
+        $harga = (int) str_replace(['Rp', '.','.', ','], '', $validateData['harga']);
+        $validateData['harga'] = $harga;
 
         Produk::where('id',$id)->update($validateData);
         return redirect('/produk-dash')->with('pesan','Data berhasil diubah');

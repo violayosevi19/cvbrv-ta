@@ -31,6 +31,7 @@
           @if(auth()->user()->role != "direksi")
           <a href="/supplier-dash/create" class="btn btn-primary">Tambah Data</a>
           @endif
+          <a href="/cetaksupplier" class="btn btn-success fa-lg"><i class="fas fa-print"></i></a>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-3">
@@ -38,12 +39,12 @@
               <thead>
                 <tr>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Supplier</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th>
+                  <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Nota</th> -->
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Supplier</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No Hp</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jatuh Tempo</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
+                  <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Faktur</th> -->
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
+                  <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th> -->
                   @if(auth()->user()->role != "direksi")
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                   @endif
@@ -55,9 +56,9 @@
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $sp->kodesupplier }}</span>
                 </td>
-                <td class="align-middle text-center">
+                <!-- <td class="align-middle text-center">
                   <span class="badge badge-sm bg-gradient-secondary">{{ $sp->nonota }}</span>
-                </td>
+                </td> -->
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $sp->namasupplier }}</span>
                 </td>
@@ -65,15 +66,15 @@
                   <span class="text-secondary text-xs font-weight-bold">{{ $sp->nohp }}</span>
                 </td>
                 <td class="align-middle text-center text-sm">
-                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->tglfaktur }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ $sp->alamat }}</span>
                 </td>
-                <td class="align-middle text-center text-sm">
+                <!-- <td class="align-middle text-center text-sm">
                   <span class="badge badge-sm bg-gradient-secondary">{{ $sp->jatuhtempo }}</span>
-                </td>
-                <td class="align-middle text-center">
+                </td> -->
+                <!-- <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ $sp->total }}</span>
-                </td>
-                @if(auth()->user()->role != "direksi")
+                </td> -->
+                @if(auth()->user()->role == "admin")
                 <td class="align-middle text-center">
                   <a href="/supplier-dash/{{$sp->id}}/edit" class="btn btn-info text-secondary font-weight-bold text-xs text-white" data-toggle="tooltip" data-original-title="Edit user">
                     Edit
@@ -89,6 +90,7 @@
                     Read
                   </a>
                 </td>
+                @else
                 @endif
               </tr>
               @endforeach

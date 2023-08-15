@@ -15,7 +15,17 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('dashboard.supplier.index',['suppliers' => Supplier::all()]);
+        $supplier = Supplier::whereIn('kodesupplier', function ($query) {
+            $query->selectRaw('MIN(kodesupplier)')
+                ->from('suppliers')
+                ->groupBy('namasupplier')
+                ->havingRaw('COUNT(*) >= 1');
+        })
+        ->get();
+        // $supplier = Supplier::all();
+    
+    
+        return view('dashboard.supplier.index',['suppliers' => $supplier]);
     }
 
     /**
@@ -37,14 +47,12 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $validateData=$request->validate([
-            'nonota' => 'required|unique:suppliers',
             'kodesupplier' => 'required|unique:suppliers',
             'namasupplier' => 'required',
             'nohp' => 'required',
             'alamat' => 'required',
             'tglfaktur' => 'required',
             'jatuhtempo' => 'required',
-            'total' => 'required',
         ]);
 
         Supplier::create($validateData);
@@ -59,10 +67,9 @@ class SupplierController extends Controller
      */
     public function show(supplier $supplier,$nonota)
     {
-        $takeDataSupplier = supplier::where('nonota','=',$nonota)->get()->all();
-        $produk = supplier::with('barangMasuk')
-        ->get()->toArray();
-
+        $takeDataSupplier = supplier::where('nonota','=',$nonota)->get()->toArray()[0];
+        $produk = supplier::with('barangMasuk')->where('namasupplier',$takeDataSupplier['namasupplier'])->get()->toArray();
+        // dd($takeDataSupplier);
         $dataProduk = [];
         foreach($produk as $data){
            foreach($data['barang_masuk'] as $value){

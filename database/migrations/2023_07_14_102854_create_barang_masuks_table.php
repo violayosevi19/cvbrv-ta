@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('harga')->nullable();
             $table->integer('stock')->nullable();
             $table->char('satuan',12)->nullable();
-            $table->string('diskon')->nullable();
-            $table->integer('jumlah')->nullable();
+            $table->decimal('diskon')->nullable();
+            $table->decimal('jumlah')->nullable();
             $table->date('tanggalmasuk');
             $table->timestamps();
         });

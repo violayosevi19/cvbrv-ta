@@ -50,13 +50,18 @@
                 </div>
               </div>
               <div class="col mt-3 justify-content-center produk-div">
+                <div class="col col-md-4">
+                  <button type="button" class="btn btn-warning btn-view" data-toggle="modal" data-target="#productModal">Cek Produk</button>
+                  <button type="button" class="btn btn-danger btn-supp" data-toggle="modal" data-target="#supplierModal">Cek Supplier</button>
+                </div>
                     <table class="table">
                         <thead>
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Produk</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">kuantitas</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga Satuan</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(pcs)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty(lsn/krtn)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diskon</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
@@ -74,16 +79,19 @@
                                 <input type="number" class="form-control"  name="inputs[0][stock]" id="kuantitas" placeholder="Enter kuantitas">
                               </td>
                               <td class="align-middle text-center">
+                                <input type="text" class="form-control"  name="inputs[0][satuan]" id="satuan" placeholder="Enter banyaknya">
+                              </td>
+                              <td class="align-middle text-center">
                                 <input type="text" class="form-control"  name="inputs[0][harga]" id="harga" placeholder="Enter harga produk">
                               </td>
                               <td class="align-middle text-center">
                                <div class="input-group">
-                                  <input type="number" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter disc">
+                                  <input type="text" class="form-control diskon" id="diskon"  name="inputs[0][diskon]" placeholder="Enter disc">
                                   <span class="input-group-text" id="basic-addon1">%</span>
                                 </div>
                               </td>
                               <td class="align-middle text-center">
-                                <input type="number" class="form-control"  name="inputs[0][jumlah]" id="jumlah" placeholder="Enter jumlah">
+                                <input type="text" class="form-control"  name="inputs[0][jumlah]" id="jumlah" placeholder="Enter jumlah">
                               </td>
                               <td class="align-middle text-center">
                                 <button class="btn btn-success mt-3" type="button" name="add" id="add">Tambah</button>
@@ -100,6 +108,90 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Daftar Produk</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive p-3">
+          <div class="col col-md-6">
+            <input type="text" class="form-control" id="searchInput" placeholder="Cari...">
+          </div>
+        <table id="tableProduct" class="table">
+          <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Kode Produk</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Nama Produk</th>
+              </tr>
+            </thead>
+          <tbody>
+            @foreach($produks as $item)
+            <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->kodeproduk}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->namaproduk}}</span>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Daftar Supplier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive p-3">
+          <div class="col col-md-6">
+            <input type="text" class="form-control" id="searchInputSupp" placeholder="Cari...">
+          </div>
+        <table id="tableSupplier" class="table">
+          <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Kode Supplier</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Nama Supplier</th>
+              </tr>
+            </thead>
+          <tbody>
+            @foreach($suppliers as $item)
+            <tr>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->kodesupplier}}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ $item->namasupplier}}</span>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   @endsection
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -129,16 +221,19 @@
                   <input type="number" class="form-control kuantitas " id="kuantitas" name="inputs[`+counter+`][stock]" placeholder="Enter kuantitas">
                 </td>
                 <td class="align-middle text-center">
+                  <input type="text" class="form-control satuan " id="satuan" name="inputs[`+counter+`][satuan]" placeholder="Enter banyaknya">
+                </td>
+                <td class="align-middle text-center">
                   <input type="number" class="form-control harga" id="harga"  name="inputs[`+counter+`][harga]" placeholder="Enter harga">
                 </td>
                 <td class="align-middle text-center">
                   <div class="input-group">
-                       <input type="number" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
+                       <input type="text" class="form-control" id="diskon" name="inputs[`+counter+`][diskon]" placeholder="Enter disc">
                         <span class="input-group-text" id="basic-addon1">%</span>
                     </div>
                 </td>
                 <td class="align-middle text-center">
-                  <input type="number" class="form-control jumlah" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
+                  <input type="text" class="form-control jumlah" id="jumlah" name="inputs[`+counter+`][jumlah]" placeholder="Enter jumlah">
                 </td>
                 <td class="align-middle text-center">
                   <button class="btn btn-danger mt-3" type="button" name="remove" id="remove">Remove</button>
@@ -158,6 +253,14 @@
             $('input[name="harga"]').val('');
             $('input[name="diskon"]').val('');
             $('input[name="jumlah"]').val('');
+          });
+
+          $('.close').on('click', function() {
+            $('#productModal').modal('hide'); 
+          });
+
+          $('.close').on('click', function() {
+            $('#supplierModal').modal('hide'); 
           });
     });
 
@@ -184,7 +287,7 @@
 
     $(document).on('input', '#diskon', function () {
             var diskon = $(this).val();
-            var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
+            // var kuantitas = parseInt($(this).closest('tr').find('#kuantitas').val()) || 0;
             var harga = parseInt($(this).closest('tr').find('#harga').val()) || 0;
             var jumlahField = $(this).closest('tr').find('#jumlah');
 
@@ -192,7 +295,7 @@
                 $.ajax({
                     url: '/get-jumlah', // Ganti dengan URL yang sesuai
                     type: 'GET',
-                    data: { diskon: diskon, stock: kuantitas, harga: harga },
+                    data: { diskon: diskon, harga: harga },
                     success: function (response) {
                         jumlahField.val(response.jumlahharga);
                     }
@@ -201,5 +304,31 @@
                 jumlahField.val(0);
             }
     });
-    
+
+    $(document).on('click','.btn-view',function(){
+      $('#productModal').modal('show');
+      // loadProducts(1);
+    });
+    $(document).on('click','.btn-supp',function(){
+      $('#supplierModal').modal('show');
+      // loadProducts(1);
+    });
+</script>
+<script>
+  $(document).ready(function() {
+    $("#searchInput").on("input", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableProduct tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+    $("#searchInputSupp").on("input", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableSupplier tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+  });
 </script>

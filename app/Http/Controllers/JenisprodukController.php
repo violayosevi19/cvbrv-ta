@@ -41,7 +41,7 @@ class JenisprodukController extends Controller
         ]);
 
         Jenisproduk::create($validateData);
-        return redirect('/jenisproduk-dash')->with('pesan','Kategori produk berhasil ditambahkan');
+        return redirect('/jenisproduk-dash')->with('pesan','Jenis produk berhasil ditambahkan');
     }
 
     /**
@@ -80,7 +80,7 @@ class JenisprodukController extends Controller
         ]);
 
         Jenisproduk::where('id',$id)->update($validateData);
-        return redirect('/jenisproduk-dash')->with('pesan','Kategori produk berhasil diubah');
+        return redirect('/jenisproduk-dash')->with('pesan','Jenis produk berhasil diubah');
     }
 
     /**

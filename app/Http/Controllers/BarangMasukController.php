@@ -21,7 +21,9 @@ class BarangMasukController extends Controller
         $nonota = BarangMasuk::select(DB::raw('MAX(id) as max_id'), 'nonota', 'namasupplier', 'tanggalmasuk')
                      ->groupBy('nonota','namasupplier','tanggalmasuk')
                      ->get();
-        // dd($nonota);
+     
+        // $takeDataSupplier = supplier::where('namasupplier','SM Office')->first()->toArray()['namasupplier'];
+        // dd($takeDataSupplier);
         return view('dashboard.pengelolaanbarang.barangmasuk.index',[
             'barangmasuks' => $nonota
         ]);
@@ -34,7 +36,17 @@ class BarangMasukController extends Controller
      */
     public function create()
     {
-        return view('dashboard.pengelolaanbarang.barangmasuk.createbarang');
+        $supplier = Supplier::whereIn('kodesupplier', function ($query) {
+            $query->selectRaw('MIN(kodesupplier)')
+                ->from('suppliers')
+                ->groupBy('namasupplier')
+                ->havingRaw('COUNT(*) >= 1');
+        })
+        ->get();
+        return view('dashboard.pengelolaanbarang.barangmasuk.createbarang',[
+            'produks' => produk::all(),
+            'suppliers' => $supplier
+        ]);
     }
 
     /**
@@ -82,6 +94,7 @@ class BarangMasukController extends Controller
             'inputs.*.kodeproduk' => 'required',
             'inputs.*.namaproduk' => 'required',
             'inputs.*.stock' => 'required',
+            'inputs.*.satuan' => 'required',
             'inputs.*.harga' => 'required',
             'inputs.*.diskon' => 'required',
             'inputs.*.jumlah' => 'required'
@@ -107,14 +120,14 @@ class BarangMasukController extends Controller
         
             if ($stockData) {
                 $stockData->stock += $stock;
-                $stockData->keterangan = 'Data telah ditambahkan pada ' . $tanggalmasuk . ' sebanyak ' . $stock;
+                $stockData->keterangan = 'Data telah ditambahkan pada ' . date('d-m-Y',strtotime($tanggalmasuk)) . ' sebanyak ' . $stock;
                 $stockData->save();
             } else {
                 $stockData = new Stock;
                 $stockData->kodeproduk = $kodeproduk;
                 $stockData->namaproduk = $value['namaproduk'];
                 $stockData->stock = $stock;
-                $stockData->keterangan = 'Data telah ditambahkan pada ' . $tanggalmasuk . ' sebanyak ' . $stock;
+                $stockData->keterangan = 'Data telah ditambahkan pada ' . date('d-m-Y',strtotime($tanggalmasuk)) . ' sebanyak ' . $stock;
                 $stockData->save();
             }
 
@@ -128,15 +141,31 @@ class BarangMasukController extends Controller
             }
         }
 
-            $supplier = new Supplier();
-            $supplier->namasupplier = $namasupplier;
-            $supplier->tglfaktur = $tanggalmasuk;
-            $supplier->nonota = $nonota;
-            $supplier->total = $totalFaktur;
-            $supplier->save();
-    
+        // $takeDataSupplier = supplier::where('namasupplier','SM Office')->first()->toArray();
 
-       
+        //     if($takeDataSupplier['namasupplier'] === $namasupplier){
+        //         $supplier = new Supplier();
+        //         $supplier->kodesupplier = $takeDataSupplier['kodesupplier'];
+        //         $supplier->namasupplier = $namasupplier;
+        //         $supplier->tglfaktur = $tanggalmasuk;
+        //         $supplier->nonota = $nonota;
+        //         $supplier->total = $totalFaktur;
+        //         $supplier->save();
+        //     } else {
+        //         $supplier = new Supplier();
+        //         $supplier->namasupplier = $namasupplier;
+        //         $supplier->tglfaktur = $tanggalmasuk;
+        //         $supplier->nonota = $nonota;
+        //         $supplier->total = $totalFaktur;
+        //         $supplier->save();
+        //     }
+        $supplier = new Supplier();
+        $supplier->namasupplier = $namasupplier;
+        $supplier->tglfaktur = $tanggalmasuk;
+        $supplier->nonota = $nonota;
+        $supplier->total = $totalFaktur;
+        $supplier->save();
+    
         return redirect('/barangmasuk-dash')->with('pesan','Data berhasil ditambahkan');
     }
 
@@ -154,6 +183,7 @@ class BarangMasukController extends Controller
             'namaproduk',
             'stock',
             'harga',
+            'satuan',
             'diskon',
             'jumlah')
             ->where('nonota','=',$nonota)->get()->toArray();
@@ -214,10 +244,13 @@ class BarangMasukController extends Controller
             'jumlah')
             ->where('nonota','=',$nonota)->get()->count();;
         // dd($detailProduks);
+        // $produks = Produk::paginate(7);
+        // dd($produks);
         return view('dashboard.pengelolaanbarang.barangmasuk.editbarang',[
             'detailfaktur' => $detailFaktur,
             'detailproduks' => $detailProduks,
-            'totaldatapernota' => $totalProdukPerNonota
+            'totaldatapernota' => $totalProdukPerNonota,
+            'produks' => produk::all()
         ]);
     }
 
@@ -249,6 +282,7 @@ class BarangMasukController extends Controller
             'inputs.*.kodeproduk' => 'required',
             'inputs.*.namaproduk' => 'required',
             'inputs.*.stock' => 'required',
+            'inputs.*.satuan' => 'required',
             'inputs.*.harga' => 'required',
             'inputs.*.diskon' => 'required',
             'inputs.*.jumlah' => 'required'
@@ -319,9 +353,9 @@ class BarangMasukController extends Controller
      * @param  \App\Models\BarangMasuk  $barangMasuk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BarangMasuk $barangMasuk,$id)
+    public function destroy(BarangMasuk $barangMasuk,$nonota)
     {
-        BarangMasuk::destroy($id);
+        BarangMasuk::where('nonota',$nonota)->delete();
         return redirect('/barangmasuk-dash');
     }
 }

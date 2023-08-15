@@ -34,13 +34,13 @@
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Harga</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="harga" value="{{ old('harga',$produks->harga) }}">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="harga" value="Rp{{ number_format(old('harga',$produks->harga),0,',','.') }}">
                   </div>
                  <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Jenis Produk</label>
                     <select class="form-select" id="jenisproduk_id" name="jenisproduk_id">
                       @foreach($jenisproduks as $jp)
-                      <option value="{{ $jp->id }}" @if(old('jenisproduk_id', $jp->id) == $jp->id) selected @endif>{{ $jp->jenis }}</option>
+                      <option value="{{ old('jenisproduk_id',$jp->id) }}" @if(($jp->id) == (old('jenisproduk_id',$produks->jenisproduk_id)))  selected @endif>{{ $jp->jenis }}</option>
                       @endforeach
                     </select>
                   </div>

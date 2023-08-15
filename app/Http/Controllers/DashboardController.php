@@ -25,7 +25,7 @@ class DashboardController extends Controller
             // dd($cekStock);
             if ($stock <= $cekStock) {
                 // Memicu peringatan atau melakukan tindakan sesuai kebutuhan
-                $message[] = "Peringatan: Stok produk $namaproduk abis tu a!";
+                $message[] = "Peringatan: Stok produk $namaproduk hampir abis!";
             } 
         }
         // return view('dashboard.dash.dashboard',[
@@ -57,8 +57,11 @@ class DashboardController extends Controller
         // ->get()->toArray();
 
         // cek penjualan untuk chart
-        $penjualan = Penjualan::join('fakturs', 'penjualans.nonota', '=', 'fakturs.nonota')
-        ->selectRaw("MONTH(fakturs.tglfaktur)  as bulan, SUM(fakturs.total) as total_penjualan")
+        // $penjualan = Penjualan::join('fakturs', 'penjualans.nonota', '=', 'fakturs.nonota')
+        // ->selectRaw("MONTH(fakturs.tglfaktur)  as bulan, SUM(fakturs.total) as total_penjualan")
+        // ->groupBy('bulan')
+        // ->get()->toArray();
+        $penjualan = faktur::selectRaw(("MONTH(tglfaktur)  as bulan, SUM(total) as total_penjualan"))
         ->groupBy('bulan')
         ->get()->toArray();
         $namaBulan  = [];
@@ -70,7 +73,7 @@ class DashboardController extends Controller
         }
 
         // cek penjualan
-        $pendapatan = penjualan::select(\DB::raw("SUM(totalpenjualan) as total"))->get()->toArray()[0]['total'];
+        $pendapatan = faktur::select(\DB::raw("SUM(total) as total"))->where('status_diterima',1)->get()->toArray()[0]['total'];
         if(!$pendapatan){
             $hasilPenjualan = 0;
             $persentase = 0;
